@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 // );
 app.use((express.static(path.join(__dirname, 'public'))));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/img', express.static(path.join(__dirname, 'images')));
 // app.use(session({
 //   secret: 'my secret',
 //   store: store,

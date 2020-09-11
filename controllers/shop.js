@@ -1,20 +1,26 @@
-const Product = require('../models/product');
+//const Product = require('../models/product');
 
-exports.getProducts = (req, res, next) => {};
+exports.getProducts = (req, res, next) => {
+      res.render('shop/products', {
+        pageTitle: 'All Products',
+        path: '/products'
+      });
+
+  // Product.findAll()
+  //   .then(products => {
+  //     res.render('shop/products', {
+  //       prods: products,
+  //       pageTitle: 'All Products',
+  //       path: '/products',
+  //       isAuthenticated: req.session.isLoggedIn
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+};
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
-    .then(products => {
-      res.render('shop/products', {
-        prods: products,
-        pageTitle: 'All Products',
-        path: '/products',
-        isAuthenticated: req.session.isLoggedIn
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
 };
 exports.getProduct = (req, res, next) => {};
 

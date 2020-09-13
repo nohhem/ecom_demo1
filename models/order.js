@@ -4,12 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-  items: [
-    {
-      product: { type: Object, required: true },
-      qty: { type: Number, required: true }
-    }
-  ],
   user: {
     email: {
       type: String,
@@ -23,8 +17,7 @@ const orderSchema = new Schema({
   },
   invoice: {
       _id: {
-        type: Schema.Types.ObjectId,
-        required: true
+        type: Schema.Types.ObjectId
       },
       totalAmount: {
           type: Number,

@@ -8,8 +8,7 @@ const categorySchema = new Schema({
     required: true
   },
   path: {
-    type: String,
-    required: true
+    type: String
   }
 });
 

@@ -4,7 +4,9 @@ const path = require('path');
 //3rd Party Packages:
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 //const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
@@ -13,8 +15,12 @@ const multer = require('multer');
 // const SequelizeStore = require("connect-session-sequelize")(
 //   session.Store
 // );
+const MONGODB_URI =
+  'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom?retryWrites=true&w=majority';
 
 const errorController = require('./controllers/error');
+const testController = require('./controllers/test');
+
 //const authController = require('./controllers/auth');
 // const sequelize = require('./util/database'); //our database connection setup
 
@@ -27,6 +33,10 @@ const app = express();
 // const store = new SequelizeStore({
 //     db: sequelize, //sequelize database
 //   });
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: 'sessions'
+  });
 // const csrfProtection = csrf();
 
 // const fileStorage = multer.diskStorage({
@@ -62,6 +72,15 @@ app.use('/img', express.static(path.join(__dirname, 'images')));
 //   resave: false, 
 //   saveUninitialized: false
 // }));
+app.use(
+    session({
+      secret: 'my secret',
+      resave: false,
+      saveUninitialized: false,
+      store: store
+    })
+  );
+app.use(testController.test1);
 // app.use(csrfProtection);
 // app.use(flash());
 
@@ -74,6 +93,7 @@ app.use('/img', express.static(path.join(__dirname, 'images')));
 //Routes Middlewares:
 // app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+
 // app.use(authRoutes);
 // app.use(errorController.get404);
 // app.get('/500', errorController.get500);
@@ -93,7 +113,7 @@ app.use(shopRoutes);
 // Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 // User.hasMany(Product);
 
-app.listen(3000);
+// app.listen(3000);
 
 //Sequelize Sync Process: (force: for creation & changes in databse schema) ONLY for one time !!!
 // sequelize
@@ -105,3 +125,12 @@ app.listen(3000);
 //   .catch(err => {
 //     console.log(err);
 //   });
+
+mongoose
+  .connect(MONGODB_URI)
+  .then(result => {
+    app.listen(3000);
+  })
+  .catch(err => {
+    console.log(err);
+  });

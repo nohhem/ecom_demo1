@@ -1,4 +1,4 @@
-const { Double } = require('mongodb');
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -27,19 +27,18 @@ const orderSchema = new Schema({
         required: true
       },
       totalAmount: {
-          type: Double,
+          type: Number,
           required: true
       },
       items: [
         {
           product: { type: Object, required: true },
           qty: { type: Number, required: true },
-          productPrice: { type: Double, required: true }
+          productPrice: { type: Number, required: true }
         }
       ],
       date: Date
-  },
-  timestamps: true
+  }
 });
 
 module.exports = mongoose.model('Order', orderSchema);

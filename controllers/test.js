@@ -54,6 +54,20 @@ exports.test1 = (req, res, next) => {
     //       order.save().then(result => {console.log('Created Order')});
 
     //   console.log('weeelcome ');
+    Category.insertMany([
+        { _id: "Fashion", path: null },
+        { _id: "Woman", path: ",fashion," },
+        { _id: "Men", path: ",fashion," },
+        { _id: "Shoe Bag", path: ",fashion," },
+        { _id: "ShoeBag", path: ",fashion," },
+        { _id: "Sports Wear & Shoes", path: ",fashion," },
+        { _id: "Outdoor Clothing & Shoes", path: ",fashion," },
+        { _id: "Kids & Baby", path: ",fashion," },
+        { _id: "Watch", path: ",fashion," },
+        { _id: "Sunglasses", path: ",fashion," },
+        { _id: "Jewelry & Gems", path: ",fashion," },
+        { _id: "Accessories", path: ",fashion," }
+    ])
     next();
 
 

@@ -1,10 +1,10 @@
 //const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-      res.render('shop/products', {
-        pageTitle: 'All Products',
-        path: '/products'
-      });
+  res.render('shop/products', {
+    pageTitle: 'All Products',
+    path: '/products'
+  });
 
   // Product.findAll()
   //   .then(products => {
@@ -22,14 +22,28 @@ exports.getProducts = (req, res, next) => {
 
 exports.getIndex = (req, res, next) => {
 };
-exports.getProduct = (req, res, next) => {};
+exports.getProduct = (req, res, next) => {
+  res.render('shop/single_product', {
+    pageTitle: 'single product'
 
-exports.getCart = (req, res, next) => {};
+  });
+};
 
-exports.postCart = (req, res, next) => {};
+/*add post and get check out here*/
+exports.getCheckout = (req, res, next) => {
+  res.render('shop/checkout', {
+    pageTitle: 'checkout'
+  });
+};
+/*--------------------------------------*/
 
-exports.postCartDeleteProduct = (req, res, next) => {};
 
-exports.postOrder = (req, res, next) => {};
+exports.getCart = (req, res, next) => { };
 
-exports.getOrders = (req, res, next) => {};
+exports.postCart = (req, res, next) => { };
+
+exports.postCartDeleteProduct = (req, res, next) => { };
+
+exports.postOrder = (req, res, next) => { };
+
+exports.getOrders = (req, res, next) => { };

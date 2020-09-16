@@ -3,7 +3,7 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 const Order = require('../models/order');
 
-exports.test1 = (req, res , next )=> {
+exports.test1 = (req, res, next) => {
 
     // User.create('Omar alomar ', 'omreal2009@gmail.com', '123456789');
     // const user = new User({
@@ -31,7 +31,7 @@ exports.test1 = (req, res , next )=> {
     //       discount: 10,
     //       reviews: [],
     //       categoryId: "Electronics"
-          
+
     //   })
     //   product.save().then(result => {console.log('Created Product')});
     // const prod2 = Product.findById('5f5e92ec2234ac0c6a604b42')
@@ -49,11 +49,11 @@ exports.test1 = (req, res , next )=> {
     //                 productPrice: 71
     //             }] 
     //           }
-              
+
     //       })
     //       order.save().then(result => {console.log('Created Order')});
 
-    console.log('weeelcome ');
+    //   console.log('weeelcome ');
     next();
 
 

@@ -11,7 +11,7 @@
             <div class="row">
                 <!-- level 3 category item -->
                 <% for (let categorylv3 of locals.categories) { %>
-                <% if (categorylv3.parent === "/" + categorylv2._id ) { %>
+                <% if (categorylv3.parent == "/" + categorylv2._id ) { %>
                 <div class="col-md-4">
                     <ul class="list-links">
                         <li>
@@ -20,9 +20,11 @@
                         </li>
                         <!-- level 4 subcategory of level 3 -->
                         <% for (let categorylv4 of categories) { %>
-                        <% if (categorylv4.parent === "/" +  categorylv3._id ){ %>
-                        <li><a href="#"><%= categorylv4._id %></a></li>
-                        <% } %>
+                            <% console.log( categorylv4.parent ,"===" +  categorylv3._id,categorylv4.parent == "/" +  categorylv3._id) %>
+                            <% if (categorylv4.parent == "/" +  categorylv3._id ){ %>
+                            
+                            <li><a href="#"><%= categorylv4._id %></a></li>
+                            <% } %>
                         <% } %>
                     </ul>
                     <hr class="hidden-md hidden-lg">

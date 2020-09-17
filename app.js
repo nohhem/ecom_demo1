@@ -41,7 +41,7 @@ const app = express();
 
 Category.find({}).then(result => {
   app.locals.categories = result;
-  console.log(app.locals.categories)
+  // console.log(app.locals.categories)
 });
 
 

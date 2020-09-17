@@ -3,7 +3,7 @@
     <% for (let categorylv2 of locals.categories){ %>
     <% if (categorylv2.parent === "/Fashion"){ %>
     <li class="dropdown side-dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <%=categorylv2._id%> <i
+        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <%=categorylv2.category_title%> <i
                 class="fa fa-angle-right"></i></a>
         <!-- level 3 -->
         <div class="custom-menu">
@@ -16,15 +16,13 @@
                     <ul class="list-links">
                         <li>
                             <!-- level 3 category label -->
-                            <h3 class="list-links-title"><%= categorylv3._id %></h3>
+                            <h3 class="list-links-title"><%= categorylv3.category_title %></h3>
                         </li>
                         <!-- level 4 subcategory of level 3 -->
                         <% for (let categorylv4 of categories) { %>
-                            <% console.log( categorylv4.parent ,"===" +  categorylv3._id,categorylv4.parent == "/" +  categorylv3._id) %>
-                            <% if (categorylv4.parent == "/" +  categorylv3._id ){ %>
-                            
-                            <li><a href="#"><%= categorylv4._id %></a></li>
-                            <% } %>
+                        <% if (categorylv4.parent == "/" +  categorylv3._id ){ %>
+                        <li><a href="#"><%= categorylv4.category_title %></a></li>
+                        <% } %>
                         <% } %>
                     </ul>
                     <hr class="hidden-md hidden-lg">

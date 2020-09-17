@@ -3,28 +3,20 @@ const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
 
-  let categorieslv2=[];
-  let categories;
-  Category.find({}).then(result => {
-    //console.log(result.);
-    categories =result;
-    result.map(b => {
-        //console.log(b._id)
-        // categorieslv2.push(b._id);
-    });
-    console.log(categories);
-    console.log('------------------');
-    console.log(categories.length);
-    
-  });
+
+  /*Category.find({}).then(result => {
+    req.app.locals.Category = result;
+  });*/
+
+
   // console.log('categorieslv2');
   // console.log(categorieslv2);
   //obtain categories lists lv2,lv3,lv4,
 
+
   res.render('shop/products', {
     pageTitle: 'All Products',
     path: '/products',
-    categories: categories
   });
 
   // Product.findAll()

@@ -1,49 +1,49 @@
 <ul class="category-list">
     <!-- level 2 category item  -->
-    <% for (let categorylv2 of categories) %>
-        <% if (categorylv2.parent=="/Fashion"){ %>
-            <li class="dropdown side-dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <%=categorylv2%> <i
-                        class="fa fa-angle-right"></i></a>
-                <!-- level 3 -->
-                <div class="custom-menu">
-                    
-                    <div class="row">
-                        <!-- level 3 category item -->
-                        <% for (let categorylv3 of categories) { %>
-                            <% if (categorylv3.parent=="/%><%= categorylv2._id %><%"){ %>
-                                <div class="col-md-4">
-                                    <ul class="list-links">
-                                        <li>
-                                            <!-- level 3 category label -->
-                                            <h3 class="list-links-title"><%= categorylv3._id %></h3>
-                                        </li>
-                                            <!-- level 4 subcategory of level 3 -->
-                                            <% for (let categorylv4 of categories) { %>
-                                                <% if (categorylv4.parent=="/%><%= categorylv3._id %><%"){ %>
-                                                    <li><a href="#"><%= categorylv4._id %></a></li>
-                                                <% } %>
-                                            <% } %>
-                                    </ul>
-                                    <hr class="hidden-md hidden-lg">
-                                </div>
-                            <% } %>
+    <% for (let categorylv2 of locals.categories){ %>
+    <% if (categorylv2.parent === "/Fashion"){ %>
+    <li class="dropdown side-dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"> <%=categorylv2._id%> <i
+                class="fa fa-angle-right"></i></a>
+        <!-- level 3 -->
+        <div class="custom-menu">
+
+            <div class="row">
+                <!-- level 3 category item -->
+                <% for (let categorylv3 of locals.categories) { %>
+                <% if (categorylv3.parent === "/" + categorylv2._id ) { %>
+                <div class="col-md-4">
+                    <ul class="list-links">
+                        <li>
+                            <!-- level 3 category label -->
+                            <h3 class="list-links-title"><%= categorylv3._id %></h3>
+                        </li>
+                        <!-- level 4 subcategory of level 3 -->
+                        <% for (let categorylv4 of categories) { %>
+                        <% if (categorylv4.parent === "/" +  categorylv3._id ){ %>
+                        <li><a href="#"><%= categorylv4._id %></a></li>
                         <% } %>
-                    </div>
-                    <div class="row hidden-sm hidden-xs">
-                        <div class="col-md-12">
-                            <hr>
-                            <a class="banner banner-1" href="#">
-                                <img src="./img/banner05.jpg" alt="">
-                                <div class="banner-caption text-center">
-                                    <h2 class="white-color">NEW COLLECTION</h2>
-                                    <h3 class="white-color font-weak">HOT DEAL</h3>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                        <% } %>
+                    </ul>
+                    <hr class="hidden-md hidden-lg">
                 </div>
-            </li>
-        <% } %>
+                <% } %>
+                <% } %>
+            </div>
+            <div class="row hidden-sm hidden-xs">
+                <div class="col-md-12">
+                    <hr>
+                    <a class="banner banner-1" href="#">
+                        <img src="./img/banner05.jpg" alt="">
+                        <div class="banner-caption text-center">
+                            <h2 class="white-color">NEW COLLECTION</h2>
+                            <h3 class="white-color font-weak">HOT DEAL</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </li>
+    <% } %>
     <% } %>
 </ul>

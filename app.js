@@ -10,6 +10,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 //const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
+const Category = require('./models/category');
 
 //Sequelize sessions Store 
 // const SequelizeStore = require("connect-session-sequelize")(
@@ -29,14 +30,28 @@ const testController = require('./controllers/test');
 //const Product = require('./models/product');
 // const User = require('./models/user');
 
+//----------------------Global variables--------------------------//
+
+//----------------------------------------------------------//
+
+
+
+
 const app = express();
+
+Category.find({}).then(result => {
+  app.locals.categories = result;
+  console.log(app.locals.categories)
+});
+
+
 // const store = new SequelizeStore({
 //     db: sequelize, //sequelize database
 //   });
 const store = new MongoDBStore({
-    uri: MONGODB_URI,
-    collection: 'sessions'
-  });
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
 // const csrfProtection = csrf();
 
 // const fileStorage = multer.diskStorage({
@@ -73,13 +88,13 @@ app.use('/img', express.static(path.join(__dirname, 'images')));
 //   saveUninitialized: false
 // }));
 app.use(
-    session({
-      secret: 'my secret',
-      resave: false,
-      saveUninitialized: false,
-      store: store
-    })
-  );
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
+);
 app.use(testController.test1);
 // app.use(csrfProtection);
 // app.use(flash());

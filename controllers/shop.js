@@ -23,9 +23,8 @@ exports.getProducts = (req, res, next) => {
 
   res.render('shop/products', {
     pageTitle: 'All Products',
-    path: '/products'
-    // categoris_lists:
-
+    path: '/products',
+    categories: categories
   });
 
   // Product.findAll()

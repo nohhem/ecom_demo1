@@ -12,9 +12,12 @@ exports.test1 = (req, res, next) => {
         })
     })*/
 
-    Category.find({ parent: /^\/Shoe/ }).then(result => {
-        console.log(result);
-    })
+    // Category.find({ parent: /^\/Shoe/ }).then(result => {
+    //     console.log(result);
+    // });
+    // Category.find({ parent: "/Shoe" }).then(result => {
+    //     console.log(result);
+    // });
 
 
 

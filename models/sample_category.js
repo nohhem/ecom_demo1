@@ -92,8 +92,6 @@ db.categories.insertMany([
 
    { _id: "Baby Girl", path: ",Fashion,Kids & Baby,Baby," },
    { _id: "Baby boy", path: ",Fashion,Kids & Baby,Baby," },
-   
-
 ])
 
 

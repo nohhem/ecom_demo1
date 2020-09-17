@@ -9,6 +9,9 @@ const categorySchema = new Schema({
   },
   path: {
     type: String
+  },
+  parent: {
+    type: String
   }
 });
 

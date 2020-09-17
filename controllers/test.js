@@ -5,6 +5,19 @@ const Order = require('../models/order');
 
 exports.test1 = (req, res, next) => {
 
+    /*Category.find({ path: /,Woman,Clothing,/ }).then(result => {
+        //console.log(result.);
+        result.map(b => {
+            console.log(b._id)
+        })
+    })*/
+
+    Category.find({ parent: /^\/Shoe/ }).then(result => {
+        console.log(result);
+    })
+
+
+
     // User.create('Omar alomar ', 'omreal2009@gmail.com', '123456789');
     // const user = new User({
     //     fullname: 'Omar alomar ',
@@ -55,105 +68,104 @@ exports.test1 = (req, res, next) => {
 
     //   console.log('weeelcome ');
 
-// We are adding categories Level 1 to our database :
-console.log('categoryyy insertion ')
-    Category.insertMany([
-        
-   // Level 1
-   { _id: "Fashion", path: null },
-   // Level 2
-   { _id: "Woman", path: ",Fashion," },
-   { _id: "Men", path: ",Fashion," },
-   { _id: "Shoe bag", path: ",Fashion," },
-   { _id: "Sports_wear & Shoes", path: ",Fashion," },
-   { _id: "Outdoor Clothing & Shoes", path: ",Fashion," },
-   { _id: "Kids & Baby", path: ",Fashion," },
-   { _id: "Watch", path: ",Fashion," },
-   { _id: "Sunglasses", path: ",Fashion," },
-   { _id: "Jewelry & Gems", path: ",Fashion," },
-   { _id: "Accessories", path: ",Fashion," },
-   // Level 3
-   { _id: "Woman Clothing", path: ",Fashion,Woman," },
-   { _id: "Beach Wear", path: ",Fashion,Woman," },
-   { _id: "Woman Underwear", path: ",Fashion,Woman," },
-   { _id: "Pyjamas", path: ",Fashion,Woman," },
-   { _id: "Woman Sportswear", path: ",Fashion,Woman," },
-   { _id: "Big size", path: ",Fashion,Woman," },
-   { _id: "Hijab Clothing", path: ",Fashion,Woman," },
-   { _id: "Woman Shoe", path: ",Fashion,Woman," },
-   { _id: "Accessory", path: ",Fashion,Woman," },
+    // We are adding categories Level 1 to our database :
+    /*console.log('categoryyy insertion ')*/
+    /*Category.insertMany([
 
-   { _id: "Men's Clothing", path: ",Fashion,Men," },
-   { _id: "Men's Underwear", path: ",Fashion,Men," },
-   { _id: "Men Sportswear", path: ",Fashion,Men," },
-   { _id: "Men Shoe", path: ",Fashion,Men," },
+        // Level 1
+        { _id: "Fashion", path: null },
+        // Level 2
+        { _id: "Woman", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Men", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Shoe bag", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Sports_wear & Shoes", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Outdoor Clothing & Shoes", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Kids & Baby", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Watch", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Sunglasses", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Jewelry & Gems", path: ",Fashion,", parent: "/Fashion" },
+        { _id: "Accessories", path: ",Fashion,", parent: "/Fashion" },
+        // Level 3
+        { _id: "Woman Clothing", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Beach Wear", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Woman Underwear", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Pyjamas", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Woman Sportswear", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Big size", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Hijab Clothing", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Woman Shoe", path: ",Fashion,Woman,", parent: "/Woman" },
+        { _id: "Accessory", path: ",Fashion,Woman,", parent: "/Woman" },
 
-   { _id: "Women shoes", path: ",Fashion,Shoe bag," },
-   { _id: "Men's shoes", path: ",Fashion,Shoe bag," },
-   { _id: "Sneakers", path: ",Fashion,Shoe bag," },
-   { _id: "Women handbags", path: ",Fashion,Shoe bag," },
-   { _id: "Men's Bag", path: ",Fashion,Shoe bag," },
-   { _id: "Suitcase & Suitcase", path: ",Fashion,Shoe bag," },
-   { _id: "Girls Shoes", path: ",Fashion,Shoe bag," },
-   { _id: "Boys Shoes", path: ",Fashion,Shoe bag," },
-   { _id: "Baby shoes", path: ",Fashion,Shoe bag," },
+        { _id: "Men's Clothing", path: ",Fashion,Men,", parent: "/Men" },
+        { _id: "Men's Underwear", path: ",Fashion,Men,", parent: "/Men" },
+        { _id: "Men Sportswear", path: ",Fashion,Men,", parent: "/Men" },
+        { _id: "Men Shoe", path: ",Fashion,Men,", parent: "/Men" },
 
-   { _id: "Child", path: ",Fashion,Kids & Baby," },
-   { _id: "Baby", path: ",Fashion,Kids & Baby," },
-   
-   { _id: "Men Watch", path: ",Fashion,Watch" },
-   { _id: "Woman Watch", path: ",Fashion,Watch" },
-   { _id: "Unisex Watch", path: ",Fashion,Watch" },
-   { _id: "Child Watch", path: ",Fashion,Watch" },
+        { _id: "Women shoes", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Men's shoes", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Sneakers", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Women handbags", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Men's Bag", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Suitcase & Suitcase", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Girls Shoes", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Boys Shoes", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
+        { _id: "Baby shoes", path: ",Fashion,Shoe bag,", parent: "/Shoe bag" },
 
-   { _id: "Men Sunglasses", path: ",Fashion,Sunglasses" },
-   { _id: "Woman Sunglasses", path: ",Fashion,Sunglasses" },
-   { _id: "Unisex Sunglasses", path: ",Fashion,Sunglasses" },
-   { _id: "Child Sunglasses", path: ",Fashion,Sunglasses" },
+        { _id: "Child", path: ",Fashion,Kids & Baby,", parent: "/Kids & Baby" },
+        { _id: "Baby", path: ",Fashion,Kids & Baby,", parent: "/Kids & Baby" },
 
-   { _id: "Woman Jewelry & Gems", path: ",Fashion,Jewelry & Gems" },
-   { _id: "Men Jewelry & Gems", path: ",Fashion,Jewelry & Gems" },
-   { _id: "Personalized Jewelry", path: ",Fashion,Jewelry & Gems" },
-   { _id: "Gift Sets", path: ",Fashion,Jewelry & Gems" },
+        { _id: "Men Watch", path: ",Fashion,Watch", parent: "/Watch" },
+        { _id: "Woman Watch", path: ",Fashion,Watch", parent: "/Watch" },
+        { _id: "Unisex Watch", path: ",Fashion,Watch", parent: "/Watch" },
+        { _id: "Child Watch", path: ",Fashion,Watch", parent: "/Watch" },
 
-   // Level 4
+        { _id: "Men Sunglasses", path: ",Fashion,Sunglasses", parent: "/Sunglasses" },
+        { _id: "Woman Sunglasses", path: ",Fashion,Sunglasses", parent: "/Sunglasses" },
+        { _id: "Unisex Sunglasses", path: ",Fashion,Sunglasses", parent: "/Sunglasses" },
+        { _id: "Child Sunglasses", path: ",Fashion,Sunglasses", parent: "/Sunglasses" },
 
-   { _id: "Dress", path: ",Fashion,Woman,Clothing," },
-   { _id: "Woman T-shirts", path: ",Fashion,Woman,Clothing," },
-   { _id: "Woman Trousers", path: ",Fashion,Woman,Clothing," },
-   { _id: "Blouse", path: ",Fashion,Woman,Clothing," },
-   { _id: "Woman Shorts", path: ",Fashion,Woman,Clothing," },
-   { _id: "Tights", path: ",Fashion,Woman,Clothing," },
-   { _id: "Skirt", path: ",Fashion,Woman,Clothing," },
-   { _id: "Woman Sweatshirt", path: ",Fashion,Woman,Clothing," },
-   { _id: "Overalls", path: ",Fashion,Woman,Clothing," },
+        { _id: "Woman Jewelry & Gems", path: ",Fashion,Jewelry & Gems", parent: "/Jewelry & Gems" },
+        { _id: "Men Jewelry & Gems", path: ",Fashion,Jewelry & Gems", parent: "/Jewelry & Gems" },
+        { _id: "Personalized Jewelry", path: ",Fashion,Jewelry & Gems", parent: "/Jewelry & Gems" },
+        { _id: "Gift Sets", path: ",Fashion,Jewelry & Gems", parent: "/Jewelry & Gems" },
 
-   { _id: "Woman Slipper", path: ",Fashion,Woman,Shoe," },
-   { _id: "Sandals", path: ",Fashion,Woman,Shoe," },
-   { _id: "Heeled shoes", path: ",Fashion,Woman,Shoe," },
-   { _id: "Women Sneakers", path: ",Fashion,Woman,Shoe," },
-   { _id: "Flat shoes", path: ",Fashion,Woman,Shoe," },
+        // Level 4
 
-   { _id: "Men T-shirts", path: ",Fashion,Men,Clothing," },
-   { _id: "Men Shirt", path: ",Fashion,Men,Clothing," },
-   { _id: "Men Trousers", path: ",Fashion,Men,Clothing," },
-   { _id: "Shorts", path: ",Fashion,Men,Clothing," },
-   { _id: "Men Sweatshirt", path: ",Fashion,Men,Clothing," },
-   { _id: "Swim Shorts", path: ",Fashion,Men,Clothing," },
+        { _id: "Dress", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Woman T-shirts", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Woman Trousers", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Blouse", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Woman Shorts", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Tights", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Skirt", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Woman Sweatshirt", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
+        { _id: "Overalls", path: ",Fashion,Woman,Clothing,", parent: "/Clothing" },
 
-   { _id: "Sports Shoes & Sneakers", path: ",Fashion,Men,Shoe," },
-   { _id: "Men Slipper", path: ",Fashion,Men,Shoe," },
-   { _id: "Classic Shoes", path: ",Fashion,Men,Shoe," },
-   { _id: "Casual Shoes", path: ",Fashion,Men,Shoe," },
+        { _id: "Woman Slipper", path: ",Fashion,Woman,Shoe,", parent: "/Shoe" },
+        { _id: "Sandals", path: ",Fashion,Woman,Shoe,", parent: "/Shoe" },
+        { _id: "Heeled shoes", path: ",Fashion,Woman,Shoe,", parent: "/Shoe" },
+        { _id: "Women Sneakers", path: ",Fashion,Woman,Shoe,", parent: "/Shoe" },
+        { _id: "Flat shoes", path: ",Fashion,Woman,Shoe,", parent: "/Shoe" },
 
-   { _id: "Girl Child", path: ",Fashion,Kids & Baby,Child," },
-   { _id: "Boy", path: ",Fashion,Kids & Baby,Child," },
+        { _id: "Men T-shirts", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
+        { _id: "Men Shirt", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
+        { _id: "Men Trousers", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
+        { _id: "Shorts", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
+        { _id: "Men Sweatshirt", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
+        { _id: "Swim Shorts", path: ",Fashion,Men,Clothing,", parent: "/MenClothing" },
 
-   { _id: "Baby Girl", path: ",Fashion,Kids & Baby,Baby," },
-   { _id: "Baby boy", path: ",Fashion,Kids & Baby,Baby," }
+        { _id: "Sports Shoes & Sneakers", path: ",Fashion,Men,Shoe,", parent: "/Shoe" },
+        { _id: "Men Slipper", path: ",Fashion,Men,Shoe,", parent: "/Shoe" },
+        { _id: "Classic Shoes", path: ",Fashion,Men,Shoe,", parent: "/Shoe" },
+        { _id: "Casual Shoes", path: ",Fashion,Men,Shoe,", parent: "/Shoe" },
 
+        { _id: "Girl Child", path: ",Fashion,Kids & Baby,Child,", parent: "/Child" },
+        { _id: "Boy", path: ",Fashion,Kids & Baby,Child,", parent: "/Child" },
 
-    ]);
+        { _id: "Baby Girl", path: ",Fashion,Kids & Baby,Baby,", parent: "/Baby" },
+        { _id: "Baby boy", path: ",Fashion,Kids & Baby,Baby,", parent: "/Baby" }
+
+    ]);*/
     next();
 
 

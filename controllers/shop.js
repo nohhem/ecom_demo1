@@ -1,9 +1,18 @@
 //const Product = require('../models/product');
+const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
+
+  /*Category.find({ path: /,Woman,Clothing,/ }).then(result => {
+    //console.log(result.);
+    result.map(b => {
+        console.log(b._id)
+    })
+})*/
   res.render('shop/products', {
     pageTitle: 'All Products',
     path: '/products'
+
   });
 
   // Product.findAll()

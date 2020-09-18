@@ -7,16 +7,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-//const csrf = require('csurf');
+const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
 const Category = require('./models/category');
 
-//Sequelize sessions Store 
-// const SequelizeStore = require("connect-session-sequelize")(
-//   session.Store
-// );
-//'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom?retryWrites=true&w=majority'
 const MONGODB_URI =
   'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom';
 
@@ -24,11 +19,8 @@ const errorController = require('./controllers/error');
 const testController = require('./controllers/test');
 
 //const authController = require('./controllers/auth');
-// const sequelize = require('./util/database'); //our database connection setup
-
 
 //----------------------Global variables--------------------------//
-
 //----------------------------------------------------------//
 const app = express();
 
@@ -36,15 +28,13 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
 });
+const csrfProtection = csrf();
 
 Category.find({}).then(result => {
   app.locals.categories = result;
-  // console.log(app.locals.categories)
 });
 
 
-
-// const csrfProtection = csrf();
 
 // const fileStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -77,31 +67,28 @@ app.use(session({
   secret: 'my secret',
   store: store,
   resave: false, 
-  saveUninitialized: true
+  saveUninitialized: false //should be false so that it we do not store session for nothing
 }));
-// app.use(csrfProtection);
+//Mware for csrf protection
+app.use(csrfProtection);
 
 //app.use(testController.test1);
 // app.use(testController.test2mockDataGeneration);
 // app.use(flash());
 
 //to auhtenticate any response we send to the user (the user will recieve a valid csrf token to be used for his next request)
+//
 let counter_test=0;
 app.use((req, res, next) => {
-  console.log(res.locals);
-  counter_test=counter_test+1;
+  //any var registred to res.locals is global and can be accessed directly bby writing its name ex: csrfToken
+  res.locals.isLoggedIn = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken(); //we need to include it as hidden input in every post request 
 
-  console.log('passed from here ',counter_test,'times----------');
-  console.log('session created ',req.session);
-  //console.log(req);
-  // req.session.save(function(err) {
-  //   // session saved
-  //   console.log('session saved with id ',req.sessionID);
-  //   store.all((error, sessions)=>{
-  //     console.log('sessions in store ',sessions);
-  //   });
-  // });
-  //res.locals.csrfToken = req.csrfToken();
+
+  //tests
+  // console.log(res.locals);
+  // counter_test=counter_test+1;
+  // console.log('passed from here ',counter_test,'times----------');
   next();
 });
 
@@ -113,6 +100,7 @@ app.use(shopRoutes);
 // app.get('/500', errorController.get500);
 
 // ???????? recheck from videos
+// a MW to handle general inetrnal error from the server 
 // app.use((error, req, res, next) => {
 //   // res.status(error.httpStatusCode).render(...);
 //   // res.redirect('/500');
@@ -123,22 +111,6 @@ app.use(shopRoutes);
 //   });
 // });
 
-//Sequelize Relationships:
-// Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
-// User.hasMany(Product);
-
-// app.listen(3000);
-
-//Sequelize Sync Process: (force: for creation & changes in databse schema) ONLY for one time !!!
-// sequelize
-//   .sync({ force: true })
-//   //.sync()
-//   .then(result => {
-//     app.listen(3000);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
 
 mongoose
   .connect(MONGODB_URI)

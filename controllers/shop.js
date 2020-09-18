@@ -2,12 +2,13 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getProductsByCategory = (req, res, next) => {
+  console.log('getProductsByCategory');
   const categoryId = req.params.categoryId;
   Product.find({categoryId:categoryId})
     .then(products => {
       res.render('shop/products', {
         products: products,
-        pageTitle: product.title,
+        pageTitle: categoryId,
         path: '/products/'+categoryId
       });
     })
@@ -20,7 +21,7 @@ exports.getProductsByCategory = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
 
-
+  console.log('getProducts controller')
   /*Category.find({}).then(result => {
     req.app.locals.Category = result;
   });*/

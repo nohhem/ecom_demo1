@@ -95,7 +95,7 @@ app.use(
     store: store
   })
 );
-app.use(testController.test1);
+//app.use(testController.test1);
 // app.use(testController.test2mockDataGeneration);
 // app.use(csrfProtection);
 // app.use(flash());

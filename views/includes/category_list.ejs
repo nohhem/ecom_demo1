@@ -21,7 +21,7 @@
                         <!-- level 4 subcategory of level 3 -->
                         <% for (let categorylv4 of categories) { %>
                         <% if (categorylv4.parent == "/" +  categorylv3._id ){ %>
-                        <li><a href="/products/<%= categorylv4._id %>"><%= categorylv4.category_title %></a></li>
+                        <li><a href="/category/<%= categorylv4._id %>"><%= categorylv4.category_title %></a></li>
 
                         <% } %>
                         <% } %>

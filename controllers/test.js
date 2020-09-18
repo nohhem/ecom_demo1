@@ -3,6 +3,9 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 const Order = require('../models/order');
 
+const mongoose = require('mongoose');
+const dummy = require('mongoose-dummy');
+
 exports.test1 = (req, res, next) => {
 
     /*Category.find({ path: /,Woman,Clothing,/ }).then(result => {
@@ -177,3 +180,27 @@ exports.test1 = (req, res, next) => {
 
 
 }
+
+exports.test2mockDataGeneration = (req,res,next) => {
+        // const mongoose = require('mongoose');
+        // const dummy = require('mongoose-dummy');
+    const ignoredFields = ['_id','created_at', '__v','reviews'];
+    // let genderValues = ['Male', 'Female']
+
+    let schemaDefinition = new mongoose.Schema(Product);
+
+    let model = mongoose.model('Product', schemaDefinition);
+    let randomObject = dummy(model, {
+        ignore: ignoredFields,
+        custom: {
+            title: [String],
+            price: [Number],
+            imageUrl: [String],
+            stockQty: [Number],
+            discount: [Number],
+            categoryId: [String]
+        }
+      });
+
+    console.log(randomObject);
+    }

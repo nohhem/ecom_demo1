@@ -1,4 +1,4 @@
-//const Product = require('../models/product');
+const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getProducts = (req, res, next) => {
@@ -12,12 +12,17 @@ exports.getProducts = (req, res, next) => {
   // console.log('categorieslv2');
   // console.log(categorieslv2);
   //obtain categories lists lv2,lv3,lv4,
+  Product.find().then(products => {
+    res.render('shop/products', {
+      pageTitle: 'All Products',
+      path: '/products',
+      products: products
 
-
-  res.render('shop/products', {
-    pageTitle: 'All Products',
-    path: '/products',
-  });
+    });
+  })
+  .catch(err => {
+      console.log(err)
+    });
 
   // Product.findAll()
   //   .then(products => {

@@ -77,7 +77,7 @@ app.use(session({
   secret: 'my secret',
   store: store,
   resave: false, 
-  saveUninitialized: false
+  saveUninitialized: true
 }));
 // app.use(csrfProtection);
 

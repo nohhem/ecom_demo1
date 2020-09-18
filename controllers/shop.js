@@ -1,6 +1,23 @@
 const Product = require('../models/product');
 const Category = require('../models/category');
 
+exports.getProductsByCategory = (req, res, next) => {
+  const categoryId = req.params.categoryId;
+  Product.find({categoryId:categoryId})
+    .then(products => {
+      res.render('shop/products', {
+        products: products,
+        pageTitle: product.title,
+        path: '/products/'+categoryId
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
 exports.getProducts = (req, res, next) => {
 
 

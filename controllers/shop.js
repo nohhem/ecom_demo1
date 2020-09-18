@@ -19,12 +19,9 @@ exports.getProductsByCategory = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-
-
   /*Category.find({}).then(result => {
     req.app.locals.Category = result;
   });*/
-
 
   // console.log('categorieslv2');
   // console.log(categorieslv2);
@@ -58,10 +55,19 @@ exports.getProducts = (req, res, next) => {
 exports.getIndex = (req, res, next) => {
 };
 exports.getProduct = (req, res, next) => {
-  res.render('shop/single_product', {
-    pageTitle: 'single product'
-
-  });
+  const prodId = req.params.productId;
+  Product.findById(prodId)
+    .then(product => {
+      res.render('shop/single_product', {
+        product: product,
+        pageTitle: product.title
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 /*add post and get check out here*/

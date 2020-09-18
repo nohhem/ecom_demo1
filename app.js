@@ -16,8 +16,9 @@ const Category = require('./models/category');
 // const SequelizeStore = require("connect-session-sequelize")(
 //   session.Store
 // );
+//'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom?retryWrites=true&w=majority'
 const MONGODB_URI =
-  'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom?retryWrites=true&w=majority';
+  'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom';
 
 const errorController = require('./controllers/error');
 const testController = require('./controllers/test');
@@ -26,18 +27,15 @@ const testController = require('./controllers/test');
 // const sequelize = require('./util/database'); //our database connection setup
 
 
-//Import Sequelize Models 
-//const Product = require('./models/product');
-// const User = require('./models/user');
-
 //----------------------Global variables--------------------------//
 
 //----------------------------------------------------------//
-
-
-
-
 const app = express();
+
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
 
 Category.find({}).then(result => {
   app.locals.categories = result;
@@ -45,13 +43,7 @@ Category.find({}).then(result => {
 });
 
 
-// const store = new SequelizeStore({
-//     db: sequelize, //sequelize database
-//   });
-const store = new MongoDBStore({
-  uri: MONGODB_URI,
-  collection: 'sessions'
-});
+
 // const csrfProtection = csrf();
 
 // const fileStorage = multer.diskStorage({
@@ -71,7 +63,7 @@ app.set('views', 'views');
 //Import Routes :
 // const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-// const authRoutes = require('./routes/auth');
+//const authRoutes = require('./routes/auth');
 
 
 //Defining app Middlewares:
@@ -81,35 +73,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // );
 app.use((express.static(path.join(__dirname, 'public'))));
 app.use('/img', express.static(path.join(__dirname, 'images')));
-// app.use(session({
-//   secret: 'my secret',
-//   store: store,
-//   resave: false, 
-//   saveUninitialized: false
-// }));
-app.use(
-  session({
-    secret: 'my secret',
-    resave: false,
-    saveUninitialized: false,
-    store: store
-  })
-);
+app.use(session({
+  secret: 'my secret',
+  store: store,
+  resave: false, 
+  saveUninitialized: false
+}));
+// app.use(csrfProtection);
+
 //app.use(testController.test1);
 // app.use(testController.test2mockDataGeneration);
-// app.use(csrfProtection);
 // app.use(flash());
 
-// app.use((req, res, next) => {
-//   res.locals.isAuthenticated = req.session.isLoggedIn;
-//   res.locals.csrfToken = req.csrfToken();
-//   next();
-// });
+//to auhtenticate any response we send to the user (the user will recieve a valid csrf token to be used for his next request)
+let counter_test=0;
+app.use((req, res, next) => {
+  console.log(res.locals);
+  counter_test=counter_test+1;
+
+  console.log('passed from here ',counter_test,'times----------');
+  console.log('session created ',req.session);
+  //console.log(req);
+  // req.session.save(function(err) {
+  //   // session saved
+  //   console.log('session saved with id ',req.sessionID);
+  //   store.all((error, sessions)=>{
+  //     console.log('sessions in store ',sessions);
+  //   });
+  // });
+  //res.locals.csrfToken = req.csrfToken();
+  next();
+});
 
 //Routes Middlewares:
 // app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-
 // app.use(authRoutes);
 // app.use(errorController.get404);
 // app.get('/500', errorController.get500);

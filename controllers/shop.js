@@ -30,6 +30,8 @@ exports.getProducts = (req, res, next) => {
   // console.log('categorieslv2');
   // console.log(categorieslv2);
   //obtain categories lists lv2,lv3,lv4,
+
+  
   Product.find().then(products => {
     res.render('shop/products', {
       pageTitle: 'All Products',

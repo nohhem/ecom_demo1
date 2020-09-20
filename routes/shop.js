@@ -17,7 +17,13 @@ router.get('/products/:productId', shopController.getProduct);
 
 // router.post('/cart', shopController.postCart);
 
+router.post('/add-to-cart/:productId', shopController.addToCart);
+
+//router.post('/add-to-cart/:productId', shopController.addToCart());
+
 // router.post('/cart-delete-item', shopController.postCartDeleteProduct);
+
+
 
 // router.post('/create-order', shopController.postOrder);
 

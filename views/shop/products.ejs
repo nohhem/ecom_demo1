@@ -47,11 +47,14 @@
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star-o empty"></i>
                                     </div>
-                                    <h2 class="product-name"><a href="#"><%= product.title %> <%= testvar %> </a></h2>
+                                    <h2 class="product-name"><a href="#"><%= product.title %>  </a></h2>
                                     <div class="product-btns">
                                         <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                         <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                        <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add
+
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" value="<%= product._id %>" name="productId">
+                                        <button class="primary-btn add-to-cart" onclick="addToCart(this)"><i class="fa fa-shopping-cart"></i> Add
                                             to
                                             Cart</button>
                                     </div>
@@ -82,6 +85,7 @@
 
     <!-- jQuery Plugins -->
     <%- include('../includes/end.ejs') %>
+    <script src="/js/our.script.js"></script>
 
 
 </body>

@@ -83,7 +83,7 @@ app.use((req, res, next) => {
   //any var registred to res.locals is global and can be accessed directly bby writing its name ex: csrfToken
   res.locals.isLoggedIn = req.session.isLoggedIn;
   res.locals.csrfToken = req.csrfToken(); //we need to include it as hidden input in every post request 
-  
+
 
   //tests
   // console.log(res.locals);

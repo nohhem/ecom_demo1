@@ -20,10 +20,20 @@
         <div class="page-filter">
             <span class="text-uppercase">Show:</span>
             <!-- <form action="/page=1-limit=<%=limit%>" method="GET" > -->
-                <select class="input" id="show" onchange="myfunction() , document.location.href = '/page=1-limit=' + this.value">
-                    <option value="10" >10</option>
-                    <option value="20" >20</option>
-                    <option value="30" >30</option>
+                <select class="input" id="show" onchange=" document.location.href = '/page=1-limit=' + this.value">
+                    <% if (limit == 10){ %>
+                        <option value="10" selected >10</option>
+                        <option value="20" >20</option>
+                        <option value="30" >30</option>
+                    <% }else if (limit ==20){ %>
+                        <option value="10" >10</option>
+                        <option value="20" selected >20</option>
+                        <option value="30" >30</option>
+                    <%} else if (limit ==30) {%> 
+                        <option value="10" >10</option>
+                        <option value="20" >20</option>
+                        <option value="30"selected >30</option>
+                    <% } %>
                 </select>
                 <!-- <input type="submit" value="submit"> -->
             <!-- </form> -->

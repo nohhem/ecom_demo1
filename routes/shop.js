@@ -7,6 +7,7 @@ const shopController = require('../controllers/shop');
 const router = express.Router();
 
 router.get('/', shopController.getProducts);
+router.get('/page=:page-limit=:limit', shopController.getPagination);
 // router.get('/products', shopController.getProducts);
 //router.get('/check_out', shopController.getCheckout);
 router.get('/category/:categoryId', shopController.getProductsByCategory);

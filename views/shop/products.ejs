@@ -24,7 +24,12 @@
                 <!-- MAIN -->
                 <div id="main" class="col-md-9">
 					<!-- store top filter -->
-					<%- include('../includes/store_top_filter.ejs') %>
+                    <%- include('../includes/store_top_filter.ejs' , 
+                        {products: products, 
+                        total: total, 
+                        limit: limit,
+                        page: page,
+                        pages: pages}) %>
 					<!-- /store top filter -->
 
 					<!-- STORE -->
@@ -77,9 +82,14 @@
                         <!-- /row -->
                     </div>
                     <!-- /STORE -->
-
+        
 					<!-- store bottom filter -->
-					<%- include('../includes/store_top_filter.ejs') %>
+					<%- include('../includes/store_top_filter.ejs' , 
+                    { products: products, 
+                    total: total, 
+                    limit: limit,
+                    page: page,
+                    pages: pages}) %>
 					<!-- /store bottom filter -->
 				</div>
 

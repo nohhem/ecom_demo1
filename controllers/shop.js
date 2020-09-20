@@ -4,12 +4,12 @@ const Category = require('../models/category');
 exports.getProductsByCategory = (req, res, next) => {
   console.log('getProductsByCategory');
   const categoryId = req.params.categoryId;
-  Product.find({categoryId:categoryId})
+  Product.find({ categoryId: categoryId })
     .then(products => {
       res.render('shop/products', {
         products: products,
         pageTitle: categoryId,
-        path: '/products/'+categoryId
+        path: '/products/' + categoryId
       });
     })
 };
@@ -26,7 +26,21 @@ exports.getProducts = (req, res, next) => {
   // console.log(categorieslv2);
   //obtain categories lists lv2,lv3,lv4,
 
-  
+  //Doing pagination
+  // Product.paginate({}, {
+  //   page: 1, limit: 1, function(err, result) {
+
+  //     res.render('shop/products', {
+  //       title: 'All Products',
+  //       result: result.docs,
+  //       total: result.total,
+  //       limit: result.limit,
+  //       page: result.page,
+  //       pages: result.pages
+  //     });
+  //   }
+  // });
+
   Product.find().then(products => {
     res.render('shop/products', {
       pageTitle: 'All Products',
@@ -35,24 +49,35 @@ exports.getProducts = (req, res, next) => {
 
     });
   })
-  .catch(err => {
+    .catch(err => {
       console.log(err)
     });
-
-  // Product.findAll()
-  //   .then(products => {
-  //     res.render('shop/products', {
-  //       prods: products,
-  //       pageTitle: 'All Products',
-  //       path: '/products',
-  //       isAuthenticated: req.session.isLoggedIn
-  //     });
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  
 };
+
+exports.getPagination = (req, res, next) => {
+  let page = req.params.page || 1;
+  let r_limit = req.params.limit || 2;
+  let limit = parseInt(r_limit);
+  console.log('limit : ' , limit)
+  Product.paginate({}, { page: page, limit: limit }, function (err, result) {
+    // console.log('result.docs : ')
+    // console.log(result.docs)
+
+    // console.log('result.totalDocs : ')
+    // console.log(result.totalDocs)
+    
+    res.render('shop/products', {
+      products:result.docs,
+      // result: result.docs, 
+      total: result.totalDocs, 
+      limit: result.limit,
+      page: page,
+      pages: result.totalPages
+    }); 
+  }).catch(err => {
+    console.log(err);
+  })
+}
 
 exports.getIndex = (req, res, next) => {
 };

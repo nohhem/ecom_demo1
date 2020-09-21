@@ -3,6 +3,7 @@ const Category = require('../models/category');
 const Cart = require('../models/cart');
 const User = require('../models/user');
 const cart = require('../models/cart');
+const { get } = require('mongoose');
 
 const categoriesArr=
 ["Dress",
@@ -41,6 +42,9 @@ exports.getProducts =(req, res, next) => {
   let page = req.params.page || 1;
   let r_limit = req.params.limit || 9;
   let limit = parseInt(r_limit);
+
+  //get the cart of current user or session to send it to the template //todo
+
 
     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
       res.render('shop/products', {
@@ -138,3 +142,4 @@ exports.postCartDeleteProduct = (req, res, next) => { };
 exports.postOrder = (req, res, next) => { };
 
 exports.getOrders = (req, res, next) => { };
+

@@ -9,7 +9,7 @@ exports.testController = (req,res,next) => {
 };
 
 exports.getProductsByCategory = (req, res, next) => {
-  console.log('getProductsByCategory');
+  // console.log('getProductsByCategory');
   const categoryId = req.params.categoryId;
   Product.find({categoryId:categoryId})
     .then(products => {
@@ -23,7 +23,7 @@ exports.getProductsByCategory = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
 
-  console.log('getProducts controller')
+  // console.log('getProducts controller')
 
   /*Category.find({}).then(result => {
     req.app.locals.Category = result;
@@ -101,14 +101,13 @@ exports.addToCart = (req, res, next) => {
         //creat a cart
 
         const cart = new Cart();
-        console.log('typeof(cart)',typeof(cart));
+        
         req.session.tempCart= cart;
         
       }else{//we already have a cart in our session cast it to document
         req.session.tempCart=Cart.hydrate(req.session.tempCart);
       }
       //add product to cart
-      console.log('typeof(req.session.tempCart)',typeof(req.session.tempCart));
       console.log(req.session.tempCart);
       req.session.tempCart.addToCart(prodId);
     }

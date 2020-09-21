@@ -11,6 +11,9 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
 const Category = require('./models/category');
+//
+const swal = require('sweetalert');
+
 
 const MONGODB_URI =
   'mongodb+srv://gofast:Go123456789@cluster0.e46es.mongodb.net/db_ecom';

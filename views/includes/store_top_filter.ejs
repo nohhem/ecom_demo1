@@ -1,5 +1,4 @@
 <div class="store-filter clearfix">
-    <% let lastPagenumber %>
     <!-- Pull left fot sorting Logic products  -->
     <div class="pull-left">
         <div class="row-filter">
@@ -24,7 +23,6 @@
             <% if (total < 10) { %>
             <% } else { %>
             <span class="text-uppercase">Show:</span>
-            <!-- <form action="/page=1-limit=<%=limit%>" method="GET" > -->
             <select class="input" id="show" onchange=" document.location.href = '/page=1-limit=' + this.value">
 
                 <% if (limit == 10){ %>
@@ -43,40 +41,38 @@
                 <option>10</option>
                 <%  } %>
                 <% } %>
-
             </select>
-            <!-- <input type="submit" value="submit"> -->
-            <!-- </form> -->
         </div>
 
         <ul class="store-pages">
-
             <% if (pages > 0) { %>
             <ul>
-                <li><span class="text-uppercase">Page</span></li>
+                <li><span class="text-uppercase">Page: </span></li>
                 <% if (page == 1) { %>
-                <li class="disabled"><a>First</a></li>
+                    <li class="disabled"><a>First</a></li>
                 <% } else { %>
-                <li><a href="/page=<%=1%>-limit=<%=limit%>">First</a></li>
+                    <li><a href="/page=<%=1%>-limit=<%=limit%>">First</a></li>
                 <% } %>
                 <% var i = (Number(page) > 3 ? Number(page) - 1 : 1) %>
                 <% if (i !== 1) { %>
-                <li class="disabled"><a>...</a></li>
+                    <!-- <li><a href="#"><i class="fa fa-caret-left"></i></a></li> -->
+                    <li class="disabled"><a>...</a></li>
                 <% } %>
                 <% for (; i <= (Number(page) + 1) && i <= pages; i++) { %>
                 <% if (i == page) { %>
-                <li class="active"><a><%= i %></a></li>
+                    <li class="active"><a><%= i %></a></li>
                 <% } else { %>
-                <li><a href="/page=<%=i%>-limit=<%=limit%>"><%= i %></a></li>
+                    <li><a href="/page=<%=i%>-limit=<%=limit%>"><%= i %></a></li>
                 <% } %>
                 <% if (i == Number(page) + 1 && i < pages) { %>
-                <li class="disabled"><a>...</a></li>
+                    <!-- <li><a href="#"><i class="fa fa-caret-right"></i></a></li> -->
+                    <li class="disabled"><a>...</a></li>
                 <% } %>
                 <% } %>
                 <% if (page == pages) { %>
-                <li class="disabled"><a>Last</a></li>
+                    <li class="disabled"><a>Last</a></li>
                 <% } else { %>
-                <li><a href="/page=<%=pages%>-limit=<%=limit%>">Last</a></li>
+                    <li><a href="/page=<%=pages%>-limit=<%=limit%>">Last</a></li>
                 <% } %>
             </ul>
             <% } %>

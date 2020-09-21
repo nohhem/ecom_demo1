@@ -8,11 +8,7 @@ exports.getProductsByCategory = (req, res, next) => {
   let r_limit = req.params.limit || 2;
   let limit = parseInt(r_limit);
 
-  console.log('limit : ', limit)
-
   Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
-    console.log(result.totalDocs)
-
     res.render('shop/products', {
       products: result.docs,
       total: result.totalDocs,
@@ -29,13 +25,10 @@ exports.getPagination = (req, res, next) => {
   let page = req.params.page || 1;
   let r_limit = req.params.limit || 2;
   let limit = parseInt(r_limit);
-  console.log('limit : ', limit)
+  // console.log('limit : ', limit)
   Product.paginate({}, { page: page, limit: limit }, function (err, result) {
     // console.log('result.docs : ')
     // console.log(result.docs)
-
-    // console.log('result.totalDocs : ')
-    // console.log(result.totalDocs)
 
     res.render('shop/products', {
       products: result.docs,
@@ -50,9 +43,6 @@ exports.getPagination = (req, res, next) => {
   })
 }
 
-
-
-
 exports.getIndex = (req, res, next) => {
   res.render('shop/index', {
     products: "",
@@ -63,7 +53,6 @@ exports.getIndex = (req, res, next) => {
     pages: ""
   });
 };
-
 
 /*add post and get check out here*/
 exports.getCheckout = (req, res, next) => {

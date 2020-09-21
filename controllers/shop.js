@@ -2,18 +2,98 @@ const Product = require('../models/product');
 const Category = require('../models/category');
 
 exports.getProductsByCategory = (req, res, next) => {
-  console.log('getProductsByCategory');
+
   const categoryId = req.params.categoryId;
-  Product.find({ categoryId: categoryId })
-    .then(products => {
-      res.render('shop/products', {
-        products: products,
-        pageTitle: categoryId,
-        path: '/products/' + categoryId
-      });
-    })
+  let page = req.params.page || 1;
+  let r_limit = req.params.limit || 2;
+  let limit = parseInt(r_limit);
+
+  console.log('limit : ', limit)
+
+  Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
+    console.log(result.totalDocs)
+
+    res.render('shop/products', {
+      products: result.docs,
+      total: result.totalDocs,
+      limit: result.limit,
+      page: page,
+      pages: result.totalPages
+    });
+  }).catch(err => {
+    console.log(err);
+  })
 };
 
+exports.getPagination = (req, res, next) => {
+  let page = req.params.page || 1;
+  let r_limit = req.params.limit || 2;
+  let limit = parseInt(r_limit);
+  console.log('limit : ', limit)
+  Product.paginate({}, { page: page, limit: limit }, function (err, result) {
+    // console.log('result.docs : ')
+    // console.log(result.docs)
+
+    // console.log('result.totalDocs : ')
+    // console.log(result.totalDocs)
+
+    res.render('shop/products', {
+      products: result.docs,
+      // result: result.docs, 
+      total: result.totalDocs,
+      limit: result.limit,
+      page: page,
+      pages: result.totalPages
+    });
+  }).catch(err => {
+    console.log(err);
+  })
+}
+
+
+
+
+exports.getIndex = (req, res, next) => {
+  res.render('shop/index', {
+    products: "",
+    result: "",
+    total: "",
+    limit: "",
+    page: "",
+    pages: ""
+  });
+};
+
+
+/*add post and get check out here*/
+exports.getCheckout = (req, res, next) => {
+  res.render('shop/checkout', {
+    pageTitle: 'checkout'
+  });
+};
+/*--------------------------------------*/
+
+
+exports.getCart = (req, res, next) => { };
+
+exports.postCart = (req, res, next) => { };
+
+exports.postCartDeleteProduct = (req, res, next) => { };
+
+exports.postOrder = (req, res, next) => { };
+
+exports.getOrders = (req, res, next) => { };
+
+
+
+
+
+
+
+
+/*Refrences codes*/
+
+/*
 exports.getProducts = (req, res, next) => {
 
   console.log('getProducts controller')
@@ -41,77 +121,75 @@ exports.getProducts = (req, res, next) => {
   //   }
   // });
 
-  Product.find().then(products => {
-    res.render('shop/products', {
-      pageTitle: 'All Products',
-      path: '/products',
-      products: products
+//  Product.find().then(products => {
+//   res.render('shop/products', {
+//     pageTitle: 'All Products',
+//     path: '/products',
+//     products: products
 
-    });
-  })
-    .catch(err => {
-      console.log(err)
-    });
-};
-
-exports.getPagination = (req, res, next) => {
-  let page = req.params.page || 1;
-  let r_limit = req.params.limit || 2;
-  let limit = parseInt(r_limit);
-  console.log('limit : ' , limit)
-  Product.paginate({}, { page: page, limit: limit }, function (err, result) {
-    // console.log('result.docs : ')
-    // console.log(result.docs)
-
-    // console.log('result.totalDocs : ')
-    // console.log(result.totalDocs)
-    
-    res.render('shop/products', {
-      products:result.docs,
-      // result: result.docs, 
-      total: result.totalDocs, 
-      limit: result.limit,
-      page: page,
-      pages: result.totalPages
-    }); 
-  }).catch(err => {
-    console.log(err);
-  })
-}
-
-exports.getIndex = (req, res, next) => {
-};
-exports.getProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      res.render('shop/single_product', {
-        product: product,
-        pageTitle: product.title
-      });
-    })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
-};
-
-/*add post and get check out here*/
-exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    pageTitle: 'checkout'
-  });
-};
-/*--------------------------------------*/
+//   });
+// })
+//   .catch(err => {
+//     console.log(err)
+//   });
+// };
 
 
-exports.getCart = (req, res, next) => { };
 
-exports.postCart = (req, res, next) => { };
+// exports.getProduct = (req, res, next) => {
+//   const prodId = req.params.productId;
+//   Product.findById(prodId)
+//     .then(product => {
+//       res.render('shop/single_product', {
+//         product: product,
+//         pageTitle: product.title
+//       });
+//     })
+//     .catch(err => {
+//       const error = new Error(err);
+//       error.httpStatusCode = 500;
+//       return next(error);
+//     });
+// };
 
-exports.postCartDeleteProduct = (req, res, next) => { };
 
-exports.postOrder = (req, res, next) => { };
 
-exports.getOrders = (req, res, next) => { };
+
+
+//  Product.find({ categoryId: categoryId })
+//     .then(products => {
+//       res.render('shop/products', {
+//         products: products,
+//         pageTitle: categoryId,
+//         path: '/products/' + categoryId
+//       });
+//     })
+
+
+
+
+// exports.getPagination = (req, res, next) => {
+//   let page = req.params.page || 1;
+//   let r_limit = req.params.limit || 2;
+//   let limit = parseInt(r_limit);
+//   console.log('limit : ', limit)
+//   Product.paginate({}, { page: page, limit: limit }, function (err, result) {
+//     // console.log('result.docs : ')
+//     // console.log(result.docs)
+
+//     // console.log('result.totalDocs : ')
+//     // console.log(result.totalDocs)
+
+//     res.render('shop/products', {
+//       products: result.docs,
+//       // result: result.docs, 
+//       total: result.totalDocs,
+//       limit: result.limit,
+//       page: page,
+//       pages: result.totalPages
+//     });
+//   }).catch(err => {
+//     console.log(err);
+//   })
+// }
+

@@ -8,8 +8,12 @@
                 <!-- category level 1 -->
                 <span class="category-header">Fashion Categories <i class="fa fa-list"></i></span>
                 <!-- inlucde  category-list -->
-                <%- include('../includes/category_list.ejs') %>
-
+                <%- include('../includes/category_list.ejs'  , 
+                {products: products, 
+                total: total, 
+                limit: limit,
+                page: page,
+                pages: pages}) %>
 
             </div>
             <!-- /category nav -->

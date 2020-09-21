@@ -6,13 +6,13 @@ const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/', shopController.getProducts);
+router.get('/', shopController.getIndex);
 router.get('/page=:page-limit=:limit', shopController.getPagination);
-// router.get('/products', shopController.getProducts);
+//router.get('/products', shopController.getPagination);
 //router.get('/check_out', shopController.getCheckout);
-router.get('/category/:categoryId', shopController.getProductsByCategory);
+//router.get('/category/page=:page-limit=:limit-:categoryId', shopController.getProductsByCategory);
 // router.get('/products', shopController.getProducts);
-router.get('/products/:productId', shopController.getProduct);
+//router.get('/products/:productId', shopController.getProduct);
 
 // router.get('/cart', shopController.getCart);
 

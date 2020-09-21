@@ -8,42 +8,58 @@
         <div class="sort-filter">
             <span class="text-uppercase">Sort By:</span>
             <select class="input">
-                    <option value="0">Position</option>
-                    <option value="0">Price</option>
-                    <option value="0">Rating</option>
-                </select>
+                <option value="0">Position</option>
+                <option value="0">Price</option>
+                <option value="0">Rating</option>
+            </select>
             <a href="#" class="main-btn icon-btn"><i class="fa fa-arrow-down"></i></a>
         </div>
     </div>
     <!-- Pull Right for Pagination Logic  -->
+
     <div class="pull-right">
+
         <div class="page-filter">
+            <% if (total < 10) { %>
+            <% } else { %>
             <span class="text-uppercase">Show:</span>
             <!-- <form action="/page=1-limit=<%=limit%>" method="GET" > -->
-                <select class="input" id="show" onchange=" document.location.href = '/page=1-limit=' + this.value">
-                    <% if (limit == 10){ %>
-                        <option value="10" selected >10</option>
-                        <option value="20" >20</option>
-                        <option value="30" >30</option>
-                    <% }else if (limit ==20){ %>
-                        <option value="10" >10</option>
-                        <option value="20" selected >20</option>
-                        <option value="30" >30</option>
-                    <%} else if (limit ==30) {%> 
-                        <option value="10" >10</option>
-                        <option value="20" >20</option>
-                        <option value="30"selected >30</option>
-                    <% } %>
-                </select>
-                <!-- <input type="submit" value="submit"> -->
+            <select class="input" id="show" onchange=" document.location.href = '/page=1-limit=' + this.value">
+
+                <% if (limit == 10){ %>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <% }else if (limit ==20){ %>
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="30">30</option>
+                <%} else if (limit ==30) {%>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30" selected>30</option>
+                <% } else { %>
+                <option>10</option>
+                <%  } %>
+                <% } %>
+
+            </select>
+            <!-- <input type="submit" value="submit"> -->
             <!-- </form> -->
         </div>
 
         <ul class="store-pages">
             <li><span class="text-uppercase">Page:</span></li>
-            
+            <% if(page != 1 ) {  var a = parseInt(page) - 1%>
+            <li><a href="/page=<%=a%>-limit=<%=limit%>">preivouse</a></li>
+            <% } %>
+
             <% for (var i =1; i <= pages;  i++ ) { %>
-                <li><a href="/page=<%=i%>-limit=<%=limit%>"><%=i%></a></li>
+            <li><a href="/page=<%=i%>-limit=<%=limit%>"><%=i%></a></li>
+            <% } %>
+
+            <% if(pages != page ) {  page =  parseInt(page) + 1%>
+            <li><a href="/page=<%=page%>-limit=<%=limit%>">next</a></li>
             <% } %>
 
             <!-- <li class="active" href="/<%=page%>-1">1</li>

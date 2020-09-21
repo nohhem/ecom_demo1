@@ -7,6 +7,7 @@ const cart = require('../models/cart');
 exports.testController = (req,res,next) => {
   console.log('testController');
 };
+
 exports.getProductsByCategory = (req, res, next) => {
   console.log('getProductsByCategory');
   const categoryId = req.params.categoryId;
@@ -110,19 +111,17 @@ exports.addToCart = (req, res, next) => {
       console.log('typeof(req.session.tempCart)',typeof(req.session.tempCart));
       console.log(req.session.tempCart);
       req.session.tempCart.addToCart(prodId);
-      
     }
   
   })
   .then(() => {
-    console.log('cart created');
-
-    res.status(200).json({message:'Success!'});
+    //console.log('cart created');
+    res.status(200).json({message:'Product added succesfully!'});
     
   })
   .catch(err => {
-    console.log('error',err);
-    res.status(500).json({message:'Adding product fail'});
+    //console.log('error',err);
+    res.status(500).json({message:'Adding product failed'});
   });
 };
 

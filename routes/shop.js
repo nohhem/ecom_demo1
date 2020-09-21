@@ -6,14 +6,19 @@ const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/', shopController.getIndex);
-// router.get('/page=:page-limit=:limit', shopController.getPagination);
-//router.get('/products', shopController.getPagination);
-//router.get('/check_out', shopController.getCheckout);
-router.get('/category/page=:page-limit=:limit-:categoryId', shopController.getProductsByCategory);
-// router.get('/products', shopController.getProducts);
-//router.get('/products/:productId', shopController.getProduct);
+router.get('/', shopController.getProducts);
+router.get('/page=:page-limit=:limit', shopController.getProducts);
 
+router.get('/category/:categoryId', shopController.getProducts);
+router.get('/category/page=:page-limit=:limit-:categoryId', shopController.getProducts);
+
+
+router.get('/products/:productId', shopController.getProduct);
+
+
+//router.get('/check_out', shopController.getCheckout);
+// router.get('/products/:productId', shopController.getProduct);
+//router.get('/products', shopController.getProducts);
 // router.get('/cart', shopController.getCart);
 
 // router.post('/cart', shopController.postCart);
@@ -23,5 +28,6 @@ router.get('/category/page=:page-limit=:limit-:categoryId', shopController.getPr
 // router.post('/create-order', shopController.postOrder);
 
 // router.get('/orders', shopController.getOrders);
+
 
 module.exports = router;

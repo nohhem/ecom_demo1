@@ -46,7 +46,6 @@ exports.getProducts =(req, res, next) => {
   //get the cart of current user or session to send it to the template //todo
 
 
-
     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
       res.render('shop/products', {
         products: result.docs,
@@ -58,6 +57,7 @@ exports.getProducts =(req, res, next) => {
     }).catch(err => {
       console.log(err);
     })
+
 };
 
 exports.getProduct = (req, res, next) => {

@@ -8,6 +8,7 @@
 
     <!-- NAVIGATION -->
     <%- include('../includes/nav.ejs') %>
+
     <!-- NAVIGATION -->
 
     <!-- BREADCRUMB -->
@@ -19,79 +20,61 @@
         <div class="container">
             <!-- row -->
             <div class="row">
-                <!-- ASIDE -->
-                
-                <!-- /ASIDE -->
-                <!-- MAIN -->
-                <div id="main" class="col-md-9">
-					<!-- store top filter -->
-					<%- include('../includes/store_top_filter.ejs') %>
-					<!-- /store top filter -->
+                <!-- STORE -->
+                <div id="store">
+                    <!-- row -->
+                    <div class="row">
 
-					<!-- STORE -->
-                    <div id="store">
-                        <!-- row -->
-                        <div class="row">
-    
-                            <!-- Product Single -->
-                            <% if (products.length > 0) { %>
-                                <% for (let product of products) { %>
-                            <div class="col-md-4 col-sm-6 col-xs-6">
-                                <div class="product product-single">
-                                    <div class="product-thumb">
-                                        <!-- Later will add them New and stock , discount -->
-                                        <!-- <div class="product-label">
-                                            <span>New</span>
-                                            <span class="sale">-20%</span>
-                                        </div> -->
-                                        <a href="/products/<%= product._id %>" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view </a>
-                                        <img src="<%= product.imageUrl %>" alt="">
+                        <!-- Product Single -->
+                        <% if (products.length > 0) { %>
+                            <% for (let product of products) { %>
+                        <div class="col-md-4 col-sm-6 col-xs-6">
+                            <div class="product product-single">
+                                <div class="product-thumb">
+                                    <!-- Later will add them New and stock , discount -->
+                                    <!-- <div class="product-label">
+                                        <span>New</span>
+                                        <span class="sale">-20%</span>
+                                    </div> -->
+                                    <a href="/products/<%= product._id %>" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view </a>
+                                    <img src="<%= product.imageUrl %>" alt="">
+                                </div>
+                                <div class="product-body">
+                                    <h3 class="product-price">$<%= product.price %> <del class="product-old-price">$<%= product.price%></del></h3>
+                                    <div class="product-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-o empty"></i>
                                     </div>
-                                    
+                                    <h2 class="product-name"><a href="#"><%= product.title %>  </a></h2>
+                                    <div class="product-btns">
+                                        <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+                                        <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 
-                                    <div class="product-body">
-                                        <h3 class="product-price">$<%= product.price %> <del class="product-old-price">$<%= product.price%></del></h3>
-                                        <div class="product-rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-o empty"></i>
-                                        </div>
-                                        <h2 class="product-name"><a href="#"><%= product.title %></a></h2>
-                                        <div class="product-btns">
-                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <input type="hidden" value="<%= product._id %>" name="productId">
-                                         
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" value="<%= product._id %>" name="productId">
+                                        <!-- document.getElementById('id01').style.display='block' -->
 
-                                            <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
-                                              <i class="fa fa-shopping-cart"></i> Add to Cart
+                                        <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
+                                            <i class="fa fa-shopping-cart"></i> Add to Cart
                                         </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                                 <% } %>
-                            <!-- /Product Single -->
-                            <% } else { %>
-                                <h1>No Products Found!</h1>
-                                <% } %>
-    
-                            <div class="clearfix visible-sm visible-xs"></div>
                         </div>
-                        <!-- /row -->
+                             <% } %>
+                        <!-- /Product Single -->
+                        <% } else { %>
+                            <h1>No Products Found!</h1>
+                            <% } %>
+
+                        <div class="clearfix visible-sm visible-xs"></div>
                     </div>
-                    <!-- /STORE -->
-
-					<!-- store bottom filter -->
-					<%- include('../includes/store_top_filter.ejs') %>
-					<!-- /store bottom filter -->
-				</div>
-
-                
+                    <!-- /row -->
+                </div>
+                <!-- /STORE -->
             </div>
             <!-- /row -->
         </div>

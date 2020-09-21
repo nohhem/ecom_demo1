@@ -11,14 +11,14 @@ const addToCart = (btn) => {
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {
-        //console.log(result.json());
+        // console.log(result.json());
         return result.json();
     })
     .then(data => {
         console.log('entered ourscript then');
         console.log(data);
         //addition succseful  // put notification code here 
-        swal("The Product is Added Succesfully !");
+        swal("My Cart","The Product is Added Succesfully !" , "success");
         //wow_default_alert();
 
     //     console.log('body', document.body);

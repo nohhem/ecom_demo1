@@ -12,7 +12,7 @@ const flash = require('connect-flash');
 const multer = require('multer');
 const Category = require('./models/category');
 //
-const swal = require('sweetalert');
+
 
 
 const MONGODB_URI =

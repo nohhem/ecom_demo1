@@ -1,4 +1,5 @@
 <div class="store-filter clearfix">
+    <% let lastPagenumber %>
     <!-- Pull left fot sorting Logic products  -->
     <div class="pull-left">
         <div class="row-filter">
@@ -49,26 +50,38 @@
         </div>
 
         <ul class="store-pages">
-            <li><span class="text-uppercase">Page:</span></li>
-            <% if(page != 1 ) {  var a = parseInt(page) - 1%>
-            <li><a href="/page=<%=a%>-limit=<%=limit%>">preivouse</a></li>
+
+            <% if (pages > 0) { %>
+            <ul>
+                <li><span class="text-uppercase">Page</span></li>
+                <% if (page == 1) { %>
+                <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                <li><a href="/page=<%=1%>-limit=<%=limit%>">First</a></li>
+                <% } %>
+                <% var i = (Number(page) > 3 ? Number(page) - 1 : 1) %>
+                <% if (i !== 1) { %>
+                <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(page) + 1) && i <= pages; i++) { %>
+                <% if (i == page) { %>
+                <li class="active"><a><%= i %></a></li>
+                <% } else { %>
+                <li><a href="/page=<%=i%>-limit=<%=limit%>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(page) + 1 && i < pages) { %>
+                <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% } %>
+                <% if (page == pages) { %>
+                <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                <li><a href="/page=<%=pages%>-limit=<%=limit%>">Last</a></li>
+                <% } %>
+            </ul>
             <% } %>
-
-            <% for (var i =1; i <= pages;  i++ ) { %>
-            <li><a href="/page=<%=i%>-limit=<%=limit%>"><%=i%></a></li>
-            <% } %>
-
-            <% if(pages != page ) {  page =  parseInt(page) + 1%>
-            <li><a href="/page=<%=page%>-limit=<%=limit%>">next</a></li>
-            <% } %>
-
-            <!-- <li class="active" href="/<%=page%>-1">1</li>
-            <li><a href="/<%=page%>-2">2</a></li>
-            <li><a href="/<%=page%>-3">3</a></li>
-            <li><a href="/<%=page%>-4">4</a></li> -->
-
             <!-- small arrrow -->
-            <li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+            <!--<li><a href="#"><i class="fa fa-caret-right"></i></a></li>-->
         </ul>
     </div>
 </div>

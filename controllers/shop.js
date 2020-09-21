@@ -4,58 +4,63 @@ const Cart = require('../models/cart');
 const User = require('../models/user');
 const cart = require('../models/cart');
 
-const categoriesArr=
-["Dress",
-"Woman T-shirts",
-"Woman Trousers",
-"Blouse",
-"Woman Shorts",
-"Tights",
-"Skirt",
-"Woman Sweatshirt",
-"Overalls",
-"Woman Slipper",
-"Sandals",
-"Heeled shoes",
-"Women Sneakers",
-"Flat shoes",
-"Men T-shirts",
-"Men Shirt",
-"Men Trousers",
-"Shorts",
-"Men Sweatshirt",
-"Swim Shorts",
-"Sports Shoes & Sneakers",
-"Men Slipper",
-"Classic Shoes",
-"Casual Shoes",
-"Girl Child",
-"Boy",
-"Baby Girl",
-"Baby boy"];
-
-exports.getProducts =(req, res, next) => {
-  //genreal funtion to return products with or without params: limit,page,category
-  const categoryId = req.params.categoryId ||categoriesArr;
-  console.log('categoryId,',categoryId,typeof(categoryId));
-  let page = req.params.page || 1;
-  let r_limit = req.params.limit || 9;
-  let limit = parseInt(r_limit);
-
-    Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
-      res.render('shop/products', {
-        products: result.docs,
-        total: result.totalDocs,
-        limit: result.limit,
-        page: page,
-        pages: result.totalPages
-      });
-    }).catch(err => {
-      console.log(err);
-    })
-
+exports.testController = (req,res,next) => {
+  console.log('testController');
 };
 
+exports.getProductsByCategory = (req, res, next) => {
+  // console.log('getProductsByCategory');
+  const categoryId = req.params.categoryId;
+  Product.find({categoryId:categoryId})
+    .then(products => {
+      res.render('shop/products', {
+        products: products,
+        pageTitle: categoryId,
+        path: '/products/'+categoryId
+      });
+    })
+};
+
+exports.getProducts = (req, res, next) => {
+
+  // console.log('getProducts controller')
+
+  /*Category.find({}).then(result => {
+    req.app.locals.Category = result;
+  });*/
+
+  // console.log('categorieslv2');
+  // console.log(categorieslv2);
+  //obtain categories lists lv2,lv3,lv4,
+  Product.find().then(products => {
+    res.render('shop/products', {
+      pageTitle: 'All Products',
+      path: '/products',
+      products: products
+
+    });
+  })
+  .catch(err => {
+      console.log(err)
+    });
+
+  // Product.findAll()
+  //   .then(products => {
+  //     res.render('shop/products', {
+  //       prods: products,
+  //       pageTitle: 'All Products',
+  //       path: '/products',
+  //       isAuthenticated: req.session.isLoggedIn
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  
+};
+
+exports.getIndex = (req, res, next) => {
+};
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
   Product.findById(prodId)
@@ -72,19 +77,6 @@ exports.getProduct = (req, res, next) => {
     });
 };
 
-
-
-exports.getIndex = (req, res, next) => {
-  res.render('shop/index', {
-    products: "",
-    result: "",
-    total: "",
-    limit: "",
-    page: "",
-    pages: ""
-  });
-};
-
 /*add post and get check out here*/
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
@@ -93,6 +85,7 @@ exports.getCheckout = (req, res, next) => {
 };
 /*--------------------------------------*/
 
+exports.postCart = (req, res, next) => { };
 
 
 exports.addToCart = (req, res, next) => {

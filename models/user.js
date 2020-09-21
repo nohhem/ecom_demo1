@@ -1,6 +1,28 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
+
+
+// const Cart = require('./cart');
+// var cartSchema= new Cart();
+
+// console.log(Cart);
+// console.log('Cart is ',Cart);
+// console.log('cartSchema is ',cartSchema);
+// console.log('test ');
+
+const cartSchema = new Schema({
+  items: [
+      {
+        productId: {
+          type: Schema.Types.ObjectId,
+          ref: 'Product',
+          required: true
+        },
+        qty: { type: Number, required: true }
+      }
+    ]
+
+},{ _id : false });
 
 const userSchema = new Schema({
   fullname: {
@@ -17,19 +39,11 @@ const userSchema = new Schema({
   },
   resetToken: String,
   resetTokenExpiration: Date,
-  cart: {
-    items: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true
-        },
-        qty: { type: Number, required: true }
-      }
-    ]
-  }
-});
+  cart: cartSchema
+},{ _id : false });
+
+// console.log('userschema is ',typeof(userSchema));
+// console.log('userschema is ',userSchema);
 
 // userSchema.methods.addToCart = function(product) {
 //   const cartProductIndex = this.cart.items.findIndex(cp => {

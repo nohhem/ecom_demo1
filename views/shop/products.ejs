@@ -1,4 +1,5 @@
 <%- include('../includes/head.ejs') %>
+<!-- temproray style -->
 
 <body>
     <!-- HEADER -->
@@ -46,6 +47,8 @@
                                         <a href="/products/<%= product._id %>" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view </a>
                                         <img src="<%= product.imageUrl %>" alt="">
                                     </div>
+                                    
+
                                     <div class="product-body">
                                         <h3 class="product-price">$<%= product.price %> <del class="product-old-price">$<%= product.price%></del></h3>
                                         <div class="product-rating">
@@ -59,9 +62,14 @@
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add
-                                                to
-                                                Cart</button>
+                                            
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <input type="hidden" value="<%= product._id %>" name="productId">
+                                         
+
+                                            <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
+                                              <i class="fa fa-shopping-cart"></i> Add to Cart
+                                        </button>
                                         </div>
                                     </div>
                                 </div>
@@ -91,14 +99,16 @@
     </div>
     <!-- /section -->
 
+
+
     <!-- FOOTER -->
     <%- include('../includes/footer.ejs') %>
     <!-- FOOTER -->
 
     <!-- jQuery Plugins -->
     <%- include('../includes/end.ejs') %>
-
-
+    <!-- our custom -->
+    <script src="/js/our.script.js"></script>
 </body>
 
 </html>

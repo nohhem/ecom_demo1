@@ -3,64 +3,58 @@ const Category = require('../models/category');
 const Cart = require('../models/cart');
 const User = require('../models/user');
 const cart = require('../models/cart');
-const { get } = require('mongoose');
 
-const categoriesArr=
-["Dress",
-"Woman T-shirts",
-"Woman Trousers",
-"Blouse",
-"Woman Shorts",
-"Tights",
-"Skirt",
-"Woman Sweatshirt",
-"Overalls",
-"Woman Slipper",
-"Sandals",
-"Heeled shoes",
-"Women Sneakers",
-"Flat shoes",
-"Men T-shirts",
-"Men Shirt",
-"Men Trousers",
-"Shorts",
-"Men Sweatshirt",
-"Swim Shorts",
-"Sports Shoes & Sneakers",
-"Men Slipper",
-"Classic Shoes",
-"Casual Shoes",
-"Girl Child",
-"Boy",
-"Baby Girl",
-"Baby boy"];
+exports.testController = (req,res,next) => {
+  console.log('testController');
+};
 
-exports.getProducts =(req, res, next) => {
-  //genreal funtion to return products with or without params: limit,page,category
-  const categoryId = req.params.categoryId ||categoriesArr;
-  console.log('categoryId,',categoryId,typeof(categoryId));
-  let page = req.params.page || 1;
-  let r_limit = req.params.limit || 9;
-  let limit = parseInt(r_limit);
-
-  //get the cart of current user or session to send it to the template //todo
-
-
-
-    Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
+exports.getProductsByCategory = (req, res, next) => {
+  // console.log('getProductsByCategory');
+  const categoryId = req.params.categoryId;
+  Product.find({categoryId:categoryId})
+    .then(products => {
       res.render('shop/products', {
-        products: result.docs,
-        total: result.totalDocs,
-        limit: result.limit,
-        page: page,
-        pages: result.totalPages
+        products: products,
+        pageTitle: categoryId,
+        path: '/products/'+categoryId
       });
-    }).catch(err => {
-      console.log(err);
     })
 };
 
+exports.getProducts = (req, res, next) => {
+  // console.log('getProducts controller')
+  // console.log(getCartProducts(req));
+
+  let cart =Cart.hydrate(req.session.tempCart);
+  let catItems ;
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    catItems= pcart.items;
+  })
+  .then(()=>{
+    return Product.find().limit(20);
+  })
+  .then(products => {
+    res.render('shop/products', {
+      pageTitle: 'All Products',
+      path: '/products',
+      products: products,
+      cartProducts:catItems
+    });
+  })
+  .catch(err => {
+      console.log(err)
+    });
+  
+};
+
+exports.getIndex = (req, res, next) => {
+};
 exports.getProduct = (req, res, next) => {
+
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
@@ -76,19 +70,6 @@ exports.getProduct = (req, res, next) => {
     });
 };
 
-
-
-exports.getIndex = (req, res, next) => {
-  res.render('shop/index', {
-    products: "",
-    result: "",
-    total: "",
-    limit: "",
-    page: "",
-    pages: ""
-  });
-};
-
 /*add post and get check out here*/
 exports.getCheckout = (req, res, next) => {
   res.render('shop/checkout', {
@@ -97,6 +78,25 @@ exports.getCheckout = (req, res, next) => {
 };
 /*--------------------------------------*/
 
+exports.getCart = (req, res, next) => {
+  let cart =Cart.hydrate(req.session.tempCart);
+  let catItems ;
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    catItems= pcart.items;
+  }).then(()=>{
+    res.render('shop/viewCart', {
+      pageTitle: 'Cart',
+      cartProducts:catItems
+    });
+  })
+  
+};
+
+exports.postCart = (req, res, next) => { };
 
 
 exports.addToCart = (req, res, next) => {
@@ -107,20 +107,20 @@ exports.addToCart = (req, res, next) => {
     if(!req.session.user){
       //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
       if(!req.session.tempCart){
-        // create a comment
-        //post.comments.push({ title: 'My comment' });
-        //creat a cart
-
+        //no Cart
+        //create a cart
+        //console.log('no Cart,create a new one')
         const cart = new Cart();
-        
         req.session.tempCart= cart;
-        
+        //console.log(req.session.tempCart,req.session.tempCart.items.length);
+
       }else{//we already have a cart in our session cast it to document
         req.session.tempCart=Cart.hydrate(req.session.tempCart);
       }
       //add product to cart
-      console.log(req.session.tempCart);
+      
       req.session.tempCart.addToCart(prodId);
+      console.log(req.session.tempCart);
     }
   
   })
@@ -143,3 +143,18 @@ exports.postOrder = (req, res, next) => { };
 
 exports.getOrders = (req, res, next) => { };
 
+function getCartProducts (req) {
+  //obtain the cart either from user or tempcart
+  //parse the cart to Mongoose object
+  //let cart =req.session.tempCart
+  let cart =Cart.hydrate(req.session.tempCart);
+  //get products of cart items
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    return pcart.items;
+  });
+
+};

@@ -7,22 +7,21 @@ const shopController = require('../controllers/shop');
 const router = express.Router();
 
 router.get('/', shopController.getProducts);
-// router.get('/products', shopController.getProducts);
-//router.get('/check_out', shopController.getCheckout);
-router.get('/category/:categoryId', shopController.getProducts);
-// router.get('/products', shopController.getProducts);
+router.get('/products/:productId', shopController.getProduct);
+router.get('/category/:categoryId', shopController.getProductsByCategory);
 router.get('/products/:productId', shopController.getProduct);
 
-// router.get('/cart', shopController.getCart);
-
-// router.post('/cart', shopController.postCart);
+router.get('/viewCart', shopController.getCart);
 
 router.post('/add-to-cart/:productId', shopController.addToCart);
 
+// router.get('/products', shopController.getProducts);
+// router.get('/products', shopController.getProducts);
+// router.get('/cart', shopController.getCart);
+// router.post('/cart', shopController.postCart);
 //router.post('/add-to-cart/:productId', shopController.addToCart());
 
 // router.post('/cart-delete-item', shopController.postCartDeleteProduct);
-
 
 
 // router.post('/create-order', shopController.postOrder);

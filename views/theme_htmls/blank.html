@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -676,3 +678,16 @@
 </body>
 
 </html>
+ <li><span class="text-uppercase">Page:</span></li>
+            <% if(page != 1 ) {  //var a = parseInt(page) - 1%>
+            <li><a href="/page=<%=page%>-limit=<%=limit%>">preivouse</a></li>
+            <% } %>
+
+            <% for (var i = 1 ; i <= 4 ;  i++ ) { lastPagenumber =  parseInt(page) + i %>
+            <% let PageNumber = parseInt(page)  + i %>
+            <li><a href="/page=<%=PageNumber%>-limit=<%=limit%>"><%= PageNumber%></a></li>
+            <% } %>
+
+            <% if(pages != page ) {  page =  parseInt(page) + 1%>
+            <li><a href="/page=<%=lastPagenumber + 1 %>-limit=<%=limit%>">next</a></li>
+            <% } %>

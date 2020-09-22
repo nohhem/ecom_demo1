@@ -1,8 +1,9 @@
 <%- include('../includes/head.ejs') %>
+<!-- temproray style -->
 
 <body>
     <!-- HEADER -->
-    <%- include('../includes/header.ejs') %>
+    <%- include('../includes/header.ejs',cartProducts) %>
     <!-- /HEADER -->
 
     <!-- NAVIGATION -->
@@ -65,8 +66,14 @@
                                         <div class="product-btns">
                                             <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
                                             <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-                                            <button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i>
+
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <input type="hidden" value="<%= product._id %>" name="productId">
+
+                                            <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
+                                                <i class="fa fa-shopping-cart"></i>
                                                 Add to Cart</button>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -92,8 +99,6 @@
                     pages: pages}) %>
                     <!-- /store bottom filter -->
                 </div>
-
-
             </div>
             <!-- /row -->
         </div>
@@ -101,14 +106,16 @@
     </div>
     <!-- /section -->
 
+
+
     <!-- FOOTER -->
     <%- include('../includes/footer.ejs') %>
     <!-- FOOTER -->
 
     <!-- jQuery Plugins -->
     <%- include('../includes/end.ejs') %>
-
-
+    <!-- our custom -->
+    <script src="/js/our.script.js"></script>
 </body>
 
 </html>

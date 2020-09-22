@@ -101,11 +101,12 @@
 									<% for (let item of cartProducts) { %>
 									<div class="product product-widget">
 										<div class="product-thumb">
-									
+
 											<img src="<%= item.productId.imageUrl %>" alt="">
 										</div>
 										<div class="product-body">
-											<h3 class="product-price"><%= item.productId.price %><span class="qty">x <%= item.qty %></span></h3>
+											<h3 class="product-price"><%= item.productId.price %><span class="qty">x
+													<%= item.qty %></span></h3>
 											<h2 class="product-name"><a href="#"><%= item.productId.title %></a></h2>
 										</div>
 										<button class="cancel-btn"><i class="fa fa-trash"></i></button>
@@ -114,7 +115,7 @@
 									<!--  -->
 								</div>
 								<div class="shopping-cart-btns">
-									<button class="main-btn">View Cart</button>
+									<a href="/viewCart" class="main-btn">View Cart</a>
 									<a href="/check_out" class="primary-btn">Checkout <i
 											class="fa fa-arrow-circle-right"></i></a>
 								</div>

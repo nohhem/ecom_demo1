@@ -24,30 +24,45 @@ exports.getProductsByCategory = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   // console.log('getProducts controller')
   // console.log(getCartProducts(req));
-
-  let cart =Cart.hydrate(req.session.tempCart);
-  let catItems ;
-  cart
-  .populate('items.productId')
-  .execPopulate()
-  .then(pcart => {
-    //console.log('getCartProducts ,cart',pcart.items);
-    catItems= pcart.items;
-  })
-  .then(()=>{
-    return Product.find().limit(20);
-  })
-  .then(products => {
-    res.render('shop/products', {
-      pageTitle: 'All Products',
-      path: '/products',
-      products: products,
-      cartProducts:catItems
-    });
-  })
-  .catch(err => {
+  
+  if(req.session.tempCart){
+    let cart =Cart.hydrate(req.session.tempCart);
+    let cartItems ;
+    cart
+    .populate('items.productId')
+    .execPopulate()
+    .then(pcart => {
+      //console.log('getCartProducts ,cart',pcart.items);
+      cartItems= pcart.items;
+    })
+    .then(()=>{
+      return Product.find().limit(20);
+    }).then(products => {
+      res.render('shop/products', {
+        pageTitle: 'All Products',
+        path: '/products',
+        products: products,
+        cartProducts:cartItems
+      });
+    }).catch(err => {
       console.log(err)
     });
+    
+  }else{
+    Product.find().limit(20)
+    .then(products => {
+      res.render('shop/products', {
+        pageTitle: 'All Products',
+        path: '/products',
+        products: products,
+        cartProducts:[]
+      });
+    })
+    .catch(err => {
+        console.log(err)
+      });
+  }
+
   
 };
 

@@ -22,46 +22,39 @@ exports.getProductsByCategory = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-
   // console.log('getProducts controller')
+  // console.log(getCartProducts(req));
 
-  /*Category.find({}).then(result => {
-    req.app.locals.Category = result;
-  });*/
-
-  // console.log('categorieslv2');
-  // console.log(categorieslv2);
-  //obtain categories lists lv2,lv3,lv4,
-  Product.find().then(products => {
+  let cart =Cart.hydrate(req.session.tempCart);
+  let catItems ;
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    catItems= pcart.items;
+  })
+  .then(()=>{
+    return Product.find().limit(20);
+  })
+  .then(products => {
     res.render('shop/products', {
       pageTitle: 'All Products',
       path: '/products',
-      products: products
-
+      products: products,
+      cartProducts:catItems
     });
   })
   .catch(err => {
       console.log(err)
     });
-
-  // Product.findAll()
-  //   .then(products => {
-  //     res.render('shop/products', {
-  //       prods: products,
-  //       pageTitle: 'All Products',
-  //       path: '/products',
-  //       isAuthenticated: req.session.isLoggedIn
-  //     });
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
   
 };
 
 exports.getIndex = (req, res, next) => {
 };
 exports.getProduct = (req, res, next) => {
+
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then(product => {
@@ -85,6 +78,24 @@ exports.getCheckout = (req, res, next) => {
 };
 /*--------------------------------------*/
 
+exports.getCart = (req, res, next) => {
+  let cart =Cart.hydrate(req.session.tempCart);
+  let catItems ;
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    catItems= pcart.items;
+  }).then(()=>{
+    res.render('shop/viewCart', {
+      pageTitle: 'Cart',
+      cartProducts:catItems
+    });
+  })
+  
+};
+
 exports.postCart = (req, res, next) => { };
 
 
@@ -96,20 +107,20 @@ exports.addToCart = (req, res, next) => {
     if(!req.session.user){
       //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
       if(!req.session.tempCart){
-        // create a comment
-        //post.comments.push({ title: 'My comment' });
-        //creat a cart
-
+        //no Cart
+        //create a cart
+        //console.log('no Cart,create a new one')
         const cart = new Cart();
-        
         req.session.tempCart= cart;
-        
+        //console.log(req.session.tempCart,req.session.tempCart.items.length);
+
       }else{//we already have a cart in our session cast it to document
         req.session.tempCart=Cart.hydrate(req.session.tempCart);
       }
       //add product to cart
-      console.log(req.session.tempCart);
+      
       req.session.tempCart.addToCart(prodId);
+      console.log(req.session.tempCart);
     }
   
   })
@@ -131,3 +142,19 @@ exports.postCartDeleteProduct = (req, res, next) => { };
 exports.postOrder = (req, res, next) => { };
 
 exports.getOrders = (req, res, next) => { };
+
+function getCartProducts (req) {
+  //obtain the cart either from user or tempcart
+  //parse the cart to Mongoose object
+  //let cart =req.session.tempCart
+  let cart =Cart.hydrate(req.session.tempCart);
+  //get products of cart items
+  cart
+  .populate('items.productId')
+  .execPopulate()
+  .then(pcart => {
+    //console.log('getCartProducts ,cart',pcart.items);
+    return pcart.items;
+  });
+
+};

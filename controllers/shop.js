@@ -31,13 +31,13 @@ const categoriesArr=
 "Baby boy"];
 
 exports.getProducts =(req, res, next) => {
-  //genreal funtion to return products with or without params: limit,page,category
-  const categoryId = req.params.categoryId ||categoriesArr;
-  console.log('categoryId,',categoryId,typeof(categoryId));
+  //General funtion to return products with or without params: limit,page,category
+  const categoryId = req.params.categoryId || categoriesArr;
+  // console.log('categoryId,',categoryId,typeof(categoryId));
   let page = req.params.page || 1;
-  let r_limit = req.params.limit || 9;
-  let limit = parseInt(r_limit);
-
+  // let r_limit = req.params.limit || 9;
+  // let limit = parseInt(r_limit);
+  let limit = 12;
     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
       res.render('shop/products', {
         products: result.docs,

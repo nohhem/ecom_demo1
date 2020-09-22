@@ -7,11 +7,10 @@ const shopController = require('../controllers/shop');
 const router = express.Router();
 
 router.get('/', shopController.getProducts);
-router.get('/page=:page-limit=:limit', shopController.getProducts);
+router.get('/page=:page', shopController.getProducts);
 
+router.get('/category/page=:page-:categoryId', shopController.getProducts);
 router.get('/category/:categoryId', shopController.getProducts);
-router.get('/category/page=:page-limit=:limit-:categoryId', shopController.getProducts);
-
 
 router.get('/products/:productId', shopController.getProduct);
 

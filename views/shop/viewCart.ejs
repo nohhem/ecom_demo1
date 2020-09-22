@@ -35,7 +35,7 @@
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
-								<h3 class="title">Order Review</h3>
+								<h3 class="title">My Cart</h3>
 							</div>
 							<table class="shopping-cart-table table">
 								<thead>
@@ -49,8 +49,10 @@
 									</tr>
 								</thead>
 								<tbody>
+                                    <!-- dynamic items -->
+                                    <% for (let item of cartProducts) { %>
 									<tr>
-										<td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
+										<td class="thumb"><img src="<%= item.productId.imageUrl %>" alt=""></td>
 										<td class="details">
 											<a href="#">Product Name Goes Here</a>
 											<ul>
@@ -58,39 +60,14 @@
 												<li><span>Color: Camelot</span></li>
 											</ul>
 										</td>
-										<td class="price text-center"><strong>$32.50</strong><br><del class="font-weak"><small>$40.00</small></del></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
+										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
+                                        <td class="qty text-center"><input class="input" type="number" value="<%= item.qty %>"></td>
+                                        <% let  total = (item.productId.price * item.qty).toFixed(2) %>
+										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
 										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-									</tr>
-									<tr>
-										<td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
-										<td class="details">
-											<a href="#">Product Name Goes Here</a>
-											<ul>
-												<li><span>Size: XL</span></li>
-												<li><span>Color: Camelot</span></li>
-											</ul>
-										</td>
-										<td class="price text-center"><strong>$32.50</strong></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-									</tr>
-									<tr>
-										<td class="thumb"><img src="./img/thumb-product01.jpg" alt=""></td>
-										<td class="details">
-											<a href="#">Product Name Goes Here</a>
-											<ul>
-												<li><span>Size: XL</span></li>
-												<li><span>Color: Camelot</span></li>
-											</ul>
-										</td>
-										<td class="price text-center"><strong>$32.50</strong></td>
-										<td class="qty text-center"><input class="input" type="number" value="1"></td>
-										<td class="total text-center"><strong class="primary-color">$32.50</strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-									</tr>
+                                    </tr>
+                                    <% } %>
+                                    <!--  -->
 								</tbody>
 								<tfoot>
 									<tr>

@@ -18,11 +18,15 @@
     <!-- Pull Right for Pagination Logic  -->
 
     <div class="pull-right">
-        <!-- <div class="page-filter">
+        <div class="page-filter">
             <span class="text-uppercase">Show:</span>
-            <select class="input" id="show" 
-                    onchange=" document.location.href = '/page=1' " >
-                <% if (limit == 10){ %>
+            <!-- onchange=" document.location.href='/page=1' "  -->
+            <select class="input" id="show" onchange="myfunction()"  >
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+
+                <!-- <% if (limit == 10){ %>
                 <option value="10" selected>10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -34,9 +38,10 @@
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30" selected>30</option>
-                <% } %>
+                <% } %> -->
+                
             </select>
-        </div> -->
+        </div>
 
         <ul class="store-pages">
             <% if (pages > 0) { %>

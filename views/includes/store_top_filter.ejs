@@ -17,61 +17,7 @@
     </div>
     <!-- Pull Right for Pagination Logic  -->
 
-    <div class="pull-right">
-        <!-- <div class="page-filter">
-            <span class="text-uppercase">Show:</span>
-            <select class="input" id="show" 
-                    onchange=" document.location.href = '/page=1' " >
-                <% if (limit == 10){ %>
-                <option value="10" selected>10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <% }else if (limit ==20){ %>
-                <option value="10">10</option>
-                <option value="20" selected>20</option>
-                <option value="30">30</option>
-                <%} else if (limit ==30) {%>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30" selected>30</option>
-                <% } %>
-            </select>
-        </div> -->
-
-        <ul class="store-pages">
-            <% if (pages > 0) { %>
-            <ul>
-                <li><span class="text-uppercase">Page: </span></li>
-                <% if (page == 1) { %>
-                    <li class="disabled"><a>First</a></li>
-                <% } else { %>
-                    <li><a href="/page=<%=1%>">First</a></li>
-                <% } %>
-                <% var i = (Number(page) > 3 ? Number(page) - 1 : 1) %>
-                <% if (i !== 1) { %>
-                    <!-- <li><a href="#"><i class="fa fa-caret-left"></i></a></li> -->
-                    <li class="disabled"><a>...</a></li>
-                <% } %>
-                <% for (; i <= (Number(page) + 1) && i <= pages; i++) { %>
-                <% if (i == page) { %>
-                    <li class="active"><a><%= i %></a></li>
-                <% } else { %>
-                    <li><a href="/page=<%=i%>"><%= i %></a></li>
-                <% } %>
-                <% if (i == Number(page) + 1 && i < pages) { %>
-                    <!-- <li><a href="#"><i class="fa fa-caret-right"></i></a></li> -->
-                    <li class="disabled"><a>...</a></li>
-                <% } %>
-                <% } %>
-                <% if (page == pages) { %>
-                    <li class="disabled"><a>Last</a></li>
-                <% } else { %>
-                    <li><a href="/page=<%=pages%>">Last</a></li>
-                <% } %>
-            </ul>
-            <% } %>
-            <!-- small arrrow -->
-            <!--<li><a href="#"><i class="fa fa-caret-right"></i></a></li>-->
-        </ul>
+    <div class="pull-right" id="app">
+        <%- include('../components/pagination.vue') %>
     </div>
 </div>

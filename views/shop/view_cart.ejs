@@ -9,6 +9,9 @@
     <%- include('../includes/nav.ejs') %>
     <!-- NAVIGATION -->
 
+	<!-- Declearing Ejs Variables >>>>> -->
+	<% let total= 0  %>
+	<% let subTotal = 0  %>
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
@@ -28,15 +31,13 @@
 			<!-- row -->
 			<div class="row">
 				<form id="checkout-form" class="clearfix">
-					
-
-					
 
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
 								<h3 class="title">My Cart</h3>
 							</div>
+							
 							<table class="shopping-cart-table table">
 								<thead>
 									<tr>
@@ -50,7 +51,7 @@
 								</thead>
 								<tbody>
 									<!--  -->
-									<% let subTotal=0;%>
+									
 									<!-- dynamic items -->
                                     <% for (let item of cartProducts) { %>
 									<tr>
@@ -64,8 +65,8 @@
 										</td>
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
                                         <td class="qty text-center"><input class="input" type="number" value="<%= item.qty %>"></td>
-										<% let  total = (item.productId.price * item.qty).toFixed(2) %>
-										<% subTotal = %>
+										<% total = (item.productId.price * item.qty) %>
+										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
 										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
                                     </tr>
@@ -76,7 +77,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">$<%= subTotal %></th>
+										<th colspan="2" class="sub-total">$ <%= parseFloat(subTotal).toFixed(2) %></th>
 									</tr>
 									<tr>
 										<th class="empty" colspan="3"></th>
@@ -86,7 +87,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>TOTAL</th>
-										<th colspan="2" class="total">$<%= subTotal %></th>
+										<th colspan="2" class="total">$ <%= parseFloat(subTotal).toFixed(2) %></th>
 									</tr>
 								</tfoot>
 							</table>

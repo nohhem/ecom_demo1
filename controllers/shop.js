@@ -96,7 +96,7 @@ exports.getProducts = (req, res, next) => {
         limit: result.limit,
         page: page,
         pages: result.totalPages,
-        cartProducts:cartItems
+        cartProducts:[]
       });
     }).catch(err => {
       console.log(err);

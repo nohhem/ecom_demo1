@@ -1,70 +1,65 @@
 <%- include('../includes/head.ejs') %>
 
 <body>
-    <!-- HEADER -->
-    <%- include('../includes/header.ejs',cartProducts) %>
-    <!-- /HEADER -->
+	<!-- HEADER -->
+	<%- include('../includes/header.ejs',cartProducts) %>
+	<!-- /HEADER -->
 
-    <!-- NAVIGATION -->
-    <%- include('../includes/nav.ejs') %>
-    <!-- NAVIGATION -->
+	<!-- NAVIGATION -->
+	<%- include('../includes/nav.ejs') %>
+	<!-- NAVIGATION -->
 
-    <!-- BREADCRUMB -->
-    <!-- BREADCRUMB -->
+	<!-- BREADCRUMB -->
+	<!-- BREADCRUMB -->
 
 
-    <div class="section">
+	<div class="section">
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
 			<div class="row">
 				<!--  Product Details -->
 				<div class="product product-details clearfix">
+					<!-- Images Section -->
 					<div class="col-md-6">
-						<div id="product-main-view" class="slick-initialized slick-slider"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: block;">Previous</button>
-							<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1820px;"><div class="product-view slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabindex="0" style="width: 455px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1; overflow: hidden;">
-								<img src="<%= product.imageUrl %>" alt="">
-							<img role="presentation" src="<%= product.imageUrl %>" class="zoomImg" style="position: absolute; top: -189.396px; left: -528.203px; opacity: 0; width: 1200px; height: 1200px; border: none; max-width: none; max-height: none;"></div><div class="product-view slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" style="width: 455px; position: relative; left: -455px; top: 0px; z-index: 998; opacity: 0; overflow: hidden;">
-								<img src="<%= product.imageUrl %>" alt="">
-							<img role="presentation" src="<%= product.imageUrl %>" class="zoomImg" style="position: absolute; top: 0px; left: 0px; opacity: 0; width: 1200px; height: 1200px; border: none; max-width: none; max-height: none;"></div><div class="product-view slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" style="width: 455px; position: relative; left: -910px; top: 0px; z-index: 998; opacity: 0; overflow: hidden;">
-								<img src="<%= product.imageUrl %>" alt="">
-							<img role="presentation" src="<%= product.imageUrl %>" class="zoomImg" style="position: absolute; top: 0px; left: 0px; opacity: 0; width: 1200px; height: 1200px; border: none; max-width: none; max-height: none;"></div><div class="product-view slick-slide" data-slick-index="3" aria-hidden="true" tabindex="-1" style="width: 455px; position: relative; left: -1365px; top: 0px; z-index: 998; opacity: 0; overflow: hidden;">
-								<img src="<%= product.imageUrl %>" alt="">
-							<img role="presentation" src="<%= product.imageUrl %>" class="zoomImg" style="position: absolute; top: 0px; left: 0px; opacity: 0; width: 1200px; height: 1200px; border: none; max-width: none; max-height: none;"></div></div></div>
-						<button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: block;">Next</button></div>
-						<div id="product-view" class="slick-initialized slick-slider"><button class="slick-prev slick-arrow" aria-label="Previous" type="button" style="display: block;">Previous</button>
-							<div class="slick-list draggable" style="padding: 0px 50px;"><div class="slick-track" style="opacity: 1; width: 1428px; transform: translate3d(-357px, 0px, 0px);"><div class="product-view slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product02.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned" data-slick-index="-2" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product03.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned slick-active" data-slick-index="-1" aria-hidden="false" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product04.jpg" alt="">
-							</div><div class="product-view slick-slide slick-current slick-active slick-center" data-slick-index="0" aria-hidden="false" tabindex="0" style="width: 119px;">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div><div class="product-view slick-slide slick-active" data-slick-index="1" aria-hidden="false" tabindex="0" style="width: 119px;">
-								<img src="./img/thumb-product02.jpg" alt="">
-							</div><div class="product-view slick-slide" data-slick-index="2" aria-hidden="true" tabindex="0" style="width: 119px;">
-								<img src="./img/thumb-product03.jpg" alt="">
-							</div><div class="product-view slick-slide" data-slick-index="3" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product04.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned slick-center" data-slick-index="4" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product01.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned" data-slick-index="5" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product02.jpg" alt="">
-							</div><div class="product-view slick-slide slick-cloned" data-slick-index="6" aria-hidden="true" tabindex="-1" style="width: 119px;">
-								<img src="./img/thumb-product03.jpg" alt="">
-							</div>
-							<div class="product-view slick-slide slick-cloned" data-slick-index="7" aria-hidden="true" tabindex="-1" style="width: 119px;">
+						<!-- Big size single image  -->
+						<div id="product-main-view">
+							<div class="product-view">
+								<!-- <img src="./img/main-product01.jpg" alt=""> -->
 								<img src="<%= product.imageUrl %>" alt="">
 							</div>
-						</div></div>
-							
-							
-							
-						<button class="slick-next slick-arrow" aria-label="Next" type="button" style="display: block;">Next</button></div>
+							<div class="product-view">
+								<img src="./img/main-product02.jpg" alt="">
+							</div>
+							<div class="product-view">
+								<img src="./img/main-product03.jpg" alt="">
+							</div>
+							<div class="product-view">
+								<img src="./img/main-product04.jpg" alt="">
+							</div>
+						</div>
+						<!-- Big size single image  -->
+
+						<!-- small images slider  -->
+						<div id="product-view">
+							<div class="product-view">
+								<img src="./img/thumb-product01.jpg" alt="">
+							</div>
+							<div class="product-view">
+								<img src="./img/thumb-product02.jpg" alt="">
+							</div>
+							<div class="product-view">
+								<img src="./img/thumb-product03.jpg" alt="">
+							</div>
+							<div class="product-view">
+								<img src="./img/thumb-product04.jpg" alt="">
+							</div>
+						</div>
+						<!-- small images slider  -->
 					</div>
+					<!-- Images Section -->
+
+					<!-- Product Information section  -->
 					<div class="col-md-6">
 						<div class="product-body">
 							<div class="product-label">
@@ -72,7 +67,8 @@
 								<span class="sale">-20%</span>
 							</div>
 							<h2 class="product-name"><%= product.title %></h2>
-							<h3 class="product-price">$<%= product.price %><del class="product-old-price">$<%= product.price %></del></h3>
+							<h3 class="product-price">$<%= product.price %><del
+									class="product-old-price">$<%= product.price %></del></h3>
 							<div>
 								<div class="product-rating">
 									<i class="fa fa-star"></i>
@@ -107,7 +103,8 @@
 									<span class="text-uppercase">QTY: </span>
 									<input class="input" type="number">
 								</div>
-								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to
+									Cart</button>
 								<div class="pull-right">
 									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
@@ -116,6 +113,9 @@
 							</div>
 						</div>
 					</div>
+					<!-- Product Information section  -->
+
+					<!-- Product Description and reviews section  -->
 					<div class="col-md-12">
 						<div class="product-tab">
 							<ul class="tab-nav">
@@ -135,7 +135,8 @@
 												<div class="single-review">
 													<div class="review-heading">
 														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0
+																PM</a></div>
 														<div class="review-rating pull-right">
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
@@ -145,15 +146,21 @@
 														</div>
 													</div>
 													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+															do eiusmod tempor incididunt ut labore et dolore magna
+															aliqua.Ut enim ad minim veniam, quis nostrud exercitation
+															ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis
+															aute
+															irure dolor in reprehenderit in voluptate velit esse cillum
+															dolore eu fugiat nulla pariatur.</p>
 													</div>
 												</div>
 
 												<div class="single-review">
 													<div class="review-heading">
 														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0
+																PM</a></div>
 														<div class="review-rating pull-right">
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
@@ -163,15 +170,21 @@
 														</div>
 													</div>
 													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+															do eiusmod tempor incididunt ut labore et dolore magna
+															aliqua.Ut enim ad minim veniam, quis nostrud exercitation
+															ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis
+															aute
+															irure dolor in reprehenderit in voluptate velit esse cillum
+															dolore eu fugiat nulla pariatur.</p>
 													</div>
 												</div>
 
 												<div class="single-review">
 													<div class="review-heading">
 														<div><a href="#"><i class="fa fa-user-o"></i> John</a></div>
-														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0 PM</a></div>
+														<div><a href="#"><i class="fa fa-clock-o"></i> 27 DEC 2017 / 8:0
+																PM</a></div>
 														<div class="review-rating pull-right">
 															<i class="fa fa-star"></i>
 															<i class="fa fa-star"></i>
@@ -181,8 +194,13 @@
 														</div>
 													</div>
 													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute
-															irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+															do eiusmod tempor incididunt ut labore et dolore magna
+															aliqua.Ut enim ad minim veniam, quis nostrud exercitation
+															ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis
+															aute
+															irure dolor in reprehenderit in voluptate velit esse cillum
+															dolore eu fugiat nulla pariatur.</p>
 													</div>
 												</div>
 
@@ -211,11 +229,16 @@
 													<div class="input-rating">
 														<strong class="text-uppercase">Your Rating: </strong>
 														<div class="stars">
-															<input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
-															<input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
-															<input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
-															<input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
-															<input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+															<input type="radio" id="star5" name="rating"
+																value="5"><label for="star5"></label>
+															<input type="radio" id="star4" name="rating"
+																value="4"><label for="star4"></label>
+															<input type="radio" id="star3" name="rating"
+																value="3"><label for="star3"></label>
+															<input type="radio" id="star2" name="rating"
+																value="2"><label for="star2"></label>
+															<input type="radio" id="star1" name="rating"
+																value="1"><label for="star1"></label>
 														</div>
 													</div>
 												</div>
@@ -227,6 +250,8 @@
 							</div>
 						</div>
 					</div>
+					<!-- Product Description and reviews section  -->
+
 				</div>
 				<!-- /Product Details -->
 			</div>
@@ -235,12 +260,12 @@
 		<!-- /container -->
 	</div>
 
-    <!-- FOOTER -->
-    <%- include('../includes/footer.ejs') %>
-    <!-- FOOTER -->
+	<!-- FOOTER -->
+	<%- include('../includes/footer.ejs') %>
+	<!-- FOOTER -->
 
-    <!-- jQuery Plugins -->
-    <%- include('../includes/end.ejs') %>
+	<!-- jQuery Plugins -->
+	<%- include('../includes/end.ejs') %>
 
 
 </body>

@@ -7,6 +7,7 @@ const shopController = require('../controllers/shop');
 const router = express.Router();
 //note check the best practice for naming the routes check ref websites
 
+
 router.get('/', shopController.getProducts);
 router.get('/page=:page', shopController.getProducts);
 router.get('/category/page=:page-:categoryId', shopController.getProducts);

@@ -64,7 +64,7 @@ exports.getProducts = (req, res, next) => {
   let limit = 12;
   if(req.session.tempCart){
     //fetch cart info
-    let cart =Cart.hydrate(req.session.tempCart);
+    let cart = Cart.hydrate(req.session.tempCart);
     let cartItems ;
 
     cart
@@ -80,7 +80,7 @@ exports.getProducts = (req, res, next) => {
           limit: result.limit,
           page: page,
           pages: result.totalPages,
-          cartProducts:cartItems
+          cartProducts: cartItems
         });
       })
     })
@@ -96,7 +96,7 @@ exports.getProducts = (req, res, next) => {
         limit: result.limit,
         page: page,
         pages: result.totalPages,
-        cartProducts:[]
+        cartProducts: []
       });
     }).catch(err => {
       console.log(err);

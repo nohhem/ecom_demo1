@@ -24,36 +24,34 @@
 					<div class="col-md-6">
 						<!-- Big size single image  -->
 						<div id="product-main-view">
+							<!-- image main 1 -->
 							<div class="product-view">
-								<!-- <img src="./img/main-product01.jpg" alt=""> -->
 								<img src="<%= product.imageUrl %>" alt="">
 							</div>
+							
+							<!-- for loop through Main images -->
+							<% for(var i=0; i < product.images.length ; i++)  { %> 
+							<!-- image main 2 -->
 							<div class="product-view">
-								<img src="./img/main-product02.jpg" alt="">
+								 <img src="<%= product.images[i] %>" alt="">
 							</div>
-							<div class="product-view">
-								<img src="./img/main-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/main-product04.jpg" alt="">
-							</div>
+							<% } %>
 						</div>
 						<!-- Big size single image  -->
 
 						<!-- small images slider  -->
 						<div id="product-view">
+							<!-- image thumb 1 -->
 							<div class="product-view">
-								<img src="./img/thumb-product01.jpg" alt="">
+								<img src="<%= product.imageUrl %>" alt="">
 							</div>
+							<!-- for loop through thumb images -->
+							<% for(var i=0; i < product.images.length ; i++)  { %> 
+							<!-- image thumb 2 -->
 							<div class="product-view">
-								<img src="./img/thumb-product02.jpg" alt="">
+								<img src="<%= product.images[0] %>" alt="">
 							</div>
-							<div class="product-view">
-								<img src="./img/thumb-product03.jpg" alt="">
-							</div>
-							<div class="product-view">
-								<img src="./img/thumb-product04.jpg" alt="">
-							</div>
+							<% } %>
 						</div>
 						<!-- small images slider  -->
 					</div>

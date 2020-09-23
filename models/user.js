@@ -12,17 +12,17 @@ const Schema = mongoose.Schema;
 
 const cartSchema = new Schema({
   items: [
-      {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Product',
-          required: true
-        },
-        qty: { type: Number, required: true }
-      }
-    ]
+    {
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+      qty: { type: Number, required: true }
+    }
+  ]
 
-},{ _id : false });
+}, { _id: false });
 
 const userSchema = new Schema({
   fullname: {
@@ -40,7 +40,7 @@ const userSchema = new Schema({
   resetToken: String,
   resetTokenExpiration: Date,
   cart: cartSchema
-},{ _id : false });
+});
 
 // console.log('userschema is ',typeof(userSchema));
 // console.log('userschema is ',userSchema);

@@ -194,8 +194,9 @@ exports.getCheckout = (req, res, next) => {
 /*--------------------------------------*/
 
 exports.getCart = (req, res, next) => {
-  let cart =Cart.hydrate(req.session.tempCart);
   let catItems ;
+  if(req.session.tempCart){
+  let cart =Cart.hydrate(req.session.tempCart);
   cart
   .populate('items.productId')
   .execPopulate()
@@ -208,6 +209,15 @@ exports.getCart = (req, res, next) => {
       cartProducts:catItems
     });
   })
+  }else{
+    res.render('shop/view_cart', {
+      pageTitle: 'Cart',
+      cartProducts:[]
+    });
+  }
+  
+  
+  
   
 };
 

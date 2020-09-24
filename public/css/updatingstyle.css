@@ -1,0 +1,32 @@
+.header-top-links {
+    font-weight: 900;
+  }
+
+.text-uppercase{
+    font-weight: 900;
+}
+.store-pages{
+    font-weight: 900;
+}
+
+
+.cool-link {
+    display: inline-block;
+    color: #000;
+    text-decoration: none;
+}
+
+.cool-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width .3s;
+}
+
+.cool-link:hover::after {
+    width: 100%;
+    
+}
+  

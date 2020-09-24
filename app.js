@@ -11,6 +11,7 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
 const Category = require('./models/category');
+const User = require('./models/user');
 //
 
 
@@ -81,7 +82,19 @@ app.use(csrfProtection);
 
 //to auhtenticate any response we send to the user (the user will recieve a valid csrf token to be used for his next request)
 //
-let counter_test = 0;
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then(user => {
+      res.locals.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
 app.use((req, res, next) => {
   //any var registred to res.locals is global and can be accessed directly bby writing its name ex: csrfToken
   res.locals.isLoggedIn = req.session.isLoggedIn;

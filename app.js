@@ -33,6 +33,7 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 const csrfProtection = csrf();
+app.use(flash());
 
 Category.find({}).then(result => {
   app.locals.categories = result;

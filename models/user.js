@@ -40,7 +40,8 @@ const userSchema = new Schema({
   resetToken: String,
   resetTokenExpiration: Date,
   cart: cartSchema
-},{ _id : false });
+  
+});
 
 // console.log('userschema is ',typeof(userSchema));
 // console.log('userschema is ',userSchema);

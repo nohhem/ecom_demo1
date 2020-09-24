@@ -215,13 +215,27 @@ exports.getCart = (req, res, next) => {
       cartProducts:[]
     });
   }
-  
-  
-  
-  
+};
+exports.postCartDeleteItem = (req, res, next) => { 
+  //delete from cart
+  const prodId = req.params.productId;
+  let items = req.session.tempCart.cartItems;
+  if(req.session.tempCart){
+    req.session.tempCart=Cart.hydrate(req.session.tempCart);
+    req.session.tempCart.deleteFromCart(prodId)
+    .then(() => {
+       
+      res.status(200).json({message:'Product deleted from cart succesfully!'});
+    })
+    .catch(err => {
+      //console.log('error',err);
+      res.status(500).json({message:'deleting product from cart failed'});
+    });;
+  }
+  //
 };
 
-exports.postCart = (req, res, next) => { };
+
 
 
 exports.addToCart = (req, res, next) => {
@@ -243,7 +257,6 @@ exports.addToCart = (req, res, next) => {
         req.session.tempCart=Cart.hydrate(req.session.tempCart);
       }
       //add product to cart
-      
       req.session.tempCart.addToCart(prodId);
       console.log(req.session.tempCart);
     }
@@ -262,7 +275,6 @@ exports.addToCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => { };
 
-exports.postCartDeleteProduct = (req, res, next) => { };
 
 exports.postOrder = (req, res, next) => { };
 

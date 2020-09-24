@@ -68,7 +68,10 @@
 										<% total = (item.productId.price * item.qty) %>
 										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
+										<td class="text-right"><button class="main-btn icon-btn" onclick="deleteFromCart(this)">
+										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" value="<%=item%>" name="item">
+											<i class="fa fa-close"></i></button></td>
                                     </tr>
                                     <% } %>
                                     <!--  -->

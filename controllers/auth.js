@@ -123,6 +123,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
+    let message = req.flash('error');
     if (message.length > 0) {
         message = message[0];
     } else {

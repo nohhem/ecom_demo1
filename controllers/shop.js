@@ -251,7 +251,7 @@ exports.addToCart = (req, res, next) => {
   })
   .then(() => {
     //console.log('cart created');
-    res.status(200).json({message:'Product added succesfully!'});
+    res.status(200).json({message:'Product added succesfully!',qty:req.session.tempCart.items.length});
     
   })
   .catch(err => {

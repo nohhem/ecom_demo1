@@ -15,9 +15,11 @@ const addToCart = (btn) => {
         return result.json();
     })
     .then(data => {
-        console.log('entered ourscript then');
-        console.log(data);
-        //addition succseful  // put notification code here 
+        // console.log('entered ourscript then');
+        // console.log(data);
+        //increase cart quantity
+        document.getElementById("cartTotalQty").innerHTML = data.qty ;
+        
         swal("My Cart","The Product is Added Succesfully !" , "success");
         //wow_default_alert();
 

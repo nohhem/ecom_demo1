@@ -54,7 +54,7 @@
 									
 									<!-- dynamic items -->
                                     <% for (let item of cartProducts) { %>
-									<tr>
+									<tr id ="<%= item.productId._id %>">
 										<td class="thumb"><img src="<%= item.productId.imageUrl %>" alt=""></td>
 										<td class="details">
 											<a href="#">Product Name Goes Here</a>
@@ -64,13 +64,13 @@
 											</ul>
 										</td>
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
-                                        <td class="qty text-center"><input class="input" type="number" value="<%= item.qty %>"></td>
+                                        <td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>"></td>
 										<% total = (item.productId.price * item.qty) %>
 										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
-										<td class="text-right"><button class="main-btn icon-btn" onclick="deleteFromCart(this)">
+										<td class="text-right"><button type="button" class="main-btn icon-btn" onclick="deleteFromCart(this)">
 										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <input type="hidden" value="<%=item%>" name="item">
+                                        <input type="hidden" name="productId" value="<%= item.productId._id %>" >
 											<i class="fa fa-close"></i></button></td>
                                     </tr>
                                     <% } %>
@@ -115,7 +115,9 @@
     <!-- FOOTER -->
 
     <!-- jQuery Plugins -->
-    <%- include('../includes/end.ejs') %>
+	<%- include('../includes/end.ejs') %>
+	
+	<script src="/js/our.script.js"></script>
    
 
 </body>

@@ -42,12 +42,16 @@ cartSchema.methods.deleteFromCart = function(prodId) {
   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
       if(this.items[cartProductIndex].qty==1){
         //Array.splice(position,num);
-        Array.splice(cartProductIndex,1);
+        this.items.splice(cartProductIndex,1);
+        console.log('item deleted from cart :',this);
+        return 0;
       }else{
         this.items[cartProductIndex].qty--;
+        console.log('item quantity decreased from cart :',this);
+        return this.items[cartProductIndex].qty
       }
+    
   
-  console.log('item deleted to cart :',this);
 };
 
 module.exports = mongoose.model('Cart', cartSchema);

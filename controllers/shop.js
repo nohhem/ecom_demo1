@@ -222,15 +222,8 @@ exports.postCartDeleteItem = (req, res, next) => {
   let items = req.session.tempCart.cartItems;
   if(req.session.tempCart){
     req.session.tempCart=Cart.hydrate(req.session.tempCart);
-    req.session.tempCart.deleteFromCart(prodId)
-    .then(() => {
-       
-      res.status(200).json({message:'Product deleted from cart succesfully!'});
-    })
-    .catch(err => {
-      //console.log('error',err);
-      res.status(500).json({message:'deleting product from cart failed'});
-    });;
+    remainingQty=req.session.tempCart.deleteFromCart(prodId)
+    res.status(200).json({message:'Product deleted from cart succesfully!',qty:remainingQty});
   }
   //
 };

@@ -31,11 +31,12 @@ const addToCart = (btn) => {
 };
 
 const deleteFromCart = (btn) => {
-    const item= btn.parentNode.querySelector('[name=item]').value;
+    const prodId= btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+    console.log('productId',prodId);
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
-    fetch('/delete-from-cart/' + item.productId,{
+    fetch('/delete-from-cart/' + prodId ,{
         method: 'POST',
         headers : {
             'csrf-token' : csrf
@@ -45,8 +46,18 @@ const deleteFromCart = (btn) => {
         return result.json();
     })
     .then(data => {
+        console.log(data);
+        //maniplute the dom => delete item if nedded or decrease quantity
+        if(data.qty <= 0){
+            //delete item
+            document.getElementById(prodId).remove();
 
-        document.getElementById("cartTotalQty").innerHTML = data.qty ;
+        }else{
+            console.log(data.qty,' qty >0')
+            //decrease quantity
+            document.getElementById(prodId).querySelector('[name=itemQty]').value=data.qty;
+
+        }
         //swal("My Cart","The Product is Added Succesfully !" , "success");
         //wow_default_alert();
     })
@@ -72,29 +83,29 @@ function createElementFromHTML(htmlString) {
   }
 
   function ref_code () {
-      // const deleteProduct = (btn) => {
-//     const prodId= btn.parentNode.querySelector('[name=productId]').value;
-//     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
-//     const productElement = btn.closest('article');
-//     //will give the closet DOM element with this class/type
-//     fetch('/admin/product/' + prodId,{
-//         method: 'DELETE',
-//         headers : {
-//             'csrf-token' : csrf
-//             //our csrf 3rd party package not only look in the body,also in query params
-//         }
-//     }).then(result => {
-//         return result.json();
-//     })
-//     .then(data => {
-//         console.log(data);
-//         //productElement.remove();//not supporeted in Internet explorer
-//         productElement.parentNode.removeChild(productElement);    
-//     })
-//     .catch(err =>{
-//         console.log(err)
-//     });
-// };
+      const deleteProduct = (btn) => {
+    const prodId= btn.parentNode.querySelector('[name=productId]').value;
+    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+    const productElement = btn.closest('article');
+    //will give the closet DOM element with this class/type
+    fetch('/admin/product/' + prodId,{
+        method: 'DELETE',
+        headers : {
+            'csrf-token' : csrf
+            //our csrf 3rd party package not only look in the body,also in query params
+        }
+    }).then(result => {
+        return result.json();
+    })
+    .then(data => {
+        console.log(data);
+        //productElement.remove();//not supporeted in Internet explorer
+        productElement.parentNode.removeChild(productElement);    
+    })
+    .catch(err =>{
+        console.log(err)
+    });
+};
 
         //refernce code
         //     console.log('body', document.body);

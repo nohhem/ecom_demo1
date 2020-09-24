@@ -1,3 +1,4 @@
+
 (function($) {
   "use strict"
 
@@ -34,6 +35,7 @@
       }
     }
   });
+
 
   // HOME SLICK
   $('#home-slick').slick({
@@ -72,6 +74,8 @@
     ]
   });
 
+  // console.log('HELLOCFROM OTHER SIDE : ' + numberOfImages);
+  
   $('#product-slick-2').slick({
     slidesToShow: 3,
     slidesToScroll: 2,

@@ -12,7 +12,15 @@
 	<!-- BREADCRUMB -->
 	<!-- BREADCRUMB -->
 
-
+	<% let discount = 0 %>
+	<% let CurrentPrice = 0 %>
+	<!-- Here if we want to pass data to script.js , js folder  -->
+	<!-- <script>
+	   var numberOfImages = '<%= product.images.length+1 %>';  //var test is now assigned to getTest which will only work on browsers
+	//    console.log(numberOfImages);  // successfully prints 101 on browser
+	</script>
+	<script src="/public/js/main.js"></script> -->
+	
 	<div class="section">
 		<!-- container -->
 		<div class="container">
@@ -35,6 +43,8 @@
 							<div class="product-view">
 								 <img src="<%= product.images[i] %>" alt="">
 							</div>
+
+							
 							<% } %>
 						</div>
 						<!-- Big size single image  -->
@@ -62,10 +72,12 @@
 						<div class="product-body">
 							<div class="product-label">
 								<span>New</span>
-								<span class="sale">-20%</span>
+								<span class="sale">-<%= product.discount %>%</span>
 							</div>
 							<h2 class="product-name"><%= product.title %></h2>
-							<h3 class="product-price">$<%= product.price %><del
+							<!-- Calculation of discount and CurrentPrice after discount -->
+							<% CurrentPrice = product.price - (product.price * (product.discount/100)) %>
+							<h3 class="product-price">$<%= parseFloat(CurrentPrice).toFixed(2) %>   <del
 									class="product-old-price">$<%= product.price %></del></h3>
 							<div>
 								<div class="product-rating">

@@ -171,9 +171,6 @@ exports.getProduct = (req, res, next) => {
 };
 
 
-
-
-
 exports.getIndex = (req, res, next) => {
   res.render('shop/index', {
     products: "",

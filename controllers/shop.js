@@ -234,6 +234,7 @@ exports.postCartDeleteItem = (req, res, next) => {
 exports.addToCart = (req, res, next) => {
   //async (due to client side request)
   const prodId = req.params.productId;
+  console.log('exports.addToCart req.body',req.body )
   Product.findById(prodId)
   .then(product => {
     //check if the user is logged in or not

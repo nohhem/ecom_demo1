@@ -64,7 +64,7 @@
 											</ul>
 										</td>
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
-                                        <td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>"></td>
+                                        <td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>" onclick="onChangeItemQty(this,'<%= item.qty %>')"></td>
 										<% total = (item.productId.price * item.qty) %>
 										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>

@@ -69,7 +69,7 @@ const deleteFromCart = (btn) => {
 
 }
 
-const testajax = (btn,itemCurrentQty) => {
+const testajaxAddtoCart = (btn,itemCurrentQty) => {
     const prodId= btn.parentNode.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.parentNode.querySelector('[name=_csrf]').value;
     $.ajax({
@@ -98,7 +98,7 @@ const testajax = (btn,itemCurrentQty) => {
 const onChangeItemQty = (btn,itemCurrentQty) => {
     console.log(btn);
     console.log(itemCurrentQty);
-    testajax(btn,itemCurrentQty);
+    testajaxAddtoCart(btn,itemCurrentQty);
     // const prodId= btn.parentNode.parentNode.querySelector('[name=productId]').value;
     // const csrf = btn.parentNode.parentNode.querySelector('[name=_csrf]').value;
 

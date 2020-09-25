@@ -179,53 +179,28 @@ exports.postReview = (req, res, next) => {
   const prodId = req.params.productId; // we can take it from hidden input
   const fullname = req.body.fullname;
   const email = req.body.email;
-  const rating = parseFloat(req.body.rating).toFixed(2);
+  const rating = parseFloat(req.body.rating); //toFixed(2) : converts the number to string !!
   const review = req.body.review;
-  let lastReviewAvgRate;
-
-  
 
   // setOptionswew set new to true to give you the update document , by default gives you the original before updating
   Product.findById(prodId)
-         .then(product => {
-           //1calculate the new avgrate 
-          let NewavgRate=product.calculateNewAvgRate(rating);
-           //insert the new review with the new AvgRate
-          //if reviews array is empty, we have to keep avgRate not = to zero 0 :
-          const reviewObj = { fullname: fullname , email: email , reviewComment: review, userRating: rating , avgRate: NewavgRate };
-          const update = { $push: { reviews: reviewObj } };
-          const options = { new: true , upsert: true , useFindAndModify: false };
-          // new:true, in oreder to get the updated version of the updated row in the databse when gettign the result after  'Product.findByIdAndUpdate'
-          //upset for timestamps to be registered at databse (created at,updated at)
-          //useFindAndModify: recomonded bbby mongodb
-          Product.findByIdAndUpdate(prodId , update , options).then(result => {
-            console.log(' SUCCSESS  ' + result)
-          })
-          
-        // if(product.reviews.length == 0){
-        //   console.log('Reviews array is empty!!')
-        //  Product.findByIdAndUpdate(prodId,{ $push: { reviews:{userRating: rating , avgRate: rating}  }})
-        //          .setOptions({ new: true, useFindAndModify: false })
-        //          .then(result => {
-        //     console.log('Reviews array added one element :' , result.reviews)})
-        // }
-        // //if reviews array is NOT empty :
-        // else {
-        //   console.log('Reviews array is NOT empty!!')
-        //   lastReviewAvgRate = product.reviews[product.reviews.length - 1].avgRate;
-        //   console.log('lastReviewAvgRate  : ' + lastReviewAvgRate)
-        //   let NewavgRate = product.calculateNewAvgRate( rating , lastReviewAvgRate );
-        //   console.log('avgRate console : ' + NewavgRate)
-        //   const reviewObj = { fullname: fullname , email: email , reviewComment: review, userRating: rating , avgRate: NewavgRate };
-        //   const update = { $push: { reviews: reviewObj } };
-        //   const options = { new: true , upsert: true , useFindAndModify: false };
-        //   Product.findByIdAndUpdate(prodId , update , options).then(result => {
-        //     console.log(' SUCCSESS  ' + result)
-        //   })
-        // }
-   
-  })
-   //  if (product.reviews[index].userId.toString() !== req.user._id.toString()) {
+    .then(product => {
+      //1-calculate the new avgrate 
+      let NewavgRate = product.calculateNewAvgRate(rating);
+      //insert the new review with the new AvgRate
+      //if reviews array is empty, we have to keep avgRate not = to zero 0 :
+      const reviewObj = { fullname: fullname, email: email, reviewComment: review, userRating: rating, avgRate: NewavgRate };
+      const update = { $push: { reviews: reviewObj } };
+      const options = { new: true, upsert: true, useFindAndModify: false };
+      //new:true, in oreder to get the updated version of the updated row in the databse when gettign the result after  'Product.findByIdAndUpdate'
+      //upset:true for timestamps to be registered at databse (created at,updated at)
+      //useFindAndModify: recomonded by mongodb
+      Product.findByIdAndUpdate(prodId, update, options).then(result => {
+        console.log(' SUCCSESS  ' + result)
+      })
+
+    })
+    //  if (product.reviews[index].userId.toString() !== req.user._id.toString()) {
     //   return res.redirect('/');
     .catch(err => {
       const error = new Error(err);
@@ -233,7 +208,6 @@ exports.postReview = (req, res, next) => {
       return next(error);
     });
 }
-
 
 
 exports.getIndex = (req, res, next) => {

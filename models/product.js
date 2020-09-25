@@ -24,7 +24,7 @@ const reviewSchema = new Schema({
     type: Number,
     required: true
   },
-  userId: {
+  userId: { // only users who bought the product can makes a review 
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
@@ -74,20 +74,21 @@ productSchema.plugin(mongoosePaginate);
 //   Review: reviewSchema
 // };
 
-productSchema.methods.calculateAvgRate = function(userRating){
+productSchema.methods.calculateNewAvgRate = function(userRating ,lastReviewAvgRate){
 
   // avgRate = (userRating+lastreview.avgRate*count)/count
-  let avgRate = 0;
-  let totalRate = 0.000001;
-  let countRate = 0.000001;
-  //total userRating
-  totalRate = totalRate + userRating;
+
+  let avgRate ;
+  let reviewsCount ;
+
   //count of userRating
-  countRate = this.reviews.length;
+  reviewsCount = this.reviews.length + 1;
+  console.log('reviewsCount : ' , reviewsCount)
 
-  avgRate = totalRate / countRate ;
-  // avgRate = (userRating + lastReviewAvgRate * countRate) / countRate ;
-
+  // avgRate = totalRate / countRate ;
+  // avgRate = (userRating + (lastReviewAvgRate * countRate)) / countRate ;
+  avgRate = (userRating + lastReviewAvgRate * reviewsCount) / reviewsCount ;
+  console.log('avgRate in calculateAvgRate after calculation: ' , avgRate)
   return avgRate;
 }
 

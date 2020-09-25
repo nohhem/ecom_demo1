@@ -176,37 +176,45 @@ exports.getProduct = (req, res, next) => {
 
 
 exports.postReview = (req, res, next) => {
-  const prodId = req.params.productId;
+  const prodId = req.params.productId; // we can take it from hidden input
   const fullname = req.body.fullname;
   const email = req.body.email;
   const rating = req.body.rating;
   const review = req.body.review;
-  // let lastReviewAvgRate = 0.01;
+  let lastReviewAvgRate;
+  
 
-  // const reviewObj = { fullname: fullname , email: email , reviewComment: review, userRating: rating  };
-  
-  
   // setOptionswew set new to true to give you the update document , by default gives you the original before updating
-  Product.findById(prodId)
+  Product.findById(prodId).setOptions({ new: true })
          .then(product => {
-    // product.reviews.push(reviewObj);
-    // console.log('product.reviews[product.reviews.length - 1].avgRate' ,product.reviews[product.reviews.length - 1].avgRate)
-    
-    // console.log('lastReviewAvgRate  : ' + lastReviewAvgRate)
-    let avgRate = product.calculateAvgRate( rating );
-    console.log('avgRate console : ' + avgRate)
+          
+        //if reviews array is empty, we have to keep avgRate not = to zero 0 :
+        if(product.reviews.length == 0){
+          console.log('Reviews array is empty!!')
+         Product.findByIdAndUpdate(prodId,{ $push: { reviews:{userRating: rating , avgRate: rating}  }})
+                 .setOptions({ new: true, useFindAndModify: false })
+                 .then(result => {
+            console.log('Reviews array added one element :' , result.reviews)})
+        }
+        //if reviews array is NOT empty :
+        else {
+          console.log('Reviews array is NOT empty!!')
+          lastReviewAvgRate = product.reviews[product.reviews.length - 1].avgRate;
+          console.log('lastReviewAvgRate  : ' + lastReviewAvgRate)
+          let NewavgRate = product.calculateNewAvgRate( rating , lastReviewAvgRate );
+          console.log('avgRate console : ' + NewavgRate)
 
-    const reviewObj = { fullname: fullname , email: email , reviewComment: review, userRating: rating , avgRate: avgRate };
-    const update = { $push: { reviews: reviewObj } };
-    const options = { new: true , upsert: true , useFindAndModify: false };
-    Product.findByIdAndUpdate(prodId , update ,options).then(result => {
-      console.log(' SUCCSESS  ' + product)
-    })
-    // product.save(err =>{
-      
-    // });
+          const reviewObj = { fullname: fullname , email: email , reviewComment: review, userRating: rating , avgRate: NewavgRate };
+          const update = { $push: { reviews: reviewObj } };
+          const options = { new: true , upsert: true , useFindAndModify: false };
+          Product.findByIdAndUpdate(prodId , update , options).then(result => {
+            console.log(' SUCCSESS  ' + result)
+          })
+
+
+        }
+   
   })
-
    //  if (product.reviews[index].userId.toString() !== req.user._id.toString()) {
     //   return res.redirect('/');
     .catch(err => {

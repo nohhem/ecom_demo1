@@ -24,8 +24,27 @@
     background: #000;
     transition: width .3s;
 }
-
 .cool-link:hover::after {
+    width: 100%;
+    
+}
+  
+
+.cool-link_orange {
+    display: inline-block;
+    color: #000;
+    text-decoration: none;
+}
+
+.cool-link_orange::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #dc590c;
+    transition: width .3s;
+}
+.cool-link_orange:hover::after {
     width: 100%;
     
 }

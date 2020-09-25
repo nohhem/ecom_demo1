@@ -142,14 +142,14 @@ exports.postResetPassword = (req, res, next) => {
         if (err) {
             console.log(err);
             console.log("something went wrong")
-            return res.redirect('/reset');
+            return res.redirect('/reset_password');
         }
         const token = buffer.toString('hex');
         User.findOne({ email: req.body.email })
             .then(user => {
                 if (!user) {
-                    req.flash('error', 'No account with that email found.');
-                    return res.redirect('/reset');
+                    req.flash('error', 'We couldnt find this email in our records');
+                    return res.redirect('/reset_password');
                 }
                 user.resetToken = token;
                 user.resetTokenExpiration = Date.now() + 3600000;

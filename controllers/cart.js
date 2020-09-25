@@ -28,7 +28,7 @@ exports.getCart = (req, res, next) => {
     }
   };
 
-  exports.addToCart_changeQty = (req, res, next) => {
+  exports.postCartChangeQty = (req, res, next) => {
     //async (due to client side request)
     const prodId = req.params.productId;
     console.log('exports.addToCart req.body',req.body.reqData )//from req.body we get the new qty
@@ -80,7 +80,7 @@ exports.getCart = (req, res, next) => {
     //
   };
 
-  exports.addToCart = (req, res, next) => {
+  exports.postAddToCart = (req, res, next) => {
     //async (due to client side request)
     const prodId = req.params.productId;
     console.log('exports.addToCart req.body',req.body )
@@ -117,23 +117,4 @@ exports.getCart = (req, res, next) => {
   };
   
   
- 
-  
-  //helper funtions
-function getCartProducts (req) { //currently not woring fully
-    //helper funtiuon
-    //obtain the cart either from user or tempcart
-    //parse the cart to Mongoose object
-    //let cart =req.session.tempCart
-    let cart =Cart.hydrate(req.session.tempCart);
-    //get products of cart items
-    cart
-    .populate('items.productId')
-    .execPopulate()
-    .then(pcart => {
-      //console.log('getCartProducts ,cart',pcart.items);
-      return pcart.items;
-    });
-  
-  };
-  
+

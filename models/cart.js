@@ -74,44 +74,6 @@ cartSchema.methods.deleteFromCart = function(prodId) {
 };
 
 
-// cartSchema.methods.addToCart = function(prodId,newQty) {
-//   //check if the product is already exist ,=> update the quantity
-//   //if the product dose not exsit then added it
-//   const exists = (item) => item.productId == prodId;
-//   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-
-//   if(cartProductIndex>=0){//the product exsit update the quantity
-//       this.items[cartProductIndex].qty=newQty
-//   }else{//add the product
-//       this.items.push({
-//           productId:prodId,
-//           qty:newQty
-//       });
-//   }
-//   console.log('item added to cart :',this);
-// };
-
-// cartSchema.methods.deleteFromCart = function(prodId,newQty) {
-//   //my code
-//   //check if the product is already exist ,
-//   const exists = (item) => item.productId == prodId;
-//   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-//       if(this.items[cartProductIndex].qty==1){
-//         //Array.splice(position,num);
-//         this.items.splice(cartProductIndex,1);
-//         console.log('item deleted from cart :',this);
-//         return 0;
-//       }else if (this.items[cartProductIndex].qty>1){
-//         this.items[cartProductIndex].qty--;
-//         console.log('item quantity decreased from cart :',this);
-//         return this.items[cartProductIndex].qty
-//       }else {
-//         console.log('error','cartSchema.methods.deleteFromCart');
-//         return -1;
-//       }
-    
-  
-// };
 
 module.exports = mongoose.model('Cart', cartSchema);
 

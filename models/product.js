@@ -74,22 +74,49 @@ productSchema.plugin(mongoosePaginate);
 //   Review: reviewSchema
 // };
 
-productSchema.methods.calculateNewAvgRate = function(userRating ,lastReviewAvgRate){
-
+productSchema.methods.calculateNewAvgRate = function(newRate){
+  
+  console.log('calculateNewAvgRate  = function(newRate){ newRate', newRate)
   // avgRate = (userRating+lastreview.avgRate*count)/count
-
-  let avgRate ;
-  let reviewsCount ;
-
-  //count of userRating
-  reviewsCount = this.reviews.length + 1;
-  console.log('reviewsCount : ' , reviewsCount)
-
-  // avgRate = totalRate / countRate ;
-  // avgRate = (userRating + (lastReviewAvgRate * countRate)) / countRate ;
-  avgRate = (userRating + lastReviewAvgRate * reviewsCount) / reviewsCount ;
-  console.log('avgRate in calculateAvgRate after calculation: ' , avgRate)
-  return avgRate;
+  //check if there is the first review then just return the same rate 
+  if(this.reviews.length==0){ //no prvious review
+    return parseFloat(newRate).toFixed(2);
+  }else{//obtain info about the previous reviews and calcualte the new avg
+  let avgRate =0 ;
+  let reviewsCount =this.reviews.length;
+  newRate = parseFloat(newRate).toFixed(2);
+  let lastReviewAvgRate = this.reviews[this.reviews.length-1].avgRate; //get the last avgRate
+  console.log(typeof(userRanewRateting),typeof(lastReviewAvgRate),typeof(reviewsCount),typeof((reviewsCount+1)));
+  avgRate = (newRate + lastReviewAvgRate * reviewsCount) / (reviewsCount+1) ;
+  console.log(avgRate);
+  return parseFloat(avgRate).toFixed(2);
+  }
 }
+
+
+// productSchema.methods.calculateNewAvgRate = function(userRating ,lastReviewAvgRate){
+
+//   // avgRate = (userRating+lastreview.avgRate*count)/count
+//   if(!lastReviewAvgRate){ //first review
+
+//   }else{
+
+//   }
+//   let avgRate =0 ;
+//   let reviewsCount =0;
+//   userRating = parseFloat(userRating).toFixed(2);
+//   //count of userRating
+//   reviewsCount = this.reviews.length;
+//   console.log('reviewsCount : ' , reviewsCount)
+
+//   // avgRate = totalRate / countRate ;
+//   // avgRate = (userRating + (lastReviewAvgRate * countRate)) / countRate ;
+
+//   console.log(typeof(userRating),typeof(lastReviewAvgRate),typeof(reviewsCount),typeof(newCount));
+  
+//   avgRate = (userRating + lastReviewAvgRate * reviewsCount) / reviewsCount+1 ;
+//   console.log('avgRate in calculateAvgRate after calculation: ' , avgRate)
+//   return parseFloat(avgRate).toFixed(2);
+// }
 
 module.exports = mongoose.model('Product', productSchema);

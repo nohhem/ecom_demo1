@@ -31,8 +31,8 @@ exports.getCart = (req, res, next) => {
   exports.addToCart_changeQty = (req, res, next) => {
     //async (due to client side request)
     const prodId = req.params.productId;
-    console.log('exports.addToCart req.body',req.body )//from req.body we get the new qty
-    let newQty=req.body.reqData
+    console.log('exports.addToCart req.body',req.body.reqData )//from req.body we get the new qty
+    let newQty = req.body.reqData
 
     Product.findById(prodId)
     .then(product => {
@@ -58,7 +58,7 @@ exports.getCart = (req, res, next) => {
     
     })
     .then(() => {
-      res.status(200).json({message:'Product added succesfully!',qty:newupdatedQuantity});
+      res.status(200).json({message:'success',qty:newupdatedQuantity});
       
     })
     .catch(err => {
@@ -74,7 +74,7 @@ exports.getCart = (req, res, next) => {
     let items = req.session.tempCart.cartItems;
     if(req.session.tempCart){
       req.session.tempCart=Cart.hydrate(req.session.tempCart);
-      remainingQty=req.session.tempCart.deleteFromCart(prodId)
+      remainingQty=req.session.tempCart.deleteFromCart(prodId);
       res.status(200).json({message:'Product deleted from cart succesfully!',qty:remainingQty});
     }
     //
@@ -107,7 +107,7 @@ exports.getCart = (req, res, next) => {
     })
     .then(() => {
       //console.log('cart created');
-      res.status(200).json({message:'Product added succesfully!',qty:req.session.tempCart.items.length});
+      res.status(200).json({message:'success',qty:req.session.tempCart.items.length});
       
     })
     .catch(err => {

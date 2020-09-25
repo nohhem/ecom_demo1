@@ -1,3 +1,9 @@
+const Product = require('../models/product');
+const Category = require('../models/category');
+const Cart = require('../models/cart');
+const User = require('../models/user');
+
+
 exports.getCart = (req, res, next) => {
     let catItems ;
     if(req.session.tempCart){
@@ -21,6 +27,47 @@ exports.getCart = (req, res, next) => {
       });
     }
   };
+
+  exports.addToCart_changeQty = (req, res, next) => {
+    //async (due to client side request)
+    const prodId = req.params.productId;
+    console.log('exports.addToCart req.body',req.body )//from req.body we get the new qty
+    let newQty=req.body.reqData
+
+    Product.findById(prodId)
+    .then(product => {
+      //check if the user is logged in or not
+      if(!req.session.user){
+        //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
+        if(!req.session.tempCart){
+          //no Cart,create a new cart
+          //console.log('no Cart,create a new one')
+          const cart = new Cart();
+          req.session.tempCart= cart;
+          //console.log(req.session.tempCart,req.session.tempCart.items.length);
+        }else{//we already have a cart in our session cast it to document
+          req.session.tempCart=Cart.hydrate(req.session.tempCart);
+        }
+        //ourcart is ready ,now change the qty of item
+        newupdatedQuantity=req.session.tempCart.changeCartItemQuantity(prodId,newQty);
+        //req.session.tempCart.addToCart(prodId);
+        console.log(req.session.tempCart);
+      }else{
+          //user is loggedin => toDo
+      }
+    
+    })
+    .then(() => {
+      res.status(200).json({message:'Product added succesfully!',qty:newupdatedQuantity});
+      
+    })
+    .catch(err => {
+      //console.log('error',err);
+      res.status(500).json({message:'Adding product failed'});
+    });
+  };
+
+
   exports.postCartDeleteItem = (req, res, next) => { 
     //delete from cart
     const prodId = req.params.productId;
@@ -32,10 +79,7 @@ exports.getCart = (req, res, next) => {
     }
     //
   };
-  
-  
-  
-  
+
   exports.addToCart = (req, res, next) => {
     //async (due to client side request)
     const prodId = req.params.productId;
@@ -71,6 +115,9 @@ exports.getCart = (req, res, next) => {
       res.status(500).json({message:'Adding product failed'});
     });
   };
+  
+  
+ 
   
   //helper funtions
 function getCartProducts (req) { //currently not woring fully

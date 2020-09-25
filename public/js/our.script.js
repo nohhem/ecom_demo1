@@ -69,7 +69,7 @@ const deleteFromCart = (btn) => {
 
 }
 
-const testajaxAddtoCart = (btn,itemCurrentQty) => {
+const testajaxOnChangeItemQty= (btn) => {
     const prodId= btn.parentNode.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.parentNode.querySelector('[name=_csrf]').value;
     $.ajax({
@@ -79,8 +79,19 @@ const testajaxAddtoCart = (btn,itemCurrentQty) => {
         headers:{'csrf-token':csrf},
         data:{'reqData':btn.value},
         success:function(response){
-            console.log('success:function(response){')
-            swal("My Cart","The Product is Added Succesfully !" , "success");
+            console.log('success:function(response.qty){',response.qty);
+                    //maniplute the dom => delete item if nedded or change quantity
+            if(response.qty <= 0){
+                //delete item
+                console.log('deleteing the item with id ', prodId)
+                document.getElementById(prodId).remove();
+            }else{
+                console.log(response.qty,' qty >0')
+                //update quantity
+                document.getElementById(prodId).querySelector('[name=itemQty]').setAttribute("value", response.qty);
+            }
+            swal("My Cart","The Quantity is updated Succesfully !" , "success");
+            
             // if(response.msg=='success'){
             // alert('task added successfully');
             // // getdata();
@@ -95,10 +106,10 @@ const testajaxAddtoCart = (btn,itemCurrentQty) => {
     });
 };
 
-const onChangeItemQty = (btn,itemCurrentQty) => {
+const onChangeItemQty = (btn) => {
     console.log(btn);
-    console.log(itemCurrentQty);
-    testajaxAddtoCart(btn,itemCurrentQty);
+    testajaxOnChangeItemQty(btn);
+
     // const prodId= btn.parentNode.parentNode.querySelector('[name=productId]').value;
     // const csrf = btn.parentNode.parentNode.querySelector('[name=_csrf]').value;
 

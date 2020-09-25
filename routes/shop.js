@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const shopController = require('../controllers/shop');
+const cartController = require('../controllers/cart');
 
 const router = express.Router();
 //note check the best practice for naming the routes check ref websites
@@ -13,10 +14,11 @@ router.get('/category/page=:page-:categoryId', shopController.getProducts);
 router.get('/category/:categoryId', shopController.getProducts);
 router.get('/products/:productId', shopController.getProduct);
 
-router.get('/view_cart', shopController.getCart);
-router.post('/add-to-cart/:productId', shopController.addToCart);
-router.post('/delete-from-cart/:productId', shopController.postCartDeleteItem);
-
+router.get('/view_cart', cartController.getCart);
+//async
+router.post('/add-to-cart/:productId', cartController.addToCart_changeQty); //temp testt
+//router.post('/add-to-cart/:productId', cartController.addToCart); temp disabled
+router.post('/delete-from-cart/:productId', cartController.postCartDeleteItem);
 
 
 //router.get('/check_out', shopController.getCheckout);

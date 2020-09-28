@@ -1,34 +1,4 @@
 
-const addToCart = (btn) => {
-    // if(!prodId && !csrf){// not included as arguments get them
-    const prodId= btn.parentNode.querySelector('[name=productId]').value;
-    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
-    // } 
-    //const productElement = btn.closest('div');
-    //will give the closet DOM element with this class/type
-    fetch('/add-to-cart/' + prodId,{
-        method: 'POST',
-        headers : {
-            'csrf-token' : csrf
-            //our csrf 3rd party package not only look in the body,also in query params
-        }
-    }).then(result => {
-        // console.log(result.json());
-        return result.json();
-    })
-    .then(data => {
-        // console.log('entered ourscript then');
-        // console.log(data);
-        //increase cart quantity
-        document.getElementById("cartTotalQty").innerHTML = data.qty ;
-        swal("My Cart","The Product is Added Succesfully !" , "success");
-        
-    })
-    .catch(err =>{
-        console.log(err)
-    });
-};
-
 const deleteFromCart = (btn) => {
     const prodId= btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
@@ -60,6 +30,38 @@ const deleteFromCart = (btn) => {
 
 }
 
+
+const addToCart = (btn) => {
+    // if(!prodId && !csrf){// not included as arguments get them
+    const prodId= btn.parentNode.querySelector('[name=productId]').value;
+    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+    // } 
+    //const productElement = btn.closest('div');
+    //will give the closet DOM element with this class/type
+    fetch('/add-to-cart/' + prodId,{
+        method: 'POST',
+        headers : {
+            'csrf-token' : csrf
+            //our csrf 3rd party package not only look in the body,also in query params
+        }
+    }).then(result => {
+        // console.log(result.json());
+        return result.json();
+    })
+    .then(data => {
+        // console.log('entered ourscript then');
+        // console.log(data);
+        //increase cart quantity
+        document.getElementById("cartTotalQty").innerHTML = data.qty ;
+        swal("My Cart","The Product is Added Succesfully !" , "success");
+        
+    })
+    .catch(err =>{
+        console.log(err)
+    });
+};
+
+
 const onChangeItemQty = (btn) => {
     console.log(btn);
     console.log(btn.value);
@@ -83,6 +85,7 @@ const testajaxOnChangeItemQty= (btn) => {
                 console.log('success:function(response.qty){',response);
                     //maniplute the dom => delete item if nedded or change quantity
                 if(response.qty <= 0){
+
                     //delete item
                     console.log('deleteing the item with id ', prodId)
                     document.getElementById(prodId).remove();
@@ -91,10 +94,11 @@ const testajaxOnChangeItemQty= (btn) => {
                     //update quantity
                     document.getElementById(prodId).querySelector('[name=itemQty]').setAttribute("value", response.qty);
                 }
-                
-                $("#cart-table").load(" #cart-table > *");
+                //fix some temproary
+                $("#tbl").load(" #tbl > *");
                 $('#cover-spin').hide();
-                swal("My Cart","The Quantity is updated Succesfully !" , "success");
+                
+                swal("My Cart","done !" , "success");
             }else {
                 console.log('not expected message');
                 alert('some error occurred try again');

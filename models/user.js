@@ -40,15 +40,7 @@ const userSchema = new Schema({
   resetTokenExpiration: Date,
   cart: cartSchema,
 
-  wishlist: [{
-    productId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-      required: true
-    }
-  }
-
-  ]
+  wishlist: []
 
 });
 

@@ -91,7 +91,10 @@ const testajaxOnChangeItemQty= (btn) => {
                     //update quantity
                     document.getElementById(prodId).querySelector('[name=itemQty]').setAttribute("value", response.qty);
                 }
-            swal("My Cart","The Quantity is updated Succesfully !" , "success");
+                
+                $("#cart-table").load(" #cart-table > *");
+                $('#cover-spin').hide();
+                swal("My Cart","The Quantity is updated Succesfully !" , "success");
             }else {
                 console.log('not expected message');
                 alert('some error occurred try again');
@@ -102,6 +105,7 @@ const testajaxOnChangeItemQty= (btn) => {
         }
     });
 };
+
 
 
 //----code for notify-----//

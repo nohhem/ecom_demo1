@@ -38,7 +38,7 @@
 								<h3 class="title">My Cart</h3>
 							</div>
 							
-							<table class="shopping-cart-table table">
+							<table id="cart-table" class="shopping-cart-table table">
 								<thead>
 									<tr>
 										<th>Product</th>
@@ -63,8 +63,12 @@
 												<li><span>Color: Camelot</span></li>
 											</ul>
 										</td>
+										<!-- onChangeItemQty(this); -->
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
-                                        <td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>" onclick="onChangeItemQty(this)"></td>
+										<td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>" onclick="$('#cover-spin').show(0); onChangeItemQty(this);"></td>
+										<!-- my loading spinner -->
+										<div id="cover-spin"></div>  
+										<!-- my loading spinner -->
 										<% total = (item.productId.price * item.qty) %>
 										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>

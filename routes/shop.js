@@ -3,6 +3,9 @@ const path = require('path');
 const express = require('express');
 
 const shopController = require('../controllers/shop');
+const wishListController = require('../controllers/wishlist');
+
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 //note check the best practice for naming the routes check ref websites
@@ -16,6 +19,10 @@ router.get('/products/:productId', shopController.getProduct);
 
 router.get('/view_cart', shopController.getCart);
 router.post('/add-to-cart/:productId', shopController.addToCart);
+
+/*-----------------wish list-----------------*/
+router.get('/wish_list', isAuth, wishListController.getWishList);
+router.post('/add-to-wish-list/:productId', isAuth, wishListController.postWishList);
 
 
 //router.get('/check_out', shopController.getCheckout);

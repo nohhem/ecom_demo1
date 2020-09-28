@@ -1,13 +1,13 @@
 <%- include('../includes/head.ejs') %>
 
 <body>
-    <!-- HEADER -->
-    <%- include('../includes/header.ejs',cartProducts) %>
-    <!-- /HEADER -->
+	<!-- HEADER -->
+	<%- include('../includes/header.ejs',cartProducts) %>
+	<!-- /HEADER -->
 
-    <!-- NAVIGATION -->
-    <%- include('../includes/nav.ejs') %>
-    <!-- NAVIGATION -->
+	<!-- NAVIGATION -->
+	<%- include('../includes/nav.ejs') %>
+	<!-- NAVIGATION -->
 
 
 	<!-- BREADCRUMB -->
@@ -28,10 +28,6 @@
 			<!-- row -->
 			<div class="row">
 				<form id="checkout-form" class="clearfix">
-					
-
-					
-
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
@@ -49,8 +45,8 @@
 									</tr>
 								</thead>
 								<tbody>
-                                    <!-- dynamic items -->
-                                    <% for (let item of cartProducts) { %>
+									<!-- dynamic items -->
+									<% for (let item of cartProducts) { %>
 									<tr>
 										<td class="thumb"><img src="<%= item.productId.imageUrl %>" alt=""></td>
 										<td class="details">
@@ -60,14 +56,19 @@
 												<li><span>Color: Camelot</span></li>
 											</ul>
 										</td>
-										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
-                                        <td class="qty text-center"><input class="input" type="number" value="<%= item.qty %>"></td>
-                                        <% let  total = (item.productId.price * item.qty).toFixed(2) %>
-										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
-                                    </tr>
-                                    <% } %>
-                                    <!--  -->
+										<td class="price text-center">
+											<strong>$<%= item.productId.price %></strong><br><del
+												class="font-weak"><small>$40.00</small></del></td>
+										<td class="qty text-center"><input class="input" type="number"
+												value="<%= item.qty %>"></td>
+										<% let  total = (item.productId.price * item.qty).toFixed(2) %>
+										<td class="total text-center"><strong class="primary-color">$
+												<%= total %></strong></td>
+										<td class="text-right"><button class="main-btn icon-btn"><i
+													class="fa fa-close"></i></button></td>
+									</tr>
+									<% } %>
+									<!--  -->
 								</tbody>
 								<tfoot>
 									<tr>
@@ -103,13 +104,13 @@
 
 
 
-    <!-- FOOTER -->
-    <%- include('../includes/footer.ejs') %>
-    <!-- FOOTER -->
+	<!-- FOOTER -->
+	<%- include('../includes/footer.ejs') %>
+	<!-- FOOTER -->
 
-    <!-- jQuery Plugins -->
-    <%- include('../includes/end.ejs') %>
-   
+	<!-- jQuery Plugins -->
+	<%- include('../includes/end.ejs') %>
+
 
 </body>
 

@@ -51,8 +51,6 @@ const categoriesArr =
 //     }).catch(err => {
 //       console.log(err);
 //     });
-
-
 // };
 
 exports.getProducts = (req, res, next) => {
@@ -209,8 +207,10 @@ exports.getCart = (req, res, next) => {
         cartProducts: catItems
       });
     })
-
 };
+
+
+
 
 exports.postCart = (req, res, next) => { };
 

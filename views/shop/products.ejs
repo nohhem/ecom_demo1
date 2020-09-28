@@ -64,16 +64,19 @@
                                         </div>
                                         <h2 class="product-name"><a href="#"><%= product.title %></a></h2>
                                         <div class="product-btns">
-                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
 
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" value="<%= product._id %>" name="productId">
-
+                                            <% if(locals.isLoggedIn == true) { %>
+                                            <button class="main-btn icon-btn" onclick="addToWishCart(this);"><i
+                                                    class="fa fa-heart"></i></button>
+                                            <% } else { %>
+                                            <a class="main-btn icon-btn" href="/signup"><i class="fa fa-heart"></i></a>
+                                            <%   } %>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
                                             <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Add to Cart</button>
-                                           
                                         </div>
                                     </div>
                                 </div>

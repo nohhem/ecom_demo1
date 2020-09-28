@@ -21,7 +21,6 @@ const cartSchema = new Schema({
       qty: { type: Number, required: true }
     }
   ]
-
 }, { _id: false });
 
 const userSchema = new Schema({
@@ -39,7 +38,18 @@ const userSchema = new Schema({
   },
   resetToken: String,
   resetTokenExpiration: Date,
-  cart: cartSchema
+  cart: cartSchema,
+
+  wishlist: [{
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    }
+  }
+
+  ]
+
 });
 
 // console.log('userschema is ',typeof(userSchema));

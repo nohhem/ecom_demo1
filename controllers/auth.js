@@ -105,7 +105,8 @@ exports.postSignup = (req, res, next) => {
                         fullname: fullname,
                         email: email,
                         password: hashedPassword,
-                        cart: { items: [] }
+                        cart: { items: [] },
+                        wishlist: { items: [] }
                     });
                     return user.save();
                 })
@@ -123,6 +124,7 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
+    // In this page the user write the email which will recive the reset link
     let message = req.flash('error');
     if (message.length > 0) {
         message = message[0];
@@ -137,7 +139,7 @@ exports.getResetPassword = (req, res, next) => {
 };
 
 exports.postResetPassword = (req, res, next) => {
-
+    // the user has wrote his email so in this router we will send an email to him 
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
             console.log(err);
@@ -176,10 +178,10 @@ exports.postResetPassword = (req, res, next) => {
 
 
 exports.getNewPassword = (req, res, next) => {
+    // after the user click on the link we will bring him to this page 
     const token = req.params.token;
     User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
         .then(user => {
-
             res.render('auth/setNewpassword', {
                 path: '/new-password',
                 pageTitle: 'New Password',
@@ -193,6 +195,7 @@ exports.getNewPassword = (req, res, next) => {
 };
 
 exports.postNewPassword = (req, res, next) => {
+    //resetting  password
     const newPassword = req.body.password;
     const userId = req.body.userId;
     const passwordToken = req.body.passwordToken;

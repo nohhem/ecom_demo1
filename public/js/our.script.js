@@ -1,5 +1,6 @@
 
 const addToCart = (btn) => {
+    console.log("i am the cart")
     const prodId = btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
     //const productElement = btn.closest('div');
@@ -109,5 +110,29 @@ $(document).ready(function () {
         $("#logout").submit();
     });
 });
+
+const addToWishCart = (btn) => {
+    // this function will add the product to the wish list 
+    const prodId = btn.parentNode.querySelector('[name=productId]').value;
+    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+
+
+    fetch('/add-to-wish-list/' + prodId, {
+        method: 'POST',
+        headers: {
+            'csrf-token': csrf
+        }
+    }).then(result => {
+        return result.json();
+    }).then(data => {
+        console.log(data);
+        //addition succseful  // put notification code here 
+        swal("My Wish list", "The Product is Added Succesfully !", "success");
+    })
+        .catch(err => {
+            console.log(err)
+        });
+
+};
 
 

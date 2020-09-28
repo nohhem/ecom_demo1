@@ -1,5 +1,6 @@
 <!-- HEADER -->
 <header>
+
 	<!-- top Header -->
 	<div id="top-header">
 		<div class="container">
@@ -9,7 +10,6 @@
 			<div class="pull-right">
 				<ul class="header-top-links">
 					<li><a href="#">Store</a></li>
-					<li><a href="#">Newsletter</a></li>
 					<li><a href="#">FAQ</a></li>
 					<li class="dropdown default-dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">ENG <i
@@ -64,6 +64,30 @@
 			<div class="pull-right">
 				<ul class="header-btns">
 					<!-- Account -->
+					<% if(locals.isLoggedIn == true) { %>
+					<li class="header-account dropdown default-dropdown">
+						<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+							<div class="header-btns-icon">
+								<i class="fa fa-user-o"></i>
+							</div>
+							<strong class="text-uppercase"><%= user.fullname  %> <i
+									class="fa fa-caret-down"></i></strong>
+						</div>
+						<ul class="custom-menu">
+							<li><a href="#" class="cool-link"><i class="fa fa-user-o"></i> My Account</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-exchange"></i> Compare</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-check"></i> Checkout</a></li>
+							<li>
+								<a href="javascript:void(0)" class="login-button"><i class="fa fa-user-times"></i>
+									Log out </a>
+							</li>
+							<form action="/logout" method="post" id="logout">
+								<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+							</form>
+						</ul>
+					</li>
+					<% } else { %>
 					<li class="header-account dropdown default-dropdown">
 						<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
 							<div class="header-btns-icon">
@@ -71,16 +95,20 @@
 							</div>
 							<strong class="text-uppercase">My Account <i class="fa fa-caret-down"></i></strong>
 						</div>
-						<a href="#" class="text-uppercase">Login</a> / <a href="#" class="text-uppercase">Join</a>
+
+						<a href="/login" class="text-uppercase">Login</a> / <a href="/signup"
+							class="text-uppercase">Join</a>
 						<ul class="custom-menu">
-							<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-							<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
-							<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
-							<li><a href="#"><i class="fa fa-check"></i> Checkout</a></li>
-							<li><a href="#"><i class="fa fa-unlock-alt"></i> Login</a></li>
-							<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-user-o"></i> My Account</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-exchange"></i> Compare</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-check"></i> Checkout</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-unlock-alt"></i> Login</a></li>
+							<li><a href="#" class="cool-link"><i class="fa fa-user-plus"></i> Create An Account</a></li>
 						</ul>
 					</li>
+					<% } %>
+
 					<!-- /Account -->
 
 					<!-- Cart -->

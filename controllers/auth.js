@@ -106,7 +106,7 @@ exports.postSignup = (req, res, next) => {
                         email: email,
                         password: hashedPassword,
                         cart: { items: [] },
-                        wishlist: { items: [] }
+                        wishlist: []
                     });
                     return user.save();
                 })

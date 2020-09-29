@@ -1,6 +1,5 @@
 <!-- HEADER -->
 <header>
-
 	<!-- top Header -->
 	<div id="top-header">
 		<div class="container">
@@ -80,7 +79,8 @@
 							<li><a href="#" class="cool-link"><i class="fa fa-exchange"></i> Compare</a></li>
 							<li><a href="#" class="cool-link"><i class="fa fa-check"></i> Checkout</a></li>
 							<li>
-								<a href="javascript:void(0)" class="login-button"><i class="fa fa-user-times"></i>
+								<a href="javascript:void(0)" id="logoutbut" class="login-button"><i
+										class="fa fa-user-times"></i>
 									Log out </a>
 							</li>
 							<form action="/logout" method="post" id="logout">
@@ -110,7 +110,6 @@
 						</ul>
 					</li>
 					<% } %>
-
 					<!-- /Account -->
 
 					<!-- Cart -->
@@ -153,17 +152,6 @@
 						</div>
 					</li>
 					<!-- /Cart -->
-					<!-- wish List -->
-					<li class="header-cart dropdown default-dropdown">
-						<a class="dropdown-toggle" href="/wish_list">
-							<div class="header-btns-icon">
-								<i class="fa fa-heart-o"></i>
-								<span class="qty"></span>
-							</div>
-						</a>
-					</li>
-					<!-- wish List -->
-
 					<!-- Mobile nav toggle-->
 					<li class="nav-toggle">
 						<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>

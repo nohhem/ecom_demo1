@@ -101,3 +101,8 @@ hr {
 .header-top-links{
   font-weight: 900;
 }
+
+body {
+  background-image: url("paper.gif");
+  background-color: #cccccc;
+ }

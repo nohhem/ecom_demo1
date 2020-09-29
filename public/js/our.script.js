@@ -105,17 +105,22 @@ function wow_default_alert() {
 
 
 $(document).ready(function () {
-    $(document).on("click", ".login-button", function () {
-        //console.log(form);
+    $(document).on("click", "#logoutbut", function () {
         $("#logout").submit();
     });
 });
 
 const addToWishCart = (btn) => {
-    // this function will add the product to the wish list 
+    // when click on adding to whish lists those style will change them immediatly the reason why  is because when click on add product to wish list 
+    // the product will be added and the style will change after refreshing so those style to change the styles on click 
+    // first i find the id 
     const prodId = btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
 
+    $('#' + prodId).css('color', "#e4826c");
+    $('#' + prodId).css('box-shadow', "0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
+    $('#' + prodId).css('-webkit-box-shadow', " 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
+    // this function will add the product to the wish list 
 
     fetch('/add-to-wish-list/' + prodId, {
         method: 'POST',
@@ -134,5 +139,6 @@ const addToWishCart = (btn) => {
         });
 
 };
+
 
 

@@ -22,7 +22,7 @@ router.post('/add-to-cart/:productId', shopController.addToCart);
 
 /*-----------------wish list-----------------*/
 router.get('/wish_list', isAuth, wishListController.getWishList);
-router.post('/add-to-wish-list/:productId', isAuth, wishListController.postWishList);
+router.post('/add-remove-wish-list/:productId', isAuth, wishListController.postaddWishList);
 
 
 //router.get('/check_out', shopController.getCheckout);

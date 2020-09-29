@@ -110,19 +110,17 @@ $(document).ready(function () {
     });
 });
 
-const addToWishCart = (btn) => {
+const addAndremove = (btn) => {
     // when click on adding to whish lists those style will change them immediatly the reason why  is because when click on add product to wish list 
     // the product will be added and the style will change after refreshing so those style to change the styles on click 
-    // first i find the id 
+    // first i find the id the according to it we change style 
     const prodId = btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
 
-    $('#' + prodId).css('color', "#e4826c");
-    $('#' + prodId).css('box-shadow', "0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
-    $('#' + prodId).css('-webkit-box-shadow', " 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
+
     // this function will add the product to the wish list 
 
-    fetch('/add-to-wish-list/' + prodId, {
+    fetch('/add-remove-wish-list/' + prodId, {
         method: 'POST',
         headers: {
             'csrf-token': csrf
@@ -130,15 +128,26 @@ const addToWishCart = (btn) => {
     }).then(result => {
         return result.json();
     }).then(data => {
-        console.log(data);
+        console.log(data.data);
+        if (data.data == "add") {
+            $('#' + prodId).css('color', "#e4826c");
+            $('#' + prodId).css('box-shadow', "0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
+            $('#' + prodId).css('-webkit-box-shadow', " 0px 0px 0px 1px #F8694A inset, 0px 0px 0px 0px #F8694A");
+        } else if (data.data == "remove") {
+            $('#' + prodId).css('color', "#30323A");
+            $('#' + prodId).css('box-shadow', "0px 0px 0px 1px #DADADA inset, 0px 0px 0px 6px transparent");
+            $('#' + prodId).css('-webkit-box-shadow', "0px 0px 0px 1px #DADADA inset, 0px 0px 0px 6px transparent");
+            $('#' + prodId).css('background-color', "#FFF");
+        }
         //addition succseful  // put notification code here 
-        swal("My Wish list", "The Product is Added Succesfully !", "success");
+        //swal("My Wish list", "The Product is Added Succesfully !", "success");
     })
         .catch(err => {
             console.log(err)
         });
 
 };
+
 
 
 

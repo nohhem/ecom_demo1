@@ -69,12 +69,12 @@
                                             <% if(locals.isLoggedIn == true) { %>
 
                                             <% if(locals.user.wishlist.includes(product._id)) { %>
-                                            <button class="main-btn Cusmain_after_adding icon-btn"><i
-                                                    class="fa fa-heart"></i>fsddfssfdfsd</button>
-
+                                            <button class="main-btn Cusmain_after_adding icon-btn"
+                                                id="<%= product._id %>" onclick="addAndremove(this);"><i
+                                                    class="fa fa-heart"></i></button>
                                             <% }else{ %>
                                             <button class="main-btn icon-btn" id="<%= product._id %>"
-                                                onclick="addToWishCart(this);"><i class="fa fa-heart"></i></button>
+                                                onclick="addAndremove(this);"><i class="fa fa-heart"></i></button>
                                             <% } %>
 
                                             <% } else { %>

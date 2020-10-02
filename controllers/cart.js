@@ -28,14 +28,15 @@ exports.getCart = (req, res, next) => {
     }
   };
 
-  exports.postCartChangeQty = (req, res, next) => {
+  exports.postCartChangeQty = async (req, res, next) => {
+
+    try{
     //async (due to client side request)
     const prodId = req.params.productId;
     console.log('exports.addToCart req.body',req.body.reqData )//from req.body we get the new qty
     let newQty = req.body.reqData
 
-    Product.findById(prodId)
-    .then(product => {
+    const product = await Product.findById(prodId)
       //check if the user is logged in or not
       if(!req.session.user){
         //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
@@ -49,22 +50,20 @@ exports.getCart = (req, res, next) => {
           req.session.tempCart=Cart.hydrate(req.session.tempCart);
         }
         //ourcart is ready ,now change the qty of item
-        newupdatedQuantity=req.session.tempCart.changeCartItemQuantity(prodId,newQty);
+         newupdatedQuantity = await req.session.tempCart.changeCartItemQuantity(prodId,newQty);
+        console.log('the new udpated qty ,' ,newupdatedQuantity);
         //req.session.tempCart.addToCart(prodId);
         console.log(req.session.tempCart);
       }else{
           //user is loggedin => toDo
       }
-    
-    })
-    .then(() => {
       res.status(200).json({message:'success',qty:newupdatedQuantity});
       
-    })
-    .catch(err => {
+
+    }catch(err){
       //console.log('error',err);
       res.status(500).json({message:'Adding product failed'});
-    });
+    }
   };
 
 

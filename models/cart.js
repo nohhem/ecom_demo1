@@ -79,17 +79,17 @@ getAvQty = async function(prodId,cart,requestedQty){
 
 
 
-cartSchema.methods.changeCartItemQuantity = function(prodId,newQty) { //most generec funtion
+cartSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
   //check if the product is already exist ,=> update the quantity
   //if the product dose not exsit then added it
   console.log('entered cartSchema.methods.changeCartItemQuantity ,with qty :',newQty);
-
+  const availableQty=await getAvQty(prodId,this,newQty); // get the quantity we can add 
   //to be sure just check if an item exsit already //insurance puposes 
   const exists = (item) => item.productId == prodId;
   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-  console.log((cartProductIndex>=0 && newQty!=0));
+  console.log((cartProductIndex>=0 && availableQty!=0));
   if(cartProductIndex>=0 && newQty!=0){//the product exsit and the new quantity not zero,update the quantity
-      this.items[cartProductIndex].qty=newQty
+      this.items[cartProductIndex].qty=availableQty
       console.log('cartSchema.methods.changeCartItemQuantity',this.items[cartProductIndex].qty);
       return this.items[cartProductIndex].qty;
   }else if(newQty<=0){

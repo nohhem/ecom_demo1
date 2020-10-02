@@ -1,4 +1,4 @@
-
+// NOH CODE for CART//
 const deleteFromCart = (btn) => {
     const prodId= btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
@@ -19,7 +19,10 @@ const deleteFromCart = (btn) => {
         //maniplute the dom => delete item if nedded or decrease quantity
         if(data.qty <= 0){
             //delete item
-            document.getElementById(prodId).remove();
+            //document.getElementById(prodId).remove();
+
+            $("#tbl").load(" #tbl > *");
+            $('#cover-spin').hide();
         }
         //swal("My Cart","The Product is deleted Succesfully !" , "success");
         
@@ -125,5 +128,7 @@ function createElementFromHTML(htmlString) {
     return div.firstChild; 
   }
 
+  // NOH CODE for CART//
+  
  
 

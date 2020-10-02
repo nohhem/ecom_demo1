@@ -66,12 +66,12 @@ exports.getProducts = (req, res, next) => {
     //fetch cart info
     let cart =Cart.hydrate(req.session.tempCart);
     let cartItems ;
+    console.log('exports.getProducts ,cart',cart.items);
 
     cart
     .populate('items.productId')
     .execPopulate()
     .then(pcart => {
-      //console.log('getCartProducts ,cart',pcart.items);
       cartItems= pcart.items;
       Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
         res.render('shop/products', {

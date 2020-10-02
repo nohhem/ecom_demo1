@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Product = require('./product');
 
 const Schema = mongoose.Schema;
 
@@ -16,21 +17,67 @@ const cartSchema = new Schema({
 
 },{ _id : false });
 
-cartSchema.methods.addToCart = function(prodId) {
-    //check if the product is already exist ,=> ++quantity
-    //if the product dose not exsit then added it
-    const exists = (item) => item.productId == prodId;
-    const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-    if(cartProductIndex>=0){//the product exsit increase the quantity
-        this.items[cartProductIndex].qty++;
-    }else{//add the product
-        this.items.push({
-            productId:prodId,
-            qty:1
-        });
-    }
-    console.log('item added to cart :',this);
+//bakcup
+
+// cartSchema.methods.addToCart = function(prodId) {
+//   //check if the product is already exist ,=> ++quantity
+//   //if the product dose not exsit then added it
+//   const exists = (item) => item.productId == prodId;
+//   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+//   if(cartProductIndex>=0){//the product exsit increase the quantity
+//       this.items[cartProductIndex].qty++;
+//   }else{//add the product
+//       this.items.push({
+//           productId:prodId,
+//           qty:1
+//       });
+//   }
+//   console.log('item added to cart :',this);
+// };
+
+cartSchema.methods.addToCart =async function(prodId) {
+  //check if the product is already exist ,=> ++quantity
+  //if the product dose not exsit then added it
+  let availableQty=0;
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  if(cartProductIndex>=0){//the product exsit increase the quantity
+    availableQty=await getAvQty(prodId,this,this.items[cartProductIndex].qty+1);
+    this.items[cartProductIndex].qty=availableQty;
+  }else{//add the product
+    availableQty=await getAvQty(prodId,this,1);
+      this.items.push({
+          productId:prodId,
+          qty:availableQty
+      });
+  }
+  console.log('cartSchema.methods.addToCart,item added to cart :',this);
 };
+
+
+//helper function
+getAvQty = async function(prodId,cart,requestedQty){
+  try{
+  const product = await Product.findById(prodId);
+  const availableQty =product.stockQty;
+  console.log('availableQty',availableQty);
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  if(availableQty>=requestedQty){
+    return requestedQty;
+  }else{
+    return availableQty;
+  }
+
+  }
+  catch(error){
+    console.log(error);
+  }
+
+  
+};
+
+
 
 cartSchema.methods.changeCartItemQuantity = function(prodId,newQty) { //most generec funtion
   //check if the product is already exist ,=> update the quantity
@@ -69,8 +116,6 @@ cartSchema.methods.deleteFromCart = function(prodId) {
         console.log('error','cartSchema.methods.deleteFromCart');
         return -1;
       }
-    
-  
 };
 
 

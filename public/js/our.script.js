@@ -52,6 +52,7 @@ const addToCart = (btn) => {
         // console.log('entered ourscript then');
         // console.log(data);
         //increase cart quantity
+        console.log('data form ourscript after fetching is done',data)
         document.getElementById("cartTotalQty").innerHTML = data.qty ;
         swal("My Cart","The Product is Added Succesfully !" , "success");
         

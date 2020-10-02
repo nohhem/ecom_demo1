@@ -80,16 +80,17 @@ exports.getCart = (req, res, next) => {
     //
   };
 
-  exports.postAddToCart = (req, res, next) => {
+  exports.postAddToCart = async (req, res, next) => {
+    try{
     //async (due to client side request)
     const prodId = req.params.productId;
-    console.log('exports.addToCart req.body',req.body )
-    Product.findById(prodId)
-    .then(product => {
+    console.log('----------exports.addToCart ------------------------',req.body );
+    console.log('our cart ',req.session.tempCart);
+    product = await Product.findById(prodId)
       //check if the user is logged in or not
       if(!req.session.user){
         //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
-        if(!req.session.tempCart){
+        if(!req.session.tempCart){wa
           //no Cart
           //create a cart
           //console.log('no Cart,create a new one')
@@ -100,20 +101,15 @@ exports.getCart = (req, res, next) => {
           req.session.tempCart=Cart.hydrate(req.session.tempCart);
         }
         //add product to cart
-        req.session.tempCart.addToCart(prodId);
-        console.log(req.session.tempCart);
+        await req.session.tempCart.addToCart(prodId);
+        console.log('exports.postAddToCart finsihed ',req.session.tempCart);
+        res.status(200).json({message:'success',qty:req.session.tempCart.items.length});
       }
-    
-    })
-    .then(() => {
-      //console.log('cart created');
-      res.status(200).json({message:'success',qty:req.session.tempCart.items.length});
       
-    })
-    .catch(err => {
-      //console.log('error',err);
+    }catch (err) {
+      console.log('error',err);
       res.status(500).json({message:'Adding product failed'});
-    });
+    }
   };
   
   

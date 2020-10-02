@@ -55,34 +55,15 @@ cartSchema.methods.addToCart =async function(prodId) {
 };
 
 
-//helper function
-getAvQty = async function(prodId,cart,requestedQty){
-  try{
-  const product = await Product.findById(prodId);
-  const availableQty =product.stockQty;
-  console.log('availableQty',availableQty);
-  const exists = (item) => item.productId == prodId;
-  const cartProductIndex=cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-  if(availableQty>=requestedQty){
-    return requestedQty;
-  }else{
-    return availableQty;
-  }
-
-  }
-  catch(error){
-    console.log(error);
-  }
-
-  
-};
-
 
 
 cartSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
   //check if the product is already exist ,=> update the quantity
   //if the product dose not exsit then added it
   console.log('entered cartSchema.methods.changeCartItemQuantity ,with qty :',newQty);
+  if(newQty <0){
+    newQty=0;
+  }
   const availableQty=await getAvQty(prodId,this,newQty); // get the quantity we can add 
   //to be sure just check if an item exsit already //insurance puposes 
   const exists = (item) => item.productId == prodId;
@@ -117,6 +98,28 @@ cartSchema.methods.deleteFromCart = function(prodId) {
         return -1;
       }
 };
+
+
+//helper function
+getAvQty = async function(prodId,cart,requestedQty){
+  try{
+  const product = await Product.findById(prodId);
+  const availableQty =product.stockQty;
+  console.log('availableQty',availableQty);
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  if(availableQty>=requestedQty){
+    return requestedQty;
+  }else{
+    return availableQty;
+  }
+
+  }
+  catch(error){
+    console.log(error);
+  }
+};
+
 
 
 

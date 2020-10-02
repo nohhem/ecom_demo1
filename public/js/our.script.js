@@ -22,6 +22,7 @@ const deleteFromCart = (btn) => {
             //document.getElementById(prodId).remove();
 
             $("#tbl").load(" #tbl > *");
+            $("#header-cart").load(" #header-cart > *");
             $('#cover-spin').hide();
         }
         //swal("My Cart","The Product is deleted Succesfully !" , "success");
@@ -56,9 +57,11 @@ const addToCart = (btn) => {
         // console.log(data);
         //increase cart quantity
         console.log('data form ourscript after fetching is done',data)
+        //dom
+        $("#header-cart").load(" #header-cart > *");
         document.getElementById("cartTotalQty").innerHTML = data.qty ;
+
         swal("My Cart","The Product is Added Succesfully !" , "success");
-        
     })
     .catch(err =>{
         console.log(err)

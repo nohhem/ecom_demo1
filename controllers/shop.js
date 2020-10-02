@@ -55,6 +55,24 @@ const categoriesArr=
 
 // };
 
+exports.postSearch = (req,res,next) => {
+  console.log(req.body.searchText);
+  const searchText = req.body.searchText;
+  Product.find( { $text: { $search: searchText } } )
+  .then(products => {
+    console.log('products.length',products.length);
+    res.render('shop/products', {
+      products: products,
+      total: products.length,
+      limit: 4,
+      page: 1,
+      pages: parseInt(products/4),
+      cartProducts:[]
+    });
+
+  })
+};
+
 exports.getProducts = (req, res, next) => {
   // console.log('getProducts controller')
   // console.log(getCartProducts(req));

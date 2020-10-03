@@ -38,7 +38,7 @@ exports.getCart = (req, res, next) => {
 
     const product = await Product.findById(prodId)
       //check if the user is logged in or not
-      if(!req.session.user){
+      if(!req.user){
         //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
         if(!req.session.tempCart){
           //no Cart,create a new cart
@@ -87,7 +87,7 @@ exports.getCart = (req, res, next) => {
     console.log('our cart ',req.session.tempCart);
     product = await Product.findById(prodId)
       //check if the user is logged in or not
-      if(!req.session.user){
+      if(!req.user){
         //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
         if(!req.session.tempCart){
           //no Cart
@@ -104,12 +104,10 @@ exports.getCart = (req, res, next) => {
         console.log('exports.postAddToCart finsihed ',req.session.tempCart);
         res.status(200).json({message:'success',qty:req.session.tempCart.items.length});
       }else if (req.session.user){ //we have user ,add to user cart
-        //we have 2 options edit the cart itself and save it,
-        req.session.user.cart =Cart.hydrate(req.session.user.cart);
-        req.session.user.cart.addToCart(prodId);
+        req.user.addToCart(prodId);
         //save the cart of the user TODO
-        req.session.user.fullname='noh1fullname';//test toremove
-        await User.hydrate(req.session.user).save();
+        req.user.fullname='noh1fullname';//test toremove
+        //await User.hydrate(req.session.user).save();
         res.status(200).json({message:'success',qty: req.session.user.cart.items.length});
       }
       

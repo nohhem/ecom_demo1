@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const Cart = require('../models/cart');
+const Product = require('../models/product');
 
 // const Cart = require('./cart');
 // var cartSchema= new Cart();
@@ -41,6 +42,73 @@ const userSchema = new Schema({
   resetTokenExpiration: Date,
   cart: cartSchema
 });
+
+// userSchema.methods.addToCart = async function(prodId) {
+//   try {
+//     cartObj = Cart.hydrate(this.cart);
+//     await cartObj.addToCart(prodId);
+//     //console.log('cartObj',cartObj);
+//     this.cart.items=cartObj.items;
+    
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+
+userSchema.methods.addToCart =async function(prodId) {
+
+  try {
+    //check if the product is already exist ,=> ++quantity
+  //if the product dose not exsit then added it
+  let availableQty=0;
+  //const updatedCartItems = [...this.cart.items];
+  //console.log('updatedCartItems before adding',updatedCartItems);
+
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=this.cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  console.log('cartProductIndex',cartProductIndex);
+  if(cartProductIndex>=0){//the product exsit increase the quantity
+    availableQty=await getAvQty(prodId,this.cart,this.cart.items[cartProductIndex].qty+1);
+    console.log('availableQty',availableQty);
+    console.log('this.cart.items[cartProductIndex].qty',this.cart.items[cartProductIndex].qty);
+    this.cart.items[cartProductIndex].qty=availableQty;
+    console.log( this.cart.items[cartProductIndex].qty);
+  }else{//add the product
+    availableQty=await getAvQty(prodId,this.cart,1);
+    console.log('this.cart.items before pushing new product',this.cart.items);
+      this.cart.items.push({
+          productId:prodId,
+          qty:availableQty
+      });
+      console.log('this.cart.items after pushing new product',this.cart.items);
+      console.log('userschema.methods.addToCart ,this.cart.items ',this.cart.items);
+  }
+  await this.save();
+  //console.log('cartSchema.methods.addToCart,item added to cart :',this.cart); 
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//helper function
+getAvQty = async function(prodId,cart,requestedQty){
+  console.log('getAvQty', prodId);
+  try{
+  const product = await Product.findById(prodId);
+  const availableQty =product.stockQty;
+  console.log('availableQty',availableQty);
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  if(availableQty>=requestedQty){
+    return requestedQty;
+  }else{
+    return availableQty;
+  }
+  }
+  catch(error){
+    console.log(error);
+  }
+};
 
 // console.log('userschema is ',typeof(userSchema));
 // console.log('userschema is ',userSchema);

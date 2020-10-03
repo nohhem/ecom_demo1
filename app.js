@@ -77,8 +77,7 @@ app.use(session({
 //Mware for csrf protection
 app.use(csrfProtection);
 
-//app.use(testController.test1);
-// app.use(testController.test2mockDataGeneration);
+
 // app.use(flash());
 
 //to auhtenticate any response we send to the user (the user will recieve a valid csrf token to be used for his next request)
@@ -90,7 +89,8 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then(user => {
-      res.locals.user = user;
+      res.locals.user = user; //m.zobi ? not sure 
+      req.user = user; //attach the current session user to the request,in order to access the user in any controller //noh
       next();
     })
     .catch(err => console.log(err));
@@ -100,14 +100,10 @@ app.use((req, res, next) => {
   //any var registred to res.locals is global and can be accessed directly bby writing its name ex: csrfToken
   res.locals.isLoggedIn = req.session.isLoggedIn;
   res.locals.csrfToken = req.csrfToken(); //we need to include it as hidden input in every post request 
-
-
-  //tests
-  // console.log(res.locals);
-  // counter_test=counter_test+1;
-  // console.log('passed from here ',counter_test,'times----------');
   next();
 });
+
+
 
 //Routes Middlewares:
 // app.use('/admin', adminRoutes);

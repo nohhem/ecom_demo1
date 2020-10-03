@@ -36,7 +36,8 @@ const cartSchema = new Schema({
 // };
 
 cartSchema.methods.addToCart =async function(prodId) {
-  //check if the product is already exist ,=> ++quantity
+  try {
+    //check if the product is already exist ,=> ++quantity
   //if the product dose not exsit then added it
   let availableQty=0;
   const exists = (item) => item.productId == prodId;
@@ -50,11 +51,13 @@ cartSchema.methods.addToCart =async function(prodId) {
           productId:prodId,
           qty:availableQty
       });
+      console.log('cartSchema.methods.addToCart ,this.items ',this.items);
   }
-  console.log('cartSchema.methods.addToCart,item added to cart :',this);
+  //console.log('cartSchema.methods.addToCart,item added to cart :',this); 
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-
 
 
 cartSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
@@ -102,6 +105,7 @@ cartSchema.methods.deleteFromCart = function(prodId) {
 
 //helper function
 getAvQty = async function(prodId,cart,requestedQty){
+  console.log('getAvQty', prodId);
   try{
   const product = await Product.findById(prodId);
   const availableQty =product.stockQty;

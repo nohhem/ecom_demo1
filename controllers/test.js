@@ -13,6 +13,7 @@ exports.test0 = async (req,res,next) => {
     req.session.testtt= 'testdata3';
     //await req.session.save();
     console.log(req.session.user.fullname,req.session.testdata);
+    
     res.status(200).json({message:'success',data:req.session});
     //return res.redirect('/');
 };

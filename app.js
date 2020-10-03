@@ -11,6 +11,7 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
 const Category = require('./models/category');
+const User = require('./models/user');
 //
 
 
@@ -32,6 +33,7 @@ const store = new MongoDBStore({
   collection: 'sessions'
 });
 const csrfProtection = csrf();
+app.use(flash());
 
 Category.find({}).then(result => {
   app.locals.categories = result;
@@ -56,7 +58,7 @@ app.set('views', 'views');
 //Import Routes :
 // const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-//const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth');
 
 
 //Defining app Middlewares:
@@ -69,7 +71,7 @@ app.use('/img', express.static(path.join(__dirname, 'img')));
 app.use(session({
   secret: 'my secret',
   store: store,
-  resave: false, 
+  resave: false,
   saveUninitialized: false //should be false so that it we do not store session for nothing
 }));
 //Mware for csrf protection
@@ -81,7 +83,19 @@ app.use(csrfProtection);
 
 //to auhtenticate any response we send to the user (the user will recieve a valid csrf token to be used for his next request)
 //
-let counter_test=0;
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then(user => {
+      res.locals.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
 app.use((req, res, next) => {
   //any var registred to res.locals is global and can be accessed directly bby writing its name ex: csrfToken
   res.locals.isLoggedIn = req.session.isLoggedIn;
@@ -98,6 +112,8 @@ app.use((req, res, next) => {
 //Routes Middlewares:
 // app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
+
 // app.use(authRoutes);
 // app.use(errorController.get404);
 // app.get('/500', errorController.get500);

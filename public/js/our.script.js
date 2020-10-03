@@ -42,10 +42,10 @@ const addToCart = (btn) => {
     // } 
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
-    fetch('/add-to-cart/' + prodId,{
+    fetch('/add-to-cart/' + prodId, {
         method: 'POST',
-        headers : {
-            'csrf-token' : csrf
+        headers: {
+            'csrf-token': csrf
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {
@@ -119,19 +119,25 @@ const testajaxOnChangeItemQty= (btn) => {
 
 
 
-//----code for notify-----//
-//----code for notify-----//
 
+//code that might come in handy for DOM manipulation
 function createElementFromHTML(htmlString) {
     console.log('createElementFromHTML')
     var div = document.createElement('div');
     div.innerHTML = htmlString.trim();
-    
-    // Change this to div.childNodes to support multiple top-level nodes
-    return div.firstChild; 
-  }
 
-  // NOH CODE for CART//
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild;
+}
+// NOH CODE for CART//
   
- 
+
+// TODO ??? who did this , and why ?
+$(document).ready(function () {
+    $(document).on("click", ".login-button", function () {
+        //console.log(form);
+        $("#logout").submit();
+    });
+});
+
 

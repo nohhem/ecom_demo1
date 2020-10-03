@@ -1,14 +1,18 @@
+
 // NOH CODE for CART//
 const deleteFromCart = (btn) => {
     const prodId= btn.parentNode.querySelector('[name=productId]').value;
+
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
     console.log('productId',prodId);
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
+
     fetch('/delete-from-cart/' + prodId ,{
+
         method: 'POST',
-        headers : {
-            'csrf-token' : csrf
+        headers: {
+            'csrf-token': csrf
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {
@@ -129,9 +133,8 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
-// NOH CODE for CART//
-  
 
+// NOH CODE for CART//
 // TODO ??? who did this , and why ?
 $(document).ready(function () {
     $(document).on("click", ".login-button", function () {
@@ -140,4 +143,6 @@ $(document).ready(function () {
     });
 });
 
-
+function wow_default_alert() {
+    alert("Hello World!");
+}

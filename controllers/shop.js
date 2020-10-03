@@ -65,7 +65,6 @@ exports.getProducts = (req, res, next) => {
   let limit = 12;
   if (req.session.tempCart) {
     //fetch cart info
-
     let cart = Cart.hydrate(req.session.tempCart);
     let cartItems;
 
@@ -106,6 +105,7 @@ exports.getProducts = (req, res, next) => {
   }
 
 };
+
 
 
 exports.getProduct = (req, res, next) => {

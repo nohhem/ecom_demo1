@@ -112,15 +112,15 @@
 					<!-- /Account -->
 
 					<!-- Cart -->
-					<li class="header-cart dropdown default-dropdown">
+					<li id ="header-cart" class="header-cart dropdown default-dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 							<div class="header-btns-icon">
 								<i class="fa fa-shopping-cart"></i>
-								<span class="qty"> <%=cartProducts.length%> </span>
+								<span id="cartTotalQty" class="qty"> <%=cartProducts.length%> </span>
 							</div>
 							<strong class="text-uppercase">My Cart:</strong>
 							<br>
-							<span>35.20$</span>
+							
 						</a>
 						<div class="custom-menu">
 							<div id="shopping-cart">

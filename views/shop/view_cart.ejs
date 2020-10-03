@@ -9,6 +9,9 @@
     <%- include('../includes/nav.ejs') %>
     <!-- NAVIGATION -->
 
+	<!-- Declearing Ejs Variables >>>>> -->
+	<% let total= 0  %>
+	<% let subTotal = 0  %>
 
 	<!-- BREADCRUMB -->
 	<div id="breadcrumb">
@@ -28,16 +31,14 @@
 			<!-- row -->
 			<div class="row">
 				<form id="checkout-form" class="clearfix">
-					
-
-					
 
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
 								<h3 class="title">My Cart</h3>
 							</div>
-							<table class="shopping-cart-table table">
+							
+							<table id="tbl" class="shopping-cart-table table">
 								<thead>
 									<tr>
 										<th>Product</th>
@@ -49,22 +50,32 @@
 									</tr>
 								</thead>
 								<tbody>
-                                    <!-- dynamic items -->
+									<!--  -->
+									
+									<!-- dynamic items -->
                                     <% for (let item of cartProducts) { %>
-									<tr>
+									<tr id ="<%= item.productId._id %>">
 										<td class="thumb"><img src="<%= item.productId.imageUrl %>" alt=""></td>
 										<td class="details">
-											<a href="#">Product Name Goes Here</a>
+											<a href="/products/<%= item.productId._id %> "><%= item.productId.title %></a>
 											<ul>
 												<li><span>Size: XL</span></li>
 												<li><span>Color: Camelot</span></li>
 											</ul>
 										</td>
+										<!-- onChangeItemQty(this); -->
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
-                                        <td class="qty text-center"><input class="input" type="number" value="<%= item.qty %>"></td>
-                                        <% let  total = (item.productId.price * item.qty).toFixed(2) %>
+										<td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>" onclick="$('#cover-spin').show(0); onChangeItemQty(this);"></td>
+										<!-- my loading spinner -->
+										<div id="cover-spin"></div>  
+										<!-- my loading spinner -->
+										<% total = (item.productId.price * item.qty) %>
+										<% subTotal += total %>
 										<td class="total text-center"><strong class="primary-color">$ <%= total %></strong></td>
-										<td class="text-right"><button class="main-btn icon-btn"><i class="fa fa-close"></i></button></td>
+										<td class="text-right"><button type="button" class="main-btn icon-btn" onclick="$('#cover-spin').show(0); deleteFromCart(this); ">
+										<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="productId" value="<%= item.productId._id %>" >
+											<i class="fa fa-close"></i></button></td>
                                     </tr>
                                     <% } %>
                                     <!--  -->
@@ -73,7 +84,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>SUBTOTAL</th>
-										<th colspan="2" class="sub-total">$97.50</th>
+										<th colspan="2" class="sub-total">$ <%= parseFloat(subTotal).toFixed(2) %></th>
 									</tr>
 									<tr>
 										<th class="empty" colspan="3"></th>
@@ -83,7 +94,7 @@
 									<tr>
 										<th class="empty" colspan="3"></th>
 										<th>TOTAL</th>
-										<th colspan="2" class="total">$97.50</th>
+										<th colspan="2" class="total">$ <%= parseFloat(subTotal).toFixed(2) %></th>
 									</tr>
 								</tfoot>
 							</table>
@@ -108,7 +119,9 @@
     <!-- FOOTER -->
 
     <!-- jQuery Plugins -->
-    <%- include('../includes/end.ejs') %>
+	<%- include('../includes/end.ejs') %>
+	
+	<script src="/js/our.script.js"></script>
    
 
 </body>

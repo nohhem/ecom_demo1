@@ -106,51 +106,7 @@ exports.getProducts = (req, res, next) => {
 
 };
 
-// exports.getProducts = (req, res, next) => {
-//   // console.log('getProducts controller')
-//   // console.log(getCartProducts(req));
 
-//   if(req.session.tempCart){
-//     let cart =Cart.hydrate(req.session.tempCart);
-//     let cartItems ;
-//     cart
-//     .populate('items.productId')
-//     .execPopulate()
-//     .then(pcart => {
-//       //console.log('getCartProducts ,cart',pcart.items);
-//       cartItems= pcart.items;
-//     })
-//     .then(()=>{
-//       return Product.find().limit(20);
-//     }).then(products => {
-//       res.render('shop/products', {
-//         pageTitle: 'All Products',
-//         path: '/products',
-//         products: products,
-//         cartProducts:cartItems
-//       });
-//     }).catch(err => {
-//       console.log(err)
-//     });
-
-//   }else{
-//     Product.find().limit(20)
-//     .then(products => {
-//       res.render('shop/products', {
-//         pageTitle: 'All Products',
-//         path: '/products',
-//         products: products,
-//         cartProducts:[]
-//       });
-//     })
-//     .catch(err => {
-//         console.log(err)
-//       });
-//   }
-
-
-
-// };
 
 exports.getProduct = (req, res, next) => {
   //try to obtain cart items bbefore rendering 
@@ -193,6 +149,7 @@ exports.getCheckout = (req, res, next) => {
   });
 };
 /*--------------------------------------*/
+
 
 exports.getCart = (req, res, next) => {
   let cart = Cart.hydrate(req.session.tempCart);
@@ -253,7 +210,7 @@ exports.addToCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => { };
 
-exports.postCartDeleteProduct = (req, res, next) => { };
+
 
 exports.postOrder = (req, res, next) => { };
 
@@ -324,14 +281,6 @@ exports.getProducts = (req, res, next) => {
 //   });
 // };
 
-
-
-
-
-
-
-
-
 //  Product.find({ categoryId: categoryId })
 //     .then(products => {
 //       res.render('shop/products', {
@@ -340,9 +289,6 @@ exports.getProducts = (req, res, next) => {
 //         path: '/products/' + categoryId
 //       });
 //     })
-
-
-
 
 // exports.getPagination = (req, res, next) => {
 //   let page = req.params.page || 1;

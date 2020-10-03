@@ -18,9 +18,7 @@ exports.postaddWishList = (req, res, next) => {
     // if product not in list then we add it 
     // if product exist we remove it 
     const prodId = req.params.productId;
-
     check_dublicate_wishlist_item(prodId, res.locals.user.wishlist).then(isExist => {
-        console.log(isExist)
         if (isExist == false) {
             User.findById(res.locals.user._id).then(user => {
                 user.wishlist.push(prodId)
@@ -45,13 +43,36 @@ exports.postaddWishList = (req, res, next) => {
 
 };
 
-exports.postremoveWishList = (req, res, next) => {
-    // here i find the user and then add the products
-    //let WishList = WishList.hydrate(req.session.tempWishList);
-    const prodId = req.params.productId;
+exports.addToCartGroup = (req, res, next) => { }
+
+exports.removeFromWishListGroup = (req, res, next) => {
+    // console.log(req.body.values)
+
+    let groupWishLIst = JSON.parse(req.body.values);
+    let userid = res.locals.user._id
+
+    User.findById(userid).then(user => {
+        console.log(user.wishlist)
+        for (i = 0; i < user.wishlist.length; i++) {
+            for (j = 0; j < groupWishLIst.length; j++) {
+                if (groupWishLIst[j] == user.wishlist[i]) {
+
+                    user.wishlist.splice(i, 1);
+                }
+            }
+
+        }
+        return user.save();
+    }).then(newWishListuser => {
+        console.log("i am the mother fucker " + newWishListuser.wishlist)
+        wishList_loop(newWishListuser.wishlist).then(products => {
+            res.status(200).json({ data: products });
+        })
+    })
 
 
-};
+
+}
 
 
 async function wishList_loop(addedProducts) {
@@ -64,9 +85,10 @@ async function wishList_loop(addedProducts) {
             wishListItems.push(results[0]);
         })
     }
-
     return wishListItems;
 }
+
+
 
 async function check_dublicate_wishlist_item(newProduct, inListProducts) {
     // in this function i check if the product alreay exist in the wish list 
@@ -77,3 +99,6 @@ async function check_dublicate_wishlist_item(newProduct, inListProducts) {
     }
     return false
 }
+
+
+

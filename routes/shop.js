@@ -24,6 +24,9 @@ router.post('/add-to-cart/:productId', shopController.addToCart);
 router.get('/wish_list', isAuth, wishListController.getWishList);
 router.post('/add-remove-wish-list/:productId', isAuth, wishListController.postaddWishList);
 
+router.post('/add-cart-group', isAuth, wishListController.addToCartGroup);
+router.post('/remove-wish-list-group', isAuth, wishListController.removeFromWishListGroup);
+
 
 //router.get('/check_out', shopController.getCheckout);
 // router.post('/cart-delete-item', shopController.postCartDeleteProduct);

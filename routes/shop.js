@@ -4,6 +4,7 @@ const express = require('express');
 
 const shopController = require('../controllers/shop');
 const cartController = require('../controllers/cart');
+const testController = require('../controllers/test');
 
 const router = express.Router();
 //note check the best practice for naming the routes check ref websites
@@ -22,6 +23,8 @@ router.post('/edit-cart/:productId', cartController.postCartChangeQty);  //edit-
 router.post('/add-to-cart/:productId', cartController.postAddToCart); //add to cart include :add a new item or increase the quantity of existing item
 router.post('/delete-from-cart/:productId', cartController.postCartDeleteItem);
 
+//test routes
+router.get('/test0',testController.test0);
 
 //router.get('/check_out', shopController.getCheckout);
 // router.post('/cart-delete-item', shopController.postCartDeleteProduct);

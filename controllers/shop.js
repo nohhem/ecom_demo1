@@ -63,11 +63,11 @@ exports.getProducts = (req, res, next) => {
   const categoryId = req.params.categoryId || categoriesArr;
   let page = req.params.page || 1;
   let limit = 12;
-  if (req.session.tempCart) {
+  if (req.session.tempCart || req.session.user) { //do we have a user or tmepcart
     //fetch cart info
-    let cart = Cart.hydrate(req.session.tempCart);
+    let cart = req.session.user.cart || req.session.tempCart //get the cart
+    cart = Cart.hydrate(cart);
     let cartItems;
-
     cart
       .populate('items.productId')
       .execPopulate()
@@ -191,7 +191,6 @@ exports.addToCart = (req, res, next) => {
           req.session.tempCart = Cart.hydrate(req.session.tempCart);
         }
         //add product to cart
-
         req.session.tempCart.addToCart(prodId);
         console.log(req.session.tempCart);
       }

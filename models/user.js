@@ -82,21 +82,21 @@ userSchema.methods.mergeCart = function(cart1) {
 
 
 
-userSchema.methods.addToCart =async function(prodId) {
-
+userSchema.methods.addToCart =async function(prodId,qty) {
+  console.log('userSchema.methods.addToCart  qty',qty);
   try {
   let availableQty=0;
   const exists = (item) => item.productId == prodId;
   const cartProductIndex=this.cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
   console.log('cartProductIndex',cartProductIndex);
   if(cartProductIndex>=0){//the product exsit increase the quantity
-    availableQty=await getAvQty(prodId,this.cart,this.cart.items[cartProductIndex].qty+1);
-    console.log('availableQty',availableQty);
+    availableQty=await getAvQty(prodId,this.cart,this.cart.items[cartProductIndex].qty+ qty );
+    console.log('availableQty pp',availableQty);
     console.log('this.cart.items[cartProductIndex].qty',this.cart.items[cartProductIndex].qty);
     this.cart.items[cartProductIndex].qty=availableQty;
     console.log( this.cart.items[cartProductIndex].qty);
   }else{//add the new product
-    availableQty=await getAvQty(prodId,this.cart,1);
+    availableQty=await getAvQty(prodId,this.cart,qty);
     console.log('this.cart.items before pushing new product',this.cart.items);
       this.cart.items.push({
           productId:prodId,
@@ -160,7 +160,7 @@ userSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //mo
 
 //helper function
 getAvQty = async function(prodId,cart,requestedQty){
-  console.log('getAvQty', prodId);
+  console.log('getAvQty,reqsted qty', requestedQty);
   try{
   const product = await Product.findById(prodId);
   const availableQty =product.stockQty;

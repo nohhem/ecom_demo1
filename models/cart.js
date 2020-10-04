@@ -20,7 +20,7 @@ const cartSchema = new Schema({
 
 
 
-cartSchema.methods.addToCart =async function(prodId) {
+cartSchema.methods.addToCart =async function(prodId,qty) {
   try {
     //check if the product is already exist ,=> ++quantity
   //if the product dose not exsit then added it
@@ -28,7 +28,7 @@ cartSchema.methods.addToCart =async function(prodId) {
   const exists = (item) => item.productId == prodId;
   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
   if(cartProductIndex>=0){//the product exsit increase the quantity
-    availableQty=await getAvQty(prodId,this,this.items[cartProductIndex].qty+1);
+    availableQty=await getAvQty(prodId,this,this.items[cartProductIndex].qty+qty);
     this.items[cartProductIndex].qty=availableQty;
   }else{//add the product
     availableQty=await getAvQty(prodId,this,1);

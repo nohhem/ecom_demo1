@@ -40,16 +40,25 @@ const deleteFromCart = (btn) => {
 
 
 const addToCart = (btn) => {
-    // if(!prodId && !csrf){// not included as arguments get them
     const prodId= btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
-    // } 
+    
+    let qty =1;
+    //if there is quantity (incase from single product view ) get 
+    if(btn.parentNode.getRootNode().getElementById('qty-input')){ 
+        qty = btn.parentNode.getRootNode().getElementById('qty-input').value;
+    }
+    //getElementsByClassName("example");
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
-    fetch('/add-to-cart/' + prodId, {
+    fetch('/add-to-cart/' + prodId ,{
         method: 'POST',
+        body: JSON.stringify({
+            qty: qty
+        }),
         headers: {
-            'csrf-token': csrf
+            'csrf-token': csrf,
+            'Content-Type': "application/json"
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {

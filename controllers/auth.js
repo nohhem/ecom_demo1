@@ -52,6 +52,8 @@ exports.postLogin =  (req, res, next) => {
                         if(tempcart){
                             console.log('there is a temp cart to merge')
                             await user.mergeCart(tempcart);
+                            //delete the tempcart
+                            delete req.session.tempCart;
                         }
                         return req.session.save(err => {
                             res.redirect('/');

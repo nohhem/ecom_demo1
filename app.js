@@ -62,7 +62,9 @@ const authRoutes = require('./routes/auth');
 
 
 //Defining app Middlewares:
+app.use(bodyParser.json()); // to parse body in json format
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // app.use(
 //   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 // );

@@ -105,7 +105,6 @@ exports.postCartChangeQty = async (req, res, next) => {
   exports.postCartDeleteItem = async (req, res, next) => { 
     //delete from cart
     const prodId = req.params.productId;
-    let items = req.session.tempCart.cartItems;
     if(req.user){
     remainingQty=await req.user.deleteFromCart(prodId);
     }else if(req.session.tempCart){
@@ -120,8 +119,12 @@ exports.postCartChangeQty = async (req, res, next) => {
     try{
     //async (due to client side request)
     const prodId = req.params.productId;
+    console.log('req.body11',req.body);
+    
+      const qty = parseInt(req.body.qty) ||1;
+      console.log('postAddToCart,qty',qty);
+    
     console.log('----------exports.addToCart ------------------------',req.body );
-    console.log('our cart ',req.session.tempCart);
     product = await Product.findById(prodId)
       //check if the user is logged in or not
       if(!req.user){
@@ -137,11 +140,11 @@ exports.postCartChangeQty = async (req, res, next) => {
           req.session.tempCart=Cart.hydrate(req.session.tempCart);
         }
         //add product to cart
-        await req.session.tempCart.addToCart(prodId);
+        await req.session.tempCart.addToCart(prodId,qty);
         console.log('exports.postAddToCart finsihed ',req.session.tempCart);
         res.status(200).json({message:'success',qty:req.session.tempCart.items.length});
       }else if (req.session.user){ //we have user ,add to user cart
-        req.user.addToCart(prodId);
+        req.user.addToCart(prodId,qty);
         //save the cart of the user TODO
         // req.user.fullname='noh1fullname';//test toremove
         //await User.hydrate(req.session.user).save();

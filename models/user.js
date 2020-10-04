@@ -112,6 +112,34 @@ userSchema.methods.addToCart =async function(prodId) {
   }
 };
 
+
+userSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
+  //check if the product is already exist ,=> update the quantity
+  //if the product dose not exsit then added it
+  console.log('entered cartSchema.methods.changeCartItemQuantity ,with qty :',newQty);
+  if(newQty <0){
+    newQty=0;
+  }
+  const availableQty=await getAvQty(prodId,this.cart,newQty); // get the quantity we can add 
+  //to be sure just check if an item exsit already //insurance puposes 
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=this.cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+  console.log((cartProductIndex>=0 && availableQty!=0));
+  if(cartProductIndex>=0 && newQty!=0){//the product exsit and the new quantity not zero,update the quantity
+      this.cart.items[cartProductIndex].qty=availableQty
+      console.log('cartSchema.methods.changeCartItemQuantity',this.cart.items[cartProductIndex].qty);
+      await this.save();
+      return this.cart.items[cartProductIndex].qty;
+  }else if(newQty<=0){
+    console.log('splicing');
+    this.cart.items.splice(cartProductIndex,1);//delete the item from cart
+    await this.save();
+    console.log('changeCartItemQuantity,an item deleted, the current items : ',this.cart.items);
+    return 0;
+  }
+  console.log('item added to cart :',this);
+};
+
 //helper function
 getAvQty = async function(prodId,cart,requestedQty){
   console.log('getAvQty', prodId);

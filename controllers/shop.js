@@ -142,43 +142,7 @@ exports.getCheckout = (req, res, next) => {
 exports.postCart = (req, res, next) => { };
 
 
-// exports.addToCart = (req, res, next) => {
-//   //async (due to client side request)
-//   const prodId = req.params.productId;
-//   Product.findById(prodId)
-//     .then(product => {
-//       //check if the user is logged in or not
-//       if (!req.session.user) {
-//         //user is not logged ,thus check if the session has a cart already if not create a new one before adding the product
-//         if (!req.session.tempCart) {
-//           //no Cart
-//           //create a cart
-//           //console.log('no Cart,create a new one')
-//           const cart = new Cart();
-//           req.session.tempCart = cart;
-//           //console.log(req.session.tempCart,req.session.tempCart.items.length);
-//         } else {//we already have a cart in our session cast it to document
-//           req.session.tempCart = Cart.hydrate(req.session.tempCart);
-//         }
-//         //add product to cart
-//         req.session.tempCart.addToCart(prodId);
-//         console.log(req.session.tempCart);
-//       }
-
-//     })
-//     .then(() => {
-//       //console.log('cart created');
-//       res.status(200).json({ message: 'Product added succesfully!' });
-
-//     })
-//     .catch(err => {
-//       //console.log('error',err);
-//       res.status(500).json({ message: 'Adding product failed' });
-//     });
-// };
-
 exports.postCart = (req, res, next) => { };
-
 
 
 exports.postOrder = (req, res, next) => { };

@@ -63,7 +63,7 @@ userSchema.methods.mergeCart = function(cart1) {
     }
   });
   let finalItems=[];
-  console.log('typeof(this.cart.items[0].productId),',typeof(this.cart.items[0].productId),this.cart.items[0].productId);
+  //console.log('typeof(this.cart.items[0].productId),',typeof(this.cart.items[0].productId),this.cart.items[0].productId);
   // this.cart.items=[];
   Object.entries(finalarr).forEach(entry => {
     const [key, value] = entry;

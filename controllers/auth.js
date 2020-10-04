@@ -121,6 +121,12 @@ exports.postSignup = (req, res, next) => {
                 .then(user => {
                     req.session.isLoggedIn = true;
                     req.session.user = user;
+                    if(tempcart){
+                        console.log('there is a temp cart to merge')
+                        await user.mergeCart(tempcart);
+                        //delete the tempcart
+                        delete req.session.tempCart;
+                    }
                     return req.session.save(empty => {
                         res.redirect('/');
                     });

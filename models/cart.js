@@ -17,23 +17,8 @@ const cartSchema = new Schema({
 
 },{ _id : false });
 
-//bakcup
 
-// cartSchema.methods.addToCart = function(prodId) {
-//   //check if the product is already exist ,=> ++quantity
-//   //if the product dose not exsit then added it
-//   const exists = (item) => item.productId == prodId;
-//   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-//   if(cartProductIndex>=0){//the product exsit increase the quantity
-//       this.items[cartProductIndex].qty++;
-//   }else{//add the product
-//       this.items.push({
-//           productId:prodId,
-//           qty:1
-//       });
-//   }
-//   console.log('item added to cart :',this);
-// };
+
 
 cartSchema.methods.addToCart =async function(prodId) {
   try {

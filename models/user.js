@@ -43,17 +43,7 @@ const userSchema = new Schema({
   cart: cartSchema
 });
 
-// userSchema.methods.addToCart = async function(prodId) {
-//   try {
-//     cartObj = Cart.hydrate(this.cart);
-//     await cartObj.addToCart(prodId);
-//     //console.log('cartObj',cartObj);
-//     this.cart.items=cartObj.items;
-    
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+
 userSchema.methods.mergeCart = function(cart1) {
   //loop over the basic array and see if there is similartiy
   let useritems =[...this.cart.items]
@@ -90,41 +80,12 @@ userSchema.methods.mergeCart = function(cart1) {
   return this.save();
   }
 
-// userSchema.methods.mergeCart = function(cart1) {
-//   //loop over the basic array and see if there is similartiy
-//   let useritems =[...this.cart.items]
-//   let cartitems = [cart1.items];
-//   // console.log('entered userSchema.methods.mergeCart,user items,tmepcart items ',useritems,cart1.items);
-  
-//   // let mathcingitems;
-//   // for (let i = 0; i < cart1.items.length; i++) {
-//   //   //check if there is duplicate in the user cart
-//   //   var mathcingItem = useritems.filter(item => (item.productId == cart1.items[i].productId));
-//   //   console.log('mathcingItem',mathcingItem);
-//   //   //const element = array[i];
-//   }
-
-  // var orders = [
-  //   { drink: 'Cappuccino', name: 'John Appleseed' }, 
-  //   { drink: 'Espresso', name: 'Mya Stuart' },
-  //   { drink: 'Cappuccino', name: 'Emma Berry' }
-  //   ];
-  //   var check_orders = orders.filter(order => (order.name === "John Appleseed"));
-  //   console.log(check_orders);
-  // output [{ drink: 'Cappuccino', name: 'John Appleseed' }]
-  
-// }
 
 
 userSchema.methods.addToCart =async function(prodId) {
 
   try {
-    //check if the product is already exist ,=> ++quantity
-  //if the product dose not exsit then added it
   let availableQty=0;
-  //const updatedCartItems = [...this.cart.items];
-  //console.log('updatedCartItems before adding',updatedCartItems);
-
   const exists = (item) => item.productId == prodId;
   const cartProductIndex=this.cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
   console.log('cartProductIndex',cartProductIndex);
@@ -134,7 +95,7 @@ userSchema.methods.addToCart =async function(prodId) {
     console.log('this.cart.items[cartProductIndex].qty',this.cart.items[cartProductIndex].qty);
     this.cart.items[cartProductIndex].qty=availableQty;
     console.log( this.cart.items[cartProductIndex].qty);
-  }else{//add the product
+  }else{//add the new product
     availableQty=await getAvQty(prodId,this.cart,1);
     console.log('this.cart.items before pushing new product',this.cart.items);
       this.cart.items.push({
@@ -170,44 +131,5 @@ getAvQty = async function(prodId,cart,requestedQty){
     console.log(error);
   }
 };
-
-// console.log('userschema is ',typeof(userSchema));
-// console.log('userschema is ',userSchema);
-
-// userSchema.methods.addToCart = function(product) {
-//   const cartProductIndex = this.cart.items.findIndex(cp => {
-//     return cp.productId.toString() === product._id.toString();
-//   });
-//   let newQuantity = 1;
-//   const updatedCartItems = [...this.cart.items];
-
-//   if (cartProductIndex >= 0) {
-//     newQuantity = this.cart.items[cartProductIndex].quantity + 1;
-//     updatedCartItems[cartProductIndex].quantity = newQuantity;
-//   } else {
-//     updatedCartItems.push({
-//       productId: product._id,
-//       quantity: newQuantity
-//     });
-//   }
-//   const updatedCart = {
-//     items: updatedCartItems
-//   };
-//   this.cart = updatedCart;
-//   return this.save();
-// };
-
-// userSchema.methods.removeFromCart = function(productId) {
-//   const updatedCartItems = this.cart.items.filter(item => {
-//     return item.productId.toString() !== productId.toString();
-//   });
-//   this.cart.items = updatedCartItems;
-//   return this.save();
-// };
-
-// userSchema.methods.clearCart = function() {
-//   this.cart = { items: [] };
-//   return this.save();
-// };
 
 module.exports = mongoose.model('User', userSchema);

@@ -44,8 +44,8 @@ exports.getCart = (req, res, next) => {
         if(!req.session.tempCart){
           //no Cart,create a new cart
           //console.log('no Cart,create a new one')
-          const cart = new Cart();
-          req.session.tempCart= cart;
+          // const cart = new Cart();
+          // req.session.tempCart= cart;
           //console.log(req.session.tempCart,req.session.tempCart.items.length);
         }else{//we already have a cart in our session cast it to document
           req.session.tempCart=Cart.hydrate(req.session.tempCart);

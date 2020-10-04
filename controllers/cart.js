@@ -102,16 +102,18 @@ exports.postCartChangeQty = async (req, res, next) => {
   // };
 
 
-  exports.postCartDeleteItem = (req, res, next) => { 
+  exports.postCartDeleteItem = async (req, res, next) => { 
     //delete from cart
     const prodId = req.params.productId;
     let items = req.session.tempCart.cartItems;
-    if(req.session.tempCart){
+    if(req.user){
+    remainingQty=await req.user.deleteFromCart(prodId);
+    }else if(req.session.tempCart){
       req.session.tempCart=Cart.hydrate(req.session.tempCart);
       remainingQty=req.session.tempCart.deleteFromCart(prodId);
-      res.status(200).json({message:'Product deleted from cart succesfully!',qty:remainingQty});
     }
-    //
+    res.status(200).json({message:'Product deleted from cart succesfully!',qty:remainingQty});
+  
   };
 
   exports.postAddToCart = async (req, res, next) => {

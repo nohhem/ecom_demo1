@@ -112,11 +112,29 @@ userSchema.methods.addToCart =async function(prodId) {
   }
 };
 
+userSchema.methods.deleteFromCart = async function(prodId) {
+  //my code
+  //check if the product is already exist ,
+  const exists = (item) => item.productId == prodId;
+  const cartProductIndex=this.cart.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
+      if(cartProductIndex >= 0){// mkae sure product exist then delete
+        //Array.splice(position,num);
+        this.cart.items.splice(cartProductIndex,1);
+        await this.save();
+        console.log('item deleted from cart :',this.cart);
+        return 0;
+      }
+      else {
+        console.log('error','userschema.methods.deleteFromCart');
+        return -1;
+      }
+};
+
 
 userSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
   //check if the product is already exist ,=> update the quantity
   //if the product dose not exsit then added it
-  console.log('entered cartSchema.methods.changeCartItemQuantity ,with qty :',newQty);
+  console.log('entered userschema.methods.changeCartItemQuantity ,with qty :',newQty);
   if(newQty <0){
     newQty=0;
   }

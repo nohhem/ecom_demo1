@@ -46,7 +46,7 @@ exports.postaddWishList = (req, res, next) => {
 exports.addToCartGroup = (req, res, next) => { }
 
 exports.removeFromWishListGroup = (req, res, next) => {
-    // console.log(req.body.values)
+
 
     let groupWishLIst = JSON.parse(req.body.values);
     let userid = res.locals.user._id
@@ -60,7 +60,6 @@ exports.removeFromWishListGroup = (req, res, next) => {
                     user.wishlist.splice(i, 1);
                 }
             }
-
         }
         return user.save();
     }).then(newWishListuser => {
@@ -69,9 +68,6 @@ exports.removeFromWishListGroup = (req, res, next) => {
             res.status(200).json({ data: products });
         })
     })
-
-
-
 }
 
 

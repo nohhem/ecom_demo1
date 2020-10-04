@@ -3,30 +3,31 @@ const Category = require('../models/category');
 const Cart = require('../models/cart');
 const User = require('../models/user');
 
-
 exports.getCart = (req, res, next) => {
-    let catItems ;
-    if(req.session.tempCart){
-    let cart =Cart.hydrate(req.session.tempCart);
-    cart
+  let catItems;
+  let cart= new Cart();
+  //get the cart either from session tempcart or user
+  
+  if(req.session.user){
+    cart = new Cart(req.user.cart);
+  }else if (req.session.tempCart) {
+    cart = new Cart(req.session.tempCart)
+  }
+  cart
     .populate('items.productId')
     .execPopulate()
     .then(pcart => {
       //console.log('getCartProducts ,cart',pcart.items);
-      catItems= pcart.items;
-    }).then(()=>{
+      catItems = pcart.items;
+    }).then(() => {
       res.render('shop/view_cart', {
         pageTitle: 'Cart',
-        cartProducts:catItems
+        cartProducts: catItems
       });
     })
-    }else{
-      res.render('shop/view_cart', {
-        pageTitle: 'Cart',
-        cartProducts:[]
-      });
-    }
-  };
+
+};
+
 
   exports.postCartChangeQty = async (req, res, next) => {
 
@@ -56,6 +57,10 @@ exports.getCart = (req, res, next) => {
         console.log(req.session.tempCart);
       }else{
           //user is loggedin => toDo
+          const cart = new Cart(req.user.cart);
+          newupdatedQuantity = await cart.changeCartItemQuantity(prodId,newQty);
+
+
       }
       res.status(200).json({message:'success',qty:newupdatedQuantity});
       
@@ -106,7 +111,7 @@ exports.getCart = (req, res, next) => {
       }else if (req.session.user){ //we have user ,add to user cart
         req.user.addToCart(prodId);
         //save the cart of the user TODO
-        req.user.fullname='noh1fullname';//test toremove
+        // req.user.fullname='noh1fullname';//test toremove
         //await User.hydrate(req.session.user).save();
         res.status(200).json({message:'success',qty: req.session.user.cart.items.length});
       }

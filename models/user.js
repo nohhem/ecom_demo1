@@ -54,6 +54,67 @@ const userSchema = new Schema({
 //     console.log(error);
 //   }
 // }
+userSchema.methods.mergeCart = function(cart1) {
+  //loop over the basic array and see if there is similartiy
+  let useritems =[...this.cart.items]
+  let cartitems = [...cart1.items];
+  let finalarr = { };
+
+  Object.entries(useritems).forEach(entry => {
+    const [key, value] = entry;
+    finalarr[value.productId]=value.qty;
+  });
+  Object.entries(cartitems).forEach(entry => {
+    const [key, value] = entry;
+    if(finalarr[value.productId]){
+    finalarr[value.productId]=value.qty+finalarr[value.productId];
+    }else{
+    finalarr[value.productId]=value.qty; //added for the 
+    }
+  });
+  let finalItems=[];
+  console.log('typeof(this.cart.items[0].productId),',typeof(this.cart.items[0].productId),this.cart.items[0].productId);
+  // this.cart.items=[];
+  Object.entries(finalarr).forEach(entry => {
+    const [key, value] = entry;
+    finalItems.push({
+    productId:key,
+    qty:value
+    })
+  });
+
+  let newCart = new Cart(
+    {items:finalItems}
+  );
+  this.cart=newCart; //assign the new merged cart to the user
+  return this.save();
+  }
+
+// userSchema.methods.mergeCart = function(cart1) {
+//   //loop over the basic array and see if there is similartiy
+//   let useritems =[...this.cart.items]
+//   let cartitems = [cart1.items];
+//   // console.log('entered userSchema.methods.mergeCart,user items,tmepcart items ',useritems,cart1.items);
+  
+//   // let mathcingitems;
+//   // for (let i = 0; i < cart1.items.length; i++) {
+//   //   //check if there is duplicate in the user cart
+//   //   var mathcingItem = useritems.filter(item => (item.productId == cart1.items[i].productId));
+//   //   console.log('mathcingItem',mathcingItem);
+//   //   //const element = array[i];
+//   }
+
+  // var orders = [
+  //   { drink: 'Cappuccino', name: 'John Appleseed' }, 
+  //   { drink: 'Espresso', name: 'Mya Stuart' },
+  //   { drink: 'Cappuccino', name: 'Emma Berry' }
+  //   ];
+  //   var check_orders = orders.filter(order => (order.name === "John Appleseed"));
+  //   console.log(check_orders);
+  // output [{ drink: 'Cappuccino', name: 'John Appleseed' }]
+  
+// }
+
 
 userSchema.methods.addToCart =async function(prodId) {
 

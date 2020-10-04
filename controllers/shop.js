@@ -35,26 +35,7 @@ const categoriesArr =
     "Baby Girl",
     "Baby boy"];
 
-// exports.getProducts =(req, res, next) => {
-//   //General funtion to return products with or without params: limit,page,category
-//   const categoryId = req.params.categoryId || categoriesArr;
-//   let page = req.params.page || 1;
-//   let limit = 12;
 
-//     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
-//       res.render('shop/products', {
-//         products: result.docs,
-//         total: result.totalDocs,
-//         limit: result.limit,
-//         page: page,
-//         pages: result.totalPages
-//       });
-//     }).catch(err => {
-//       console.log(err);
-//     });
-
-
-// };
 
 exports.getProducts = (req, res, next) => {
   // console.log('getProducts controller')
@@ -64,23 +45,20 @@ exports.getProducts = (req, res, next) => {
   const categoryId = req.params.categoryId || categoriesArr;
   let page = req.params.page || 1;
   let limit = 12;
+  let cartItems;
+  let cart;
   if (req.session.tempCart || req.user) { //do we have a user or tempcart
     //fetch cart info
-    let cart;
     if(!req.user){ cart = req.session.tempCart}
     else{ cart = req.user.cart }
-    //poplute cart with product details 
-    console.log('cart getproducts controller',cart);
-    cart = Cart.hydrate(cart); //treat the cart as independent object
-    
-    let cartItems;
+    cart = new Cart(cart); //intilize a cart object to populate it with products
     cart
       .populate('items.productId')
       .execPopulate()
       .then(pcart => {
         //console.log('getCartProducts ,cart',pcart.items);
         cartItems = pcart.items;
-        console.log('cartItems',cartItems);
+        
         Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
           res.render('shop/products', {
             products: result.docs,
@@ -97,7 +75,7 @@ exports.getProducts = (req, res, next) => {
       });
 
 
-  } else {// we do not hve a cart nor a user 
+  } else {// we do not have a cart nor a user 
     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
       res.render('shop/products', {
         products: result.docs,
@@ -159,23 +137,7 @@ exports.getCheckout = (req, res, next) => {
 /*--------------------------------------*/
 
 
-exports.getCart = (req, res, next) => {
-  let cart = Cart.hydrate(req.session.tempCart);
-  let catItems;
-  cart
-    .populate('items.productId')
-    .execPopulate()
-    .then(pcart => {
-      //console.log('getCartProducts ,cart',pcart.items);
-      catItems = pcart.items;
-    }).then(() => {
-      res.render('shop/view_cart', {
-        pageTitle: 'Cart',
-        cartProducts: catItems
-      });
-    })
 
-};
 
 exports.postCart = (req, res, next) => { };
 

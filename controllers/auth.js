@@ -97,6 +97,7 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const cpassword = req.body.cpassword;
+    const tempcart = req.session.tempCart;
     User.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) {
@@ -118,7 +119,7 @@ exports.postSignup = (req, res, next) => {
                     });
                     return user.save();
                 })
-                .then(user => {
+                .then(async user => {
                     req.session.isLoggedIn = true;
                     req.session.user = user;
                     if(tempcart){

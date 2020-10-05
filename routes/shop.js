@@ -11,8 +11,9 @@ const router = express.Router();
 
 router.get('/', shopController.getProducts);
 router.get('/page=:page', shopController.getProducts);
-router.get('/category/page=:page-:categoryId', shopController.getProducts);
-router.get('/category/:categoryId', shopController.getProducts);
+//router.get('/category/page=:page-:categoryId', shopController.getProducts);
+router.get('/page=:page-:categoryId', shopController.getProducts);
+router.get('/:categoryId', shopController.getProducts);
 router.get('/products/:productId', shopController.getProduct);
 
 

@@ -42,7 +42,7 @@ exports.getProducts = (req, res, next) => {
   // console.log(getCartProducts(req));
   //General funtion to return products with or without params: limit,page,category
 
-  const categoryId = req.params.categoryId || categoriesArr;
+  const categoryId = req.params.categoryId || categoriesArr; //if no specified category then all categories to be listed 
   let page = req.params.page || 1;
   let limit = 12;
   let cartItems;
@@ -86,7 +86,7 @@ exports.getProducts = (req, res, next) => {
         page: page,
         pages: result.totalPages,
         cartProducts: [],
-        categoryId: categoryId
+        passedcategoryId: categoryId
       });
     }).catch(err => {
       console.log(err);

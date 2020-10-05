@@ -94,23 +94,41 @@ exports.getProducts = (req, res, next) => {
 
 
 
-exports.getProduct = (req, res, next) => {
+exports.getProduct = async (req, res, next) => {
   //try to obtain cart items bbefore rendering 
   //getCartProducts()
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then(product => {
-      res.render('shop/single_product', {
-        product: product,
-        pageTitle: product.title,
-        cartProducts: [] //temproary solution ! error
+  try {
+    const prodId = req.params.productId;
+    let cart;
+    let cartItems;
+    if (req.session.tempCart || req.user) {  //do we have a user or tempcart, if so, obtain the cartitems info
+    //fetch cart info
+    if(!req.user){ cart = req.session.tempCart}
+    else{ cart = req.user.cart }
+    cart = new Cart(cart); //intilize a cart object to populate it with products
+    pCart= await cart.populate('items.productId').execPopulate();
+    cartItems = pCart.items;
+    }
+  
+    console
+    Product.findById(prodId)
+      .then(product => {
+        res.render('shop/single_product', {
+          product: product,
+          pageTitle: product.title,
+          cartProducts: cartItems || []
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
       });
-    })
-    .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
+  } catch (error) {
+    console.log(error);
+  }
+ 
 };
 
 
@@ -138,11 +156,6 @@ exports.getCheckout = (req, res, next) => {
 
 
 
-
-exports.postCart = (req, res, next) => { };
-
-
-exports.postCart = (req, res, next) => { };
 
 
 exports.postOrder = (req, res, next) => { };

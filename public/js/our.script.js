@@ -1,73 +1,144 @@
 
 
+// NOH CODE for CART//
+const deleteFromCart = (btn) => {
+    const prodId= btn.parentNode.querySelector('[name=productId]').value;
 
-const addToCart = (btn) => {
-    console.log("i am the cart")
-    const prodId = btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+    console.log('productId',prodId);
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
-    fetch('/add-to-cart/' + prodId, {
+
+    fetch('/delete-from-cart/' + prodId ,{
+
         method: 'POST',
         headers: {
             'csrf-token': csrf
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {
+        return result.json();
+    })
+    .then(data => {
+        console.log(data);
+        //maniplute the dom => delete item if nedded or decrease quantity
+        if(data.qty <= 0){
+            //delete item
+            //document.getElementById(prodId).remove();
+
+            $("#tbl").load(" #tbl > *");
+            $("#header-cart").load(" #header-cart > *");
+            $('#cover-spin').hide();
+        }
+        //swal("My Cart","The Product is deleted Succesfully !" , "success");
+        
+    })
+    .catch(err =>{
+        console.log(err)
+    });
+
+}
+
+
+
+const addToCart = (btn) => {
+    console.log("i am the cart")
+    const prodId = btn.parentNode.querySelector('[name=productId]').value;
+    const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+    
+    let qty =1;
+    //if there is quantity (incase from single product view ) get 
+    if(btn.parentNode.getRootNode().getElementById('qty-input')){ 
+        qty = btn.parentNode.getRootNode().getElementById('qty-input').value;
+    }
+    //getElementsByClassName("example");
+    //const productElement = btn.closest('div');
+    //will give the closet DOM element with this class/type
+
+    fetch('/add-to-cart/' + prodId ,{
+        method: 'POST',
+        body: JSON.stringify({
+            qty: qty
+        }),
+        headers: {
+            'csrf-token': csrf,
+            'Content-Type': "application/json"
+
+            //our csrf 3rd party package not only look in the body,also in query params
+        }
+    }).then(result => {
         // console.log(result.json());
         return result.json();
     })
-        .then(data => {
-            console.log('entered ourscript then');
-            console.log(data);
-            //addition succseful  // put notification code here 
-            swal("My Cart", "The Product is Added Succesfully !", "success");
-            //wow_default_alert();
+    .then(data => {
+        // console.log('entered ourscript then');
+        // console.log(data);
+        //increase cart quantity
+        console.log('data form ourscript after fetching is done',data)
+        //dom
+        $("#header-cart").load(" #header-cart > *");
+        document.getElementById("cartTotalQty").innerHTML = data.qty ;
 
-            //     console.log('body', document.body);
-            //     // <div id="notification" class="notification-popover success" style="display: none;">Ürün başarılı bir şekilde sepete eklenmiştir.</div>
-            //                  // Create a <p> element
-            //     //var mdiv =createElementFromHTML(``);
-            //     var htmlString = `<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            //     <div class="modal-dialog" role="document">
-            //       <div class="modal-content">
-            //         <div class="modal-header">
-            //           <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            //           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            //             <span aria-hidden="true">&times;</span>
-            //           </button>
-            //         </div>
-            //         <div class="modal-body">
-            //           ...
-            //         </div>
-            //         <div class="modal-footer">
-            //           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            //           <button type="button" class="btn btn-primary">Save changes</button>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </div>`;
-
-            //     var mdiv = new DOMParser().parseFromString(htmlString, "text/html");
-            //     mdiv=mdiv.firstChild;
-            //     console.log('created the html element ---------');
-            //     console.log(mdiv);
-            //     //var mdiv = document.createElement("div");  
-            //     //mdiv.setAttribute("class", "modal"); //todo
-            //     // mdiv.setAttribute("style", "display: block;");
-            //     // mdiv.innerText =''               // Insert text
-            //     document.body.appendChild(mdiv);   // Append <p> to <body>
-
-            //     //alert('succefully submitted'); // make the div visible
-            //     //productElement.remove();//not supporeted in Internet explorer
-            //     //productElement.parentNode.removeChild(productElement);    
-        })
-        .catch(err => {
-            console.log(err)
-        });
+        swal("My Cart","The Product is Added Succesfully !" , "success");
+    })
+    .catch(err =>{
+        console.log(err)
+    });
 };
-//----code for notify-----//
-//----code for notify-----//
+
+
+const onChangeItemQty = (btn) => {
+    console.log(btn);
+    console.log(btn.value);
+    testajaxOnChangeItemQty(btn);
+
+}
+
+const testajaxOnChangeItemQty= (btn) => {
+    const prodId= btn.parentNode.parentNode.querySelector('[name=productId]').value;
+    const csrf = btn.parentNode.parentNode.querySelector('[name=_csrf]').value;
+    console.log(btn.value);
+    $.ajax({
+        url:'/edit-cart/'+ prodId,
+        method:'post',
+        dataType:'json',
+        headers:{'csrf-token':csrf},
+        data:{'reqData':btn.value},
+        success:function(response){
+            console.log(response.msg,'success',response.msg=="success");
+            if(response.message=="success"){
+                console.log('success:function(response.qty){',response);
+                    //maniplute the dom => delete item if nedded or change quantity
+                if(response.qty <= 0){
+
+                    //delete item
+                    console.log('deleteing the item with id ', prodId)
+                    document.getElementById(prodId).remove();
+                }else{
+                    console.log(response.qty,' qty >0')
+                    //update quantity
+                    document.getElementById(prodId).querySelector('[name=itemQty]').setAttribute("value", response.qty);
+                }
+                //fix some temproary
+                $("#tbl").load(" #tbl > *");
+                $('#cover-spin').hide();
+                
+                swal("My Cart","done !" , "success");
+            }else {
+                console.log('not expected message');
+                alert('some error occurred try again');
+            }
+        },
+        error:function(response){
+            alert('server error occured')
+        }
+    });
+};
+
+
+
+
+//code that might come in handy for DOM manipulation
 function createElementFromHTML(htmlString) {
     console.log('createElementFromHTML')
     var div = document.createElement('div');
@@ -76,44 +147,18 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
+// NOH CODE for CART//--end
+
+
+//this code register an onclick listener for the logout anchor tag <a> ,thus when its clicked the form "logout" will be submit it (send a post request)  
+$(document).ready(function () {
+    $(document).on("click", ".login-button", function () {
+        //console.log(form);
+        $("#logout").submit(); // in order to submit the "logout" from in our header.ejs 
+    });
+});
 
 function wow_default_alert() {
     alert("Hello World!");
 }
-
-// const deleteProduct = (btn) => {
-//     const prodId= btn.parentNode.querySelector('[name=productId]').value;
-//     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
-//     const productElement = btn.closest('article');
-//     //will give the closet DOM element with this class/type
-//     fetch('/admin/product/' + prodId,{
-//         method: 'DELETE',
-//         headers : {
-//             'csrf-token' : csrf
-//             //our csrf 3rd party package not only look in the body,also in query params
-//         }
-//     }).then(result => {
-//         return result.json();
-//     })
-//     .then(data => {
-//         console.log(data);
-//         //productElement.remove();//not supporeted in Internet explorer
-//         productElement.parentNode.removeChild(productElement);    
-//     })
-//     .catch(err =>{
-//         console.log(err)
-//     });
-// };
-
-
-$(document).ready(function () {
-    $(document).on("click", "#logoutbut", function () {
-        $("#logout").submit();
-    });
-});
-
-
-
-
-
 

@@ -31,21 +31,33 @@ exports.getLogin = (req, res, next) => {
     });
 };
 
-exports.postLogin = (req, res, next) => {
+
+
+exports.postLogin =  (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    const tempcart = req.session.tempCart;
     User.findOne({ email: email })
-        .then(user => {
+        .then((user) =>  {
             if (!user) {
                 req.flash('error', 'We dont have this email in our records ');
                 return res.redirect('/login');
             }
             bcrypt
                 .compare(password, user.password)
-                .then(doMatch => {
+                .then(async doMatch => {
                     if (doMatch) {
                         req.session.isLoggedIn = true;
                         req.session.user = user;
+                        //check if there is a tempcart to merge
+                        console.log('check existance of tmepcart ',tempcart);
+                        if(tempcart){
+                            console.log('there is a temp cart to merge')
+                            await user.mergeCart(tempcart);
+                            //delete the tempcart
+                            delete req.session.tempCart;
+                        }
+
                         return req.session.save(err => {
                             res.redirect('/');
                         });
@@ -88,6 +100,8 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const cpassword = req.body.cpassword;
+    const tempcart = req.session.tempCart;
+
     User.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) {
@@ -106,13 +120,19 @@ exports.postSignup = (req, res, next) => {
                         email: email,
                         password: hashedPassword,
                         cart: { items: [] },
-                        wishlist: []
+                          wishlist: []
                     });
                     return user.save();
                 })
-                .then(user => {
+                .then(async user => {
                     req.session.isLoggedIn = true;
                     req.session.user = user;
+                    if(tempcart){
+                        console.log('there is a temp cart to merge')
+                        await user.mergeCart(tempcart);
+                        //delete the tempcart
+                        delete req.session.tempCart;
+                    }
                     return req.session.save(empty => {
                         res.redirect('/');
                     });
@@ -124,7 +144,9 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
+
     // In this page the user write the email which will recive the reset link
+
     let message = req.flash('error');
     if (message.length > 0) {
         message = message[0];
@@ -139,7 +161,7 @@ exports.getResetPassword = (req, res, next) => {
 };
 
 exports.postResetPassword = (req, res, next) => {
-    // the user has wrote his email so in this router we will send an email to him 
+    // the user has wrote his email so in this controller we will send an email to him 
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
             console.log(err);
@@ -195,7 +217,9 @@ exports.getNewPassword = (req, res, next) => {
 };
 
 exports.postNewPassword = (req, res, next) => {
+
     //resetting  password
+
     const newPassword = req.body.password;
     const userId = req.body.userId;
     const passwordToken = req.body.passwordToken;

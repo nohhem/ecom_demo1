@@ -41,7 +41,7 @@ exports.getProducts = (req, res, next) => {
   // console.log('getProducts controller')
   // console.log(getCartProducts(req));
   //General funtion to return products with or without params: limit,page,category
-
+  console.log("this is the right " + req.params.categoryId)
   const categoryId = req.params.categoryId || categoriesArr; //if no specified category then all categories to be listed 
   let page = req.params.page || 1;
   let limit = 12;
@@ -68,7 +68,7 @@ exports.getProducts = (req, res, next) => {
             page: page,
             pages: result.totalPages,
             cartProducts: cartItems,
-            passedcategoryId: categoryId
+            categoryId: categoryId
           });
         })
       })
@@ -86,12 +86,13 @@ exports.getProducts = (req, res, next) => {
         page: page,
         pages: result.totalPages,
         cartProducts: [],
-        passedcategoryId: categoryId
+        categoryId: categoryId
       });
     }).catch(err => {
       console.log(err);
     });
   }
+
 
 };
 

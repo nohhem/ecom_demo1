@@ -35,7 +35,7 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 app.use(flash());
 
-Category.find({}).then(result => {
+Category.find({}).then(result => { // storing our categories in the app varaibles
   app.locals.categories = result;
 });
 

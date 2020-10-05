@@ -17,32 +17,18 @@ const cartSchema = new Schema({
 
 },{ _id : false });
 
-//bakcup
 
-// cartSchema.methods.addToCart = function(prodId) {
-//   //check if the product is already exist ,=> ++quantity
-//   //if the product dose not exsit then added it
-//   const exists = (item) => item.productId == prodId;
-//   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
-//   if(cartProductIndex>=0){//the product exsit increase the quantity
-//       this.items[cartProductIndex].qty++;
-//   }else{//add the product
-//       this.items.push({
-//           productId:prodId,
-//           qty:1
-//       });
-//   }
-//   console.log('item added to cart :',this);
-// };
 
-cartSchema.methods.addToCart =async function(prodId) {
-  //check if the product is already exist ,=> ++quantity
+
+cartSchema.methods.addToCart =async function(prodId,qty) {
+  try {
+    //check if the product is already exist ,=> ++quantity
   //if the product dose not exsit then added it
   let availableQty=0;
   const exists = (item) => item.productId == prodId;
   const cartProductIndex=this.items.findIndex(exists);// if product exsit it will return its index, otherwise return -1
   if(cartProductIndex>=0){//the product exsit increase the quantity
-    availableQty=await getAvQty(prodId,this,this.items[cartProductIndex].qty+1);
+    availableQty=await getAvQty(prodId,this,this.items[cartProductIndex].qty+qty);
     this.items[cartProductIndex].qty=availableQty;
   }else{//add the product
     availableQty=await getAvQty(prodId,this,1);
@@ -50,11 +36,13 @@ cartSchema.methods.addToCart =async function(prodId) {
           productId:prodId,
           qty:availableQty
       });
+      console.log('cartSchema.methods.addToCart ,this.items ',this.items);
   }
-  console.log('cartSchema.methods.addToCart,item added to cart :',this);
+  //console.log('cartSchema.methods.addToCart,item added to cart :',this); 
+  } catch (error) {
+    console.log(error);
+  }
 };
-
-
 
 
 cartSchema.methods.changeCartItemQuantity = async function(prodId,newQty) { //most generec funtion
@@ -102,6 +90,7 @@ cartSchema.methods.deleteFromCart = function(prodId) {
 
 //helper function
 getAvQty = async function(prodId,cart,requestedQty){
+  console.log('getAvQty', prodId);
   try{
   const product = await Product.findById(prodId);
   const availableQty =product.stockQty;

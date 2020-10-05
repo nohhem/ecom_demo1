@@ -7,6 +7,17 @@ const mongoose = require('mongoose');
 const dummy = require('mongoose-dummy');
 const category = require('../models/category');
 
+exports.test0 = async (req,res,next) => {
+    req.session.user.fullname = 'nohtest4';
+    req.session.testdata='testdata3';
+    req.session.testtt= 'testdata3';
+    //await req.session.save();
+    console.log(req.session.user.fullname,req.session.testdata);
+    
+    res.status(200).json({message:'success',data:req.session});
+    //return res.redirect('/');
+};
+
 exports.test1 = (req, res, next) => {
 
     /*Category.find({ path: /,Woman,Clothing,/ }).then(result => {

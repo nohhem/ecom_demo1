@@ -31,21 +31,30 @@ exports.getLogin = (req, res, next) => {
     });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin =  (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
+    const tempcart = req.session.tempCart;
     User.findOne({ email: email })
-        .then(user => {
+        .then((user) =>  {
             if (!user) {
                 req.flash('error', 'We dont have this email in our records ');
                 return res.redirect('/login');
             }
             bcrypt
                 .compare(password, user.password)
-                .then(doMatch => {
+                .then(async doMatch => {
                     if (doMatch) {
                         req.session.isLoggedIn = true;
                         req.session.user = user;
+                        //check if there is a tempcart to merge
+                        console.log('check existance of tmepcart ',tempcart);
+                        if(tempcart){
+                            console.log('there is a temp cart to merge')
+                            await user.mergeCart(tempcart);
+                            //delete the tempcart
+                            delete req.session.tempCart;
+                        }
                         return req.session.save(err => {
                             res.redirect('/');
                         });
@@ -88,6 +97,7 @@ exports.postSignup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const cpassword = req.body.cpassword;
+    const tempcart = req.session.tempCart;
     User.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) {
@@ -109,9 +119,15 @@ exports.postSignup = (req, res, next) => {
                     });
                     return user.save();
                 })
-                .then(user => {
+                .then(async user => {
                     req.session.isLoggedIn = true;
                     req.session.user = user;
+                    if(tempcart){
+                        console.log('there is a temp cart to merge')
+                        await user.mergeCart(tempcart);
+                        //delete the tempcart
+                        delete req.session.tempCart;
+                    }
                     return req.session.save(empty => {
                         res.redirect('/');
                     });

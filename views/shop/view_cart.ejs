@@ -1,13 +1,13 @@
 <%- include('../includes/head.ejs') %>
 
 <body>
-    <!-- HEADER -->
-    <%- include('../includes/header.ejs',cartProducts) %>
-    <!-- /HEADER -->
+	<!-- HEADER -->
+	<%- include('../includes/header.ejs',cartProducts) %>
+	<!-- /HEADER -->
 
-    <!-- NAVIGATION -->
-    <%- include('../includes/nav.ejs') %>
-    <!-- NAVIGATION -->
+	<!-- NAVIGATION -->
+	<%- include('../includes/nav.ejs') %>
+	<!-- NAVIGATION -->
 
 	<!-- Declearing Ejs Variables >>>>> -->
 	<% let total= 0  %>
@@ -23,7 +23,6 @@
 		</div>
 	</div>
 	<!-- /BREADCRUMB -->
-
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -31,7 +30,6 @@
 			<!-- row -->
 			<div class="row">
 				<form id="checkout-form" class="clearfix">
-
 					<div class="col-md-12">
 						<div class="order-summary clearfix">
 							<div class="section-title">
@@ -63,6 +61,7 @@
 												<li><span>Color: Camelot</span></li>
 											</ul>
 										</td>
+
 										<!-- onChangeItemQty(this); -->
 										<td class="price text-center"><strong>$<%= item.productId.price %></strong><br><del class="font-weak"><small>$40.00</small></del></td>
 										<td class="qty text-center"><input name="itemQty" class="input" type="number" value="<%= item.qty %>" onclick="$('#cover-spin').show(0); onChangeItemQty(this);"></td>
@@ -114,11 +113,11 @@
 
 
 
-    <!-- FOOTER -->
-    <%- include('../includes/footer.ejs') %>
-    <!-- FOOTER -->
+	<!-- FOOTER -->
+	<%- include('../includes/footer.ejs') %>
+	<!-- FOOTER -->
 
-    <!-- jQuery Plugins -->
+	<!-- jQuery Plugins -->
 	<%- include('../includes/end.ejs') %>
 	
 	<script src="/js/our.script.js"></script>

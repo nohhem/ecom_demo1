@@ -22,7 +22,6 @@ const cartSchema = new Schema({
       qty: { type: Number, required: true }
     }
   ]
-
 }, { _id: false });
 
 const userSchema = new Schema({
@@ -40,8 +39,13 @@ const userSchema = new Schema({
   },
   resetToken: String,
   resetTokenExpiration: Date,
-  cart: cartSchema
+
+  cart: cartSchema,
+
+  wishlist: []
+
 });
+
 
 
 userSchema.methods.mergeCart = function(cart1) {

@@ -1,0 +1,112 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+    <!-- HEADER -->
+    <%- include('../includes/header.ejs',cartProducts) %>
+    <!-- /HEADER -->
+
+    <!-- NAVIGATION -->
+    <%- include('../includes/nav.ejs') %>
+    <!-- NAVIGATION -->
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li class="active">Wish List</li>
+            </ul>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <form id="checkout-form" class="clearfix">
+                    <div class="col-md-12">
+                        <div class="order-summary clearfix">
+                            <div class="section-title">
+
+                                <h3 class="title">My wish list</h3>
+                                <a href="javascript:void(0)"
+                                    class="addtoCart btn btn-warning btn-shadow font-weight-bold mr-2"
+                                    style="display: none;" onclick="addToCartGroup(this)">add
+                                    to
+                                    cart</a>
+                                <a href="javascript:void(0)"
+                                    class="removefromWish btn btn-warning btn-shadow font-weight-bold mr-2"
+                                    style="display: none;" onclick="removeFromWishListGroup(this)">remove</a>
+                            </div>
+
+                            <!-- STORE -->
+                            <div id="store" style="border-top : 0px">
+                                <!-- row -->
+                                <div class="row products">
+                                    <% for (let wishListProduct of wishListProducts) { %>
+                                    <div class="wish-col-md-4 col-md-4 col-sm-6 col-xs-6">
+                                        <div class="product product-single wishproduct wishproduct-single">
+                                            <div class="product-thumb wishproduct-thumb">
+
+                                                <label
+                                                    class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary ">
+                                                    <input value="<%= wishListProduct._id %>" type="checkbox"
+                                                        class="checkinputhide checkvalues" onclick="checkBoxWish(this)">
+                                                    <span></span></label>
+                                                <img src="<%= wishListProduct.imageUrl %>" alt="">
+
+                                            </div>
+                                            <div class="product-body">
+                                                <div class="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-o empty"></i>
+                                                </div>
+                                                <h2 class="product-name"><a href="#"><%= wishListProduct.title %></a>
+                                                </h2>
+                                                <div class="product-btns">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>"
+                                                        id="token">
+                                                    <input type="hidden" value="<%= wishListProduct._id %>"
+                                                        name="productId">
+                                                    <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                        Add to Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <!-- Product Single -->
+
+                                    <div class="clearfix visible-sm visible-xs"></div>
+                                </div>
+                                <!-- /row -->
+                            </div>
+                            <!-- /STORE -->
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+    <!-- FOOTER -->
+    <%- include('../includes/footer.ejs') %>
+    <!-- FOOTER -->
+
+    <!-- jQuery Plugins -->
+    <%- include('../includes/end.ejs') %>
+
+
+</body>
+
+</html>

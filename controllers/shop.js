@@ -41,6 +41,7 @@ exports.getProducts = (req, res, next) => {
   // console.log('getProducts controller')
   // console.log(getCartProducts(req));
   //General funtion to return products with or without params: limit,page,category
+
   console.log("this is the right " + req.params.categoryId)
   const categoryId = req.params.categoryId || categoriesArr; //if no specified category then all categories to be listed 
   let page = req.params.page || 1;
@@ -53,13 +54,13 @@ exports.getProducts = (req, res, next) => {
     if (!req.user) { cart = req.session.tempCart }
     else { cart = req.user.cart }
     cart = new Cart(cart); //intilize a cart object to populate it with products
+    
     cart
       .populate('items.productId')
       .execPopulate()
       .then(pcart => {
         //console.log('getCartProducts ,cart',pcart.items);
         cartItems = pcart.items;
-
         Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
           res.render('shop/products', {
             products: result.docs,
@@ -69,6 +70,7 @@ exports.getProducts = (req, res, next) => {
             pages: result.totalPages,
             cartProducts: cartItems,
             categoryId: categoryId
+
           });
         })
       })
@@ -76,8 +78,8 @@ exports.getProducts = (req, res, next) => {
         console.log(err)
       });
 
-
   } else {// we do not have a cart nor a user 
+
     Product.paginate({ categoryId: categoryId }, { page: page, limit: limit }, function (err, result) {
       res.render('shop/products', {
         products: result.docs,
@@ -87,14 +89,14 @@ exports.getProducts = (req, res, next) => {
         pages: result.totalPages,
         cartProducts: [],
         categoryId: categoryId
+
       });
     }).catch(err => {
       console.log(err);
     });
   }
-
-
 };
+
 
 
 
@@ -157,8 +159,6 @@ exports.getCheckout = (req, res, next) => {
   });
 };
 /*--------------------------------------*/
-
-
 
 
 

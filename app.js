@@ -91,7 +91,7 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then(user => {
-      res.locals.user = user; //m.zobi ? not sure 
+      res.locals.user = user; // in order to access it in the view,without passing it in the controller while rendering
       req.user = user; //attach the current session user to the request,in order to access the user in any controller //noh
       next();
     })

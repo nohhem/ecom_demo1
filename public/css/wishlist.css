@@ -1,0 +1,129 @@
+@media (min-width: 992px){
+    .wish-col-md-4 {
+        width: 250px
+    }
+    
+}
+
+
+.wishproduct.wishproduct-single .wishproduct-thumb>img {
+    width: 100%;
+    height: 23rem;
+}
+
+
+.product.product-single .checkbox{
+    position: absolute;
+    top: 9%;
+    left: 9%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 20;
+}
+
+.product.product-single:hover  .checkbox {
+    opacity: 1;
+    visibility: visible;
+}
+
+.checkbox-inline .checkbox {
+    margin-right: 1rem;
+    margin-bottom: 0.35rem;
+}
+
+
+.checkbox > input:checked ~ span {
+    background-color: #3699FF;
+}
+.checkbox > input:checked ~ span {
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    background-color: none;
+}
+
+.checkbox-inline .checkbox span {
+    margin-right: 0.75rem;
+}
+
+.checkbox > span {
+    background-color: #EBEDF3;
+    border: 1px solid transparent;
+}
+
+.checkbox > span {
+    height: 18px;
+    width: 18px;
+}
+.checkbox > span {
+    background-color: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    border-radius: 0.42rem;
+}
+
+.checkbox > input:checked ~ span:after {
+     border-color: #ffffff; 
+}
+.checkbox > input:checked ~ span:after {
+    display: block;
+}
+
+.checkbox > span:after {
+    width: 5px;
+    height: 10px;
+}
+
+.checkbox > span:after {
+    content: '';
+    border-color: transparent;
+    border-style: solid;
+    border-width: 0 2px 2px 0/*rtl:ignore*/ !important;
+    -webkit-transform: rotate(45deg)/*rtl:ignore*/;
+    transform: rotate(45deg)/*rtl:ignore*/;
+    margin-top: -2px;
+}
+
+.checkinputhide{
+    visibility: hidden;
+}
+
+.btn.btn-warning.btn-shadow {
+    -webkit-box-shadow: 0px 9px 16px 0px rgba(255, 168, 0, 0.25) !important;
+    box-shadow: 0px 9px 16px 0px rgba(255, 168, 0, 0.25) !important;
+}
+
+.btn.btn-warning {
+    color: #ffffff;
+    background-color: #FFA800;
+    border-color: #FFA800;
+}
+
+.btn {
+    outline: none !important;
+    vertical-align: middle;
+    -webkit-transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, -webkit-box-shadow 0.15s ease;
+}
+
+
+.btn.btn-warning:hover:not(.btn-text):not(:disabled):not(.disabled), .btn.btn-warning:focus:not(.btn-text), .btn.btn-warning.focus:not(.btn-text) {
+    color: #FFFFFF;
+    background-color: #d48f03;
+    border-color: #d48f03;
+}
+
+

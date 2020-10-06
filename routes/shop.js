@@ -3,8 +3,12 @@ const path = require('path');
 const express = require('express');
 
 const shopController = require('../controllers/shop');
+
+const wishListController = require('../controllers/wishlist');
+const isAuth = require('../middleware/is-auth');
 const cartController = require('../controllers/cart');
 const testController = require('../controllers/test');
+
 
 const router = express.Router();
 //note check the best practice for naming the routes check ref websites
@@ -12,13 +16,21 @@ const router = express.Router();
 router.get('/page=:page-:categoryId', shopController.getProducts);
 router.get('/products/:productId', shopController.getProduct);
 
+
+
+/*-----------------wish list-----------------*/
+router.get('/wish_list', isAuth, wishListController.getWishList);
+router.post('/add-remove-wish-list/:productId', isAuth, wishListController.postaddWishList);
+router.post('/from-wish-list-add-to-cart-group', isAuth, wishListController.wishListAddToCartGroup); //TODO with noh and zobi 
+router.post('/remove-wish-list-group', isAuth, wishListController.removeFromWishListGroup);
+/*-----------------wish list-----------------*/
+
+
 //router.get('/page=:page', shopController.getProducts);
 //router.get('/category/page=:page-:categoryId', shopController.getProducts);
 //router.get('/:categoryId', shopController.getProducts);
 
 router.get('/', shopController.getProducts);
-
-
 
 router.get('/view_cart', cartController.getCart);
 //async
@@ -28,6 +40,7 @@ router.post('/delete-from-cart/:productId', cartController.postCartDeleteItem);
 
 //test routes
 router.get('/test0', testController.test0);
+
 
 //router.get('/check_out', shopController.getCheckout);
 // router.post('/cart-delete-item', shopController.postCartDeleteProduct);

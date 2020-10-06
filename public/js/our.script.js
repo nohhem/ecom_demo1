@@ -1,4 +1,5 @@
 
+
 // NOH CODE for CART//
 const deleteFromCart = (btn) => {
     const prodId= btn.parentNode.querySelector('[name=productId]').value;
@@ -39,8 +40,10 @@ const deleteFromCart = (btn) => {
 }
 
 
+
 const addToCart = (btn) => {
-    const prodId= btn.parentNode.querySelector('[name=productId]').value;
+    console.log("i am the cart")
+    const prodId = btn.parentNode.querySelector('[name=productId]').value;
     const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
     
     let qty =1;
@@ -51,6 +54,7 @@ const addToCart = (btn) => {
     //getElementsByClassName("example");
     //const productElement = btn.closest('div');
     //will give the closet DOM element with this class/type
+
     fetch('/add-to-cart/' + prodId ,{
         method: 'POST',
         body: JSON.stringify({
@@ -59,6 +63,7 @@ const addToCart = (btn) => {
         headers: {
             'csrf-token': csrf,
             'Content-Type': "application/json"
+
             //our csrf 3rd party package not only look in the body,also in query params
         }
     }).then(result => {
@@ -142,16 +147,18 @@ function createElementFromHTML(htmlString) {
     // Change this to div.childNodes to support multiple top-level nodes
     return div.firstChild;
 }
+// NOH CODE for CART//--end
 
-// NOH CODE for CART//
-// TODO ??? who did this , and why ?
+
+//this code register an onclick listener for the logout anchor tag <a> ,thus when its clicked the form "logout" will be submit it (send a post request)  
 $(document).ready(function () {
     $(document).on("click", ".login-button", function () {
         //console.log(form);
-        $("#logout").submit();
+        $("#logout").submit(); // in order to submit the "logout" from in our header.ejs 
     });
 });
 
 function wow_default_alert() {
     alert("Hello World!");
 }
+

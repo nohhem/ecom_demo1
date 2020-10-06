@@ -64,16 +64,26 @@
                                         </div>
                                         <h2 class="product-name"><a href="#"><%= product.title %></a></h2>
                                         <div class="product-btns">
-                                            <button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
-                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
-
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" value="<%= product._id %>" name="productId">
+                                            <% if(locals.isLoggedIn == true) { %>
 
+                                            <% if(locals.user.wishlist.includes(product._id)) { %>
+                                            <button class="main-btn Cusmain_after_adding icon-btn"
+                                                id="<%= product._id %>" onclick="addAndremove(this);"><i
+                                                    class="fa fa-heart"></i></button>
+                                            <% }else{ %>
+                                            <button class="main-btn icon-btn" id="<%= product._id %>"
+                                                onclick="addAndremove(this);"><i class="fa fa-heart"></i></button>
+                                            <% } %>
+
+                                            <% } else { %>
+                                            <a class="main-btn icon-btn " href="/signup"><i class="fa fa-heart"></i></a>
+                                            <%   } %>
+                                            <button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
                                             <button class="primary-btn add-to-cart" onclick="addToCart(this); ">
                                                 <i class="fa fa-shopping-cart"></i>
                                                 Add to Cart</button>
-                                           
                                         </div>
                                     </div>
                                 </div>
@@ -106,8 +116,6 @@
     </div>
     <!-- /section -->
 
-
-
     <!-- FOOTER -->
     <%- include('../includes/footer.ejs') %>
     <!-- FOOTER -->
@@ -115,7 +123,7 @@
     <!-- jQuery Plugins -->
     <%- include('../includes/end.ejs') %>
     <!-- our custom -->
-    <script src="/js/our.script.js"></script>
+
 </body>
 
 </html>
